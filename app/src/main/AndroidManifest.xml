@@ -24,6 +24,7 @@
         android:theme="@style/HighContrast">
         <activity
             android:name=".activity.SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="false" >
 
 
