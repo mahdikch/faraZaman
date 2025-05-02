@@ -19,13 +19,19 @@
     <application
         android:description="@string/app_description"
         android:icon="@drawable/ic_launcher"
+        android:name=".MyApplication"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/HighContrast">
         <activity
             android:name=".activity.SplashActivity"
-            android:exported="false" >
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -41,11 +47,7 @@
             android:name=".activity.TrackManager"
             android:exported="true"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.TrackLogger"
