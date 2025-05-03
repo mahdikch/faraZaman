@@ -71,13 +71,15 @@ public class GPSLogger extends Service implements LocationListener {
 	/**
 	 * Last known location
 	 */
-	private Location lastLocation;
-	
+	private Location lastLocation_gps;
+	private Location lastLocation_network;
+
 	/**
 	 * LocationManager
 	 */
-	private LocationManager lmgr;
-	
+	private LocationManager lmgr_gps;
+	private LocationManager lmgr_network;
+
 	/**
 	 * Current Track ID
 	 */
@@ -120,17 +122,28 @@ public class GPSLogger extends Service implements LocationListener {
 					// because of the gps logging interval our last fix could be very old
 					// so we'll request the last known location from the gps provider
 					if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-						lastLocation = lmgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-						if (lastLocation != null) {
+						lastLocation_gps = lmgr_gps.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+						lastLocation_network = lmgr_network.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+						if (lastLocation_gps != null) {
 							Long trackId = extras.getLong(TrackContentProvider.Schema.COL_TRACK_ID);
 							String uuid = extras.getString(OSMTracker.INTENT_KEY_UUID);
 							String name = extras.getString(OSMTracker.INTENT_KEY_NAME);
 							String link = extras.getString(OSMTracker.INTENT_KEY_LINK);
 
-							dataHelper.wayPoint(trackId, lastLocation, name, link, uuid, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
+							dataHelper.wayPoint(trackId, lastLocation_gps, name, link, uuid, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
 
 							// If there is a waypoint in the track, there should also be a trackpoint
-							dataHelper.track(currentTrackId, lastLocation, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
+							dataHelper.track(currentTrackId, lastLocation_gps, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
+						}if (lastLocation_network != null) {
+							Long trackId = extras.getLong(TrackContentProvider.Schema.COL_TRACK_ID);
+							String uuid = extras.getString(OSMTracker.INTENT_KEY_UUID);
+							String name = extras.getString(OSMTracker.INTENT_KEY_NAME);
+							String link = extras.getString(OSMTracker.INTENT_KEY_LINK);
+
+							dataHelper.wayPoint(trackId, lastLocation_network, name, link, uuid, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
+
+							// If there is a waypoint in the track, there should also be a trackpoint
+							dataHelper.track(currentTrackId, lastLocation_network, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
 						}
 					}
 				}
@@ -237,10 +250,12 @@ public class GPSLogger extends Service implements LocationListener {
 		}
 
 		// Register ourselves for location updates
-		lmgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		lmgr_gps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		lmgr_network = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-			lmgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsLoggingInterval, gpsLoggingMinDistance, this);
+			lmgr_gps.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsLoggingInterval, gpsLoggingMinDistance, this);
+			lmgr_network.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, gpsLoggingInterval, gpsLoggingMinDistance, this);
 		}
 		
 		//register for Orientation updates
@@ -269,8 +284,9 @@ public class GPSLogger extends Service implements LocationListener {
 		}
 
 		// Unregister listener
-		lmgr.removeUpdates(this);
-		
+		lmgr_gps.removeUpdates(this);
+		lmgr_network.removeUpdates(this);
+
 		// Unregister broadcast receiver
 		unregisterReceiver(receiver);
 		
@@ -315,8 +331,8 @@ public class GPSLogger extends Service implements LocationListener {
 		if((lastGPSTimestamp + gpsLoggingInterval) < System.currentTimeMillis()){
 			lastGPSTimestamp = System.currentTimeMillis(); // save the time of this fix
 		
-			lastLocation = location;
-			
+			lastLocation_gps = location;
+			lastLocation_network=location;
 			if (isTracking) {
 				dataHelper.track(currentTrackId, location, sensorListener.getAzimuth(), sensorListener.getAccuracy(), pressureListener.getPressure());
 			}
