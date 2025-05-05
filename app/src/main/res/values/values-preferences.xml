@@ -3,8 +3,8 @@
 
 	<string-array name="prefs_ui_picture_source_values">
 		<item>camera</item>
-		<item>gallery</item>
-		<item>ask</item>
+<!--		<item>gallery</item>-->
+<!--		<item>ask</item>-->
 	</string-array>
 
 	<string-array name="prefs_ui_orientation_options_values">

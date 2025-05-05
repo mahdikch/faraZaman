@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/farazaman"
+        android:src="@drawable/ic_launcher"
         android:contentDescription="@string/app_name" />
 
     <TextView
@@ -18,8 +18,10 @@
         android:layout_centerInParent="true"
         android:layout_below="@id/imageView"
         android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textColor="@color/map_onClickBackground"
+        android:textSize="48dp"
+        android:fontFamily="@font/iran_sans"
+        android:layout_marginTop="36dp"
         android:textStyle="bold" />
 
 </RelativeLayout>

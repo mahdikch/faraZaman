@@ -88,7 +88,7 @@
 
 	<PreferenceCategory android:title="@string/prefs_ui">
 		<ListPreference
-			android:defaultValue="none"
+			android:defaultValue="camera"
 			android:key="ui.picture.source"
 			android:title="@string/prefs_ui_picture_source"
 			android:summary="@string/prefs_ui_picture_source_summary"

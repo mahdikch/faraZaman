@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Generic strings -->
-    <string name="app_name">سامانه فرا زمان</string>
+    <string name="app_name">فرا زمان</string>
     <string name="app_short_name">فرا زمان</string>
 <!--    <string name="app_description">Inspired by OSMTracker on Windows Mobile, it allows you to track your journeys, mark significant way points (Voice recording, photos), export them in GPX format for later use with Open Street Map tools like JOSM.</string>-->
     <string name="app_description">سامانه فرا زمان در موبایل، به شما امکان می‌دهد سفرهای خود را پیگیری کنید، نقاط مسیر مهم را علامت‌گذاری کنید (ضبط صدا، عکس)، و آنها را با فرمت GPX برای استفاده بعدی با ابزارهای نقشه خیابان باز مانند JOSM صادر کنید.</string>

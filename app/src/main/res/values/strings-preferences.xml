@@ -136,8 +136,8 @@
 	<string name="prefs_ui_picture_source_summary">عکس‌برداری با دوربین یا انتخاب از گالری؟</string>
 	<string-array name="prefs_ui_picture_source_keys">
 		<item>دوربین</item>
-		<item>گالری</item>
-		<item>همیشه بپرس</item>
+<!--		<item>گالری</item>-->
+<!--		<item>همیشه بپرس</item>-->
 	</string-array>
 	<string name="prefs_ui_buttons_layout">پیش‌تنظیم‌های دکمه‌ها</string>
 	<string name="prefs_ui_buttons_layout_summary">انتخاب مجموعهٔ دلخواه از دکمه‌ها (مستندات را ببینید)</string>
