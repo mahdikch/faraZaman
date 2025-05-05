@@ -12,6 +12,9 @@ import net.osmtracker.db.TrackContentProvider;
 import android.content.ContentResolver;
 import android.database.Cursor;
 
+import saman.zamani.persiandate.PersianDate;
+import saman.zamani.persiandate.PersianDateFormat;
+
 /**
  * Represents a Track
 
@@ -197,7 +200,9 @@ public class Track {
 			return name;
 		} else {
 			// Use start date as name
-			return DATE_FORMAT.format(new Date(trackDate));
+			PersianDate persianDate=new PersianDate(trackDate);
+			PersianDateFormat format=new PersianDateFormat("Y/m/d");
+            return format.format(persianDate);
 		}
 	}
 

@@ -24,6 +24,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
+import saman.zamani.persiandate.PersianDate;
+
 public class VoiceRecDialog extends ProgressDialog implements OnInfoListener{
 	
 	private final static String TAG = VoiceRecDialog.class.getSimpleName();
@@ -321,7 +323,7 @@ public class VoiceRecDialog extends ProgressDialog implements OnInfoListener{
 		// Ensure that this location can be written to 
 		if (trackDir.exists() && trackDir.canWrite()) {
 			audioFile = new File(trackDir, 
-					DataHelper.FILENAME_FORMATTER.format(new Date()) + DataHelper.EXTENSION_3GPP);
+					DataHelper.PERSIAN_FILENAME_FORMATTER.format(new PersianDate()) + DataHelper.EXTENSION_3GPP);
 			} else {
 			Log.w(TAG, "The directory [" + trackDir.getAbsolutePath() + "] will not allow files to be created");
 		}

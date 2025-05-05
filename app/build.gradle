@@ -21,7 +21,9 @@ android {
         testApplicationId "net.osmtracker.test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -108,7 +110,7 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
     // Required for local unit tests. Prevent null in JSONObject, JSONArray, etc.
     testImplementation 'org.json:json:20240303'
-
+    implementation 'com.github.samanzamani:PersianDate:1.7.1'
     // Required for instrumented tests
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

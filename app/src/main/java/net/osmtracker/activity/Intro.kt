@@ -13,12 +13,13 @@ class Intro : AppIntro() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Make sure you don't call setContentView!
-
+setSkipText("بیخیال")
+        setDoneText("متوجه شدم")
         // Call addSlide passing your Fragments.
         // You can use AppIntroFragment to use a pre-built fragment
         addSlide(AppIntroFragment.createInstance(
                 title = getString(R.string.app_intro_slide1_title),
-                imageDrawable = R.drawable.icon_100x100,
+                imageDrawable = R.drawable.ic_launcher,
                 backgroundColorRes = R.color.appintro_background_color,
                 description = getString(R.string.app_intro_slide1_description)
         ))
@@ -26,7 +27,7 @@ class Intro : AppIntro() {
         //TODO: change the image of slide number 2.
         addSlide(AppIntroFragment.createInstance(
                 title = getString(R.string.app_intro_slide2_title),
-                imageDrawable = R.drawable.icon_100x100,
+                imageDrawable = R.drawable.ic_launcher,
                 backgroundColorRes = R.color.appintro_background_color,
                 description = getString(R.string.app_intro_slide2_description)
         ))
@@ -45,4 +46,5 @@ class Intro : AppIntro() {
         startActivity(Intent(this, TrackManager::class.java))
         finish()
     }
+
 }

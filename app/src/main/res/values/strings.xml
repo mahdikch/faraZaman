@@ -2,96 +2,175 @@
 <resources>
     <!-- Generic strings -->
     <string name="app_name">سامانه فرا زمان</string>
-    <string name="app_short_name">OSMTracker</string>
-    <string name="app_description">Inspired by OSMTracker on Windows Mobile, it allows you to track your journeys, mark significant way points (Voice recording, photos), export them in GPX format for later use with Open Street Map tools like JOSM.</string>
+    <string name="app_short_name">فرا زمان</string>
+<!--    <string name="app_description">Inspired by OSMTracker on Windows Mobile, it allows you to track your journeys, mark significant way points (Voice recording, photos), export them in GPX format for later use with Open Street Map tools like JOSM.</string>-->
+    <string name="app_description">سامانه فرا زمان در موبایل، به شما امکان می‌دهد سفرهای خود را پیگیری کنید، نقاط مسیر مهم را علامت‌گذاری کنید (ضبط صدا، عکس)، و آنها را با فرمت GPX برای استفاده بعدی با ابزارهای نقشه خیابان باز مانند JOSM صادر کنید.</string>
 
     <!-- TrackLogger -->
-    <string name="tracklogger">Track logger</string>
-    <string name="tracklogger_waiting_gps">Waiting for GPS fix to enable buttons&#8230;</string>
-    <string name="tracklogger_voicerec_title">Voice recording</string>
-    <string name="tracklogger_voicerec_text">Recording a {0}s audio clip.</string>
-    <string name="tracklogger_voicerec_stop">Stop</string>
-    <string name="tracklogger_btnBack">Back</string>
-    <string name="tracklogger_tracked">Tracked: </string>
-    <string name="tracklogger_gps_disabled">GPS disabled</string>
-    <string name="tracklogger_gps_disabled_hint">GPS is disabled. Do you want to enable it?</string>
-    <string name="tracklogger_choose_gallery_camera">Gallery or camera?</string>
-    <string name="tracklogger_camera">Take photo with camera</string>
-    <string name="tracklogger_gallery">Select photo from gallery</string>
+    <!--    <string name="tracklogger">Track logger</string>-->
+    <!--    <string name="tracklogger_waiting_gps">Waiting for GPS fix to enable buttons&#8230;</string>-->
+    <!--    <string name="tracklogger_voicerec_title">Voice recording</string>-->
+    <!--    <string name="tracklogger_voicerec_text">Recording a {0}s audio clip.</string>-->
+    <!--    <string name="tracklogger_voicerec_stop">Stop</string>-->
+    <!--    <string name="tracklogger_btnBack">Back</string>-->
+    <!--    <string name="tracklogger_tracked">Tracked: </string>-->
+    <!--    <string name="tracklogger_gps_disabled">GPS disabled</string>-->
+    <!--    <string name="tracklogger_gps_disabled_hint">GPS is disabled. Do you want to enable it?</string>-->
+    <!--    <string name="tracklogger_choose_gallery_camera">Gallery or camera?</string>-->
+    <!--    <string name="tracklogger_camera">Take photo with camera</string>-->
+    <!--    <string name="tracklogger_gallery">Select photo from gallery</string>-->
+    <string name="tracklogger">واقعه‌نگار مسیر</string>
+    <string name="tracklogger_waiting_gps">در انتظار ثابت‌شدن GPS برای فعال‌سازی دکمه‌ها...</string>
+    <string name="tracklogger_voicerec_title">ضبط صدا</string>
+    <string name="tracklogger_voicerec_text">در حال ضبط (0) ثانیه فایل صوتی</string>
+    <string name="tracklogger_voicerec_stop">توقف</string>
+    <string name="tracklogger_btnBack">عقب</string>
+    <string name="tracklogger_tracked">مسیر ثبت شده:</string>
+    <string name="tracklogger_gps_disabled">GPS غیرفعال</string>
+    <string name="tracklogger_gps_disabled_hint">‏GPS غیرفعال است. آن را فعال می‌کنید؟</string>
+    <string name="tracklogger_choose_gallery_camera">گالری تصاویر یا دوربین؟</string>
+    <string name="tracklogger_camera">با دوربین عکس بگیر</string>
+    <string name="tracklogger_gallery">انتخاب عکس از گالری</string>
+
 
     <!-- Waypoint List -->
-    <string name="wplist">Waypoint list</string>
-    <string name="wplist_latitude">Lat: </string>
-    <string name="wplist_longitude">Long: </string>
-    <string name="wplist_elevation">Ele: </string>
-    <string name="wplist_accuracy">Accur: </string>
-    <string name="wplist_compass">Comp. head.:</string>
-    <string name="wplist_compass_accuracy">Comp. accur.:</string>
+    <!--    <string name="wplist">Waypoint list</string>-->
+    <!--    <string name="wplist_latitude">Lat: </string>-->
+    <!--    <string name="wplist_longitude">Long: </string>-->
+    <!--    <string name="wplist_elevation">Ele: </string>-->
+    <!--    <string name="wplist_accuracy">Accur: </string>-->
+    <!--    <string name="wplist_compass">Comp. head.:</string>-->
+    <!--    <string name="wplist_compass_accuracy">Comp. accur.:</string>-->
+    <string name="wplist">لیست نقاط بین‌راهی</string>
+    <string name="wplist_latitude">عرض جغرافیایی:</string>
+    <string name="wplist_longitude">طول جغرافیایی:</string>
+    <string name="wplist_elevation">ارتفاع:</string>
+    <string name="wplist_accuracy">دقت:</string>
+    <string name="wplist_compass">جهت قطب‌نما:</string>
+    <string name="wplist_compass_accuracy">دقت قطب‌نما:</string>
+
 
     <!-- Track Manager -->
-    <string name="trackmgr">Track manager</string>
-    <string name="trackmgr_tracklist">Track list:</string>
-    <string name="trackmgr_waypoints_count">Waypoints: </string>
-    <string name="trackmgr_trackpoints_count">Trackpoints: </string>
-    <string name="trackmgr_empty">You don\'t have any tracks.</string>
-    <string name="trackmgr_newtrack_hint">Press to record a new track.</string>
-    <string name="trackmgr_newtrack_error">Unable to create a new track: {0}</string>
-    <string name="trackmgr_continuetrack_hint">You are currently recording <b>track #{0}</b>\nChoose it in the list to continue</string>
-    <string name="trackmgr_contextmenu_stop">Stop tracking</string>
-    <string name="trackmgr_contextmenu_resume">Resume tracking</string>
-    <string name="trackmgr_contextmenu_delete">Delete</string>
-    <string name="trackmgr_contextmenu_export">Export</string>
-    <string name="trackmgr_contextmenu_share">Share</string>
-    <string name="trackmgr_contextmenu_osm_upload">Upload to OpenStreetMap</string>
-    <string name="trackmgr_contextmenu_display">Display</string>
-    <string name="trackmgr_contextmenu_details">Details</string>
-    <string name="trackmgr_contextmenu_title">Track #{0}</string>
-    <string name="trackmgr_delete_confirm">Track #{0} will be deleted</string>
-    <string name="trackmgr_deleteall_confirm">All tracks will be deleted. Are you sure?</string>
-    <string name="trackmgr_exporting">Exporting track #{0}&#8230;</string>
-    <string name="trackmgr_exporting_prepare">Preparing export&#8230;</string>
-    <string name="trackmgr_export_error">Unable to export track: {0}</string>
-    <string name="trackmgr_exportall_confirm">All tracks will be exported, which could take a long time. Are you sure?</string>
-    <string name="trackmgr_prepare_for_share_error">Unable to process the track: {0}</string>
+    <!--    <string name="trackmgr">Track manager</string>-->
+    <!--    <string name="trackmgr_tracklist">Track list:</string>-->
+    <!--    <string name="trackmgr_waypoints_count">Waypoints: </string>-->
+    <!--    <string name="trackmgr_trackpoints_count">Trackpoints: </string>-->
+    <!--    <string name="trackmgr_empty">You don\'t have any tracks.</string>-->
+    <!--    <string name="trackmgr_newtrack_hint">Press to record a new track.</string>-->
+    <!--    <string name="trackmgr_newtrack_error">Unable to create a new track: {0}</string>-->
+    <!--    <string name="trackmgr_continuetrack_hint">You are currently recording <b>track #{0}</b>\nChoose it in the list to continue</string>-->
+    <!--    <string name="trackmgr_contextmenu_stop">Stop tracking</string>-->
+    <!--    <string name="trackmgr_contextmenu_resume">Resume tracking</string>-->
+    <!--    <string name="trackmgr_contextmenu_delete">Delete</string>-->
+    <string name="trackmgr_contextmenu_export">دریافت خروجی</string>
+<!--    <string name="trackmgr_contextmenu_export">Eport</string>-->
+<!--    <string name="trackmgr_contextmenu_share">Share</string>-->
+    <string name="trackmgr_contextmenu_share">اشتراک گذاری</string>
+    <!--    <string name="trackmgr_contextmenu_osm_upload">Upload to OpenStreetMap</string>-->
+    <!--    <string name="trackmgr_contextmenu_display">Display</string>-->
+    <!--    <string name="trackmgr_contextmenu_details">Details</string>-->
+    <!--    <string name="trackmgr_contextmenu_title">Track #{0}</string>-->
+    <!--    <string name="trackmgr_delete_confirm">Track #{0} will be deleted</string>-->
+    <!--    <string name="trackmgr_deleteall_confirm">All tracks will be deleted. Are you sure?</string>-->
+    <!--    <string name="trackmgr_exporting">Exporting track #{0}&#8230;</string>-->
+    <!--    <string name="trackmgr_exporting_prepare">Preparing export&#8230;</string>-->
+    <!--    <string name="trackmgr_export_error">Unable to export track: {0}</string>-->
+    <!--    <string name="trackmgr_exportall_confirm">All tracks will be exported, which could take a long time. Are you sure?</string>-->
+    <!--    <string name="trackmgr_prepare_for_share_error">Unable to process the track: {0}</string>-->
+    <string name="trackmgr">مدیریت مسیرها</string>
+    <string name="trackmgr_tracklist">لیست ماموریت ها:</string>
+    <string name="trackmgr_waypoints_count">نقاط بین‌راهی:</string>
+    <string name="trackmgr_trackpoints_count">نقاط مسیر:</string>
+    <string name="trackmgr_empty">شما هیچ مسیری ندارید.</string>
+    <string name="trackmgr_newtrack_hint">برای ضبط یک رد تازه لمس کنید</string>
+    <string name="trackmgr_newtrack_error">امکان ساخت مسیر جدید وجود ندارد: {0}</string>
+    <string name="trackmgr_continuetrack_hint">هم‌اکنون در حال ضبط <b>مسیر#{0}</b> هستید\nبرای ادامه آن را از لیست انتخاب کنید</string>
+    <string name="trackmgr_contextmenu_stop">توقف ماموریت</string>
+    <string name="trackmgr_contextmenu_resume">ادامهٔ ماموریت</string>
+    <string name="trackmgr_contextmenu_delete">حذف</string>
+<!--    <string name="trackmgr_contextmenu_osm_upload">بارگذاری در OpenStreetMap</string>-->
+    <string name="trackmgr_contextmenu_osm_upload">اتمام ماموریت</string>
+    <string name="trackmgr_contextmenu_display">نمایش</string>
+    <string name="trackmgr_contextmenu_details">جزئیات</string>
+    <string name="trackmgr_contextmenu_title">مسیر #{0}</string>
+    <string name="trackmgr_delete_confirm">مسیر #{0} پاک خواهد شد</string>
+    <string name="trackmgr_deleteall_confirm">تمامی مسیرها پاک خواهد شد. آیا مطمئن هستید؟</string>
+    <string name="trackmgr_exporting">در حال خروجی‌گرفتن از مسیر #{0}...</string>
+    <string name="trackmgr_exporting_prepare">در حال آماده‌سازی فایل خروجی...</string>
+    <string name="trackmgr_export_error">امکان تهیهٔ خروجی از مسیر: {0} وجود ندارد</string>
+    <string name="trackmgr_exportall_confirm">از تمامی مسیرها خروجی تهیه خواهد شد که امکان دارد زمان زیادی طول بکشد. آیا مطمئن هستید؟</string>
+    <string name="trackmgr_prepare_for_share_error">امکان پردازش رد وجود ندارد: {0}</string>
 
     <!-- Track Detail -->
-    <string name="trackdetail">Track Details</string>
-    <string name="trackdetail_startdate">Start time:</string>
-    <string name="trackdetail_enddate">End time:</string>
-    <string name="trackdetail_startloc">Starts at:</string>
-    <string name="trackdetail_endloc">Ends at:</string>
-    <string name="trackdetail_exportdate">Exported:</string>
-    <string name="trackdetail_osm_upload_date">Uploaded to OpenStreetMap:</string>
-    <string name="trackdetail_btn_export">Export as GPX</string>
-    <string name="trackdetail_export_notyet">(Not exported yet)</string>
-    <string name="trackdetail_osm_upload_notyet">(Not uploaded yet)</string>
-    <string name="trackdetail_export_display">Display</string>
-    <string name="trackdetail_name">Name</string>
-    <string name="trackdetail_description">Description</string>
-    <string name="trackdetail_tags">Tags (comma separated)</string>
-    <string name="trackdetail_description_mandatory">You must enter a description</string>
-    <string name="osm_visibility_private">Private</string>
-    <string name="osm_visibility_public">Public</string>
-    <string name="osm_visibility_trackable">Trackable</string>
-    <string name="osm_visibility_identifiable">Identifiable</string>
+    <!--    <string name="trackdetail">Track Details</string>-->
+    <!--    <string name="trackdetail_startdate">Start time:</string>-->
+    <!--    <string name="trackdetail_enddate">End time:</string>-->
+    <!--    <string name="trackdetail_startloc">Starts at:</string>-->
+    <!--    <string name="trackdetail_endloc">Ends at:</string>-->
+    <!--    <string name="trackdetail_exportdate">Exported:</string>-->
+    <!--    <string name="trackdetail_osm_upload_date">Uploaded to OpenStreetMap:</string>-->
+    <!--    <string name="trackdetail_btn_export">Export as GPX</string>-->
+    <!--    <string name="trackdetail_export_notyet">(Not exported yet)</string>-->
+    <!--    <string name="trackdetail_osm_upload_notyet">(Not uploaded yet)</string>-->
+    <!--    <string name="trackdetail_export_display">Display</string>-->
+<!--    <string name="trackdetail_name">Name</string>-->
+    <string name="trackdetail_name">نام</string>
+    <!--    <string name="trackdetail_description">Description</string>-->
+    <!--    <string name="trackdetail_tags">Tags (comma separated)</string>-->
+    <!--    <string name="trackdetail_description_mandatory">You must enter a description</string>-->
+    <!--    <string name="osm_visibility_private">Private</string>-->
+    <!--    <string name="osm_visibility_public">Public</string>-->
+    <!--    <string name="osm_visibility_trackable">Trackable</string>-->
+    <!--    <string name="osm_visibility_identifiable">Identifiable</string>-->
+    <string name="trackdetail">جزئیات مسیر</string>
+    <string name="trackdetail_startdate">زمان شروع:</string>
+    <string name="trackdetail_enddate">زمان خاتمه:</string>
+    <string name="trackdetail_startloc">شروع در:</string>
+    <string name="trackdetail_endloc">خاتمه در:</string>
+    <string name="trackdetail_exportdate">خروجی:</string>
+    <string name="trackdetail_osm_upload_date">در OpenStreetMap بارگذاری شد:</string>
+    <string name="trackdetail_btn_export">خروجی در قالب GPX</string>
+    <string name="trackdetail_export_notyet">(هنوز خروجی نگرفته‌اید)</string>
+    <string name="trackdetail_osm_upload_notyet">(هنوز بارگذاری نشده است)</string>
+    <string name="trackdetail_export_display">نمایش</string>
+    <string name="trackdetail_description">توضیح</string>
+    <string name="trackdetail_tags">برچسب (با کاما جدا شوند)</string>
+    <string name="trackdetail_description_mandatory">باید توضیحی بنویسید</string>
+    <string name="osm_visibility_private">خصوصی</string>
+    <string name="osm_visibility_public">عمومی</string>
+    <string name="osm_visibility_trackable">قابل ردیابی</string>
+    <string name="osm_visibility_identifiable">قابل‌شناسایی</string>
 
     <!-- OSM upload -->
-    <string name="osm_upload">OpenStreetMap upload</string>
-    <string name="osm_upload_ok">Save and upload</string>
-    <string name="osm_upload_tmpfile_failed">Unable to export the track to a temporary file</string>
-    <string name="osm_upload_oauth_failed">Unable to authenticate to OSM</string>
-    <string name="osm_upload_sending">Sending track #{0}&#8230;</string>
-    <string name="osm_upload_waiting_response">Waiting for OpenStreetMap server response&#8230;</string>
-    <string name="osm_upload_error">Error while uploading track</string>
-    <string name="osm_upload_bad_response">The OSM server returned an error: ({0}) message {1}</string>
-    <string name="osm_upload_unauthorized">Authorization error. Would you like to clear the saved OpenStreetMap credentials?</string>
-    <string name="osm_upload_sucess">OpenStreetMap upload succeeded</string>
+    <!--    <string name="osm_upload">OpenStreetMap upload</string>-->
+    <!--    <string name="osm_upload_ok">Save and upload</string>-->
+    <!--    <string name="osm_upload_tmpfile_failed">Unable to export the track to a temporary file</string>-->
+    <!--    <string name="osm_upload_oauth_failed">Unable to authenticate to OSM</string>-->
+    <!--    <string name="osm_upload_sending">Sending track #{0}&#8230;</string>-->
+    <!--    <string name="osm_upload_waiting_response">Waiting for OpenStreetMap server response&#8230;</string>-->
+    <!--    <string name="osm_upload_error">Error while uploading track</string>-->
+    <!--    <string name="osm_upload_bad_response">The OSM server returned an error: ({0}) message {1}</string>-->
+    <!--    <string name="osm_upload_unauthorized">Authorization error. Would you like to clear the saved OpenStreetMap credentials?</string>-->
+    <!--    <string name="osm_upload_sucess">OpenStreetMap upload succeeded</string>-->
+    <string name="osm_upload">بارگذاری در OpenStreetMap</string>
+    <string name="osm_upload_ok">ذخیره و بارگذاری</string>
+    <string name="osm_upload_tmpfile_failed">تهیهٔ خروجی مسیر بر روی فایل موقت ناموفق بود</string>
+    <string name="osm_upload_oauth_failed">تأیید حساب کاربری در OSM ناموفق بود</string>
+    <string name="osm_upload_sending">در حال ارسال مسیر #{0}...</string>
+    <string name="osm_upload_waiting_response">منتظر پاسخ از سرور OpenStreetMap...</string>
+    <string name="osm_upload_error">بارگذاری مسیر با خطا مواجه گردید</string>
+    <string name="osm_upload_bad_response">سرور OSM یک خطا برگرداند: {(0)} پیغام {1}</string>
+    <string name="osm_upload_unauthorized">خطای دسترسی. مایلید اطلاعات ورود به حساب کاربری OpenStreetMap از روی دستگاه پاک شود؟</string>
+    <string name="osm_upload_sucess">بارگذاری در OpenStreetMap موفقیت‌آمیز بود</string>
+
 
     <!-- GPS Status & record bar -->
-    <string name="gpsstatus_record_voicerec">Voice record</string>
-    <string name="gpsstatus_record_stillimage">Take photo</string>
-    <string name="gpsstatus_record_textnote">Text note</string>
-
+    <!--    <string name="gpsstatus_record_voicerec">Voice record</string>-->
+    <!--    <string name="gpsstatus_record_stillimage">Take photo</string>-->
+    <!--    <string name="gpsstatus_record_textnote">Text note</string>-->
+    <string name="gpsstatus_record_voicerec">ضبط صدا</string>
+    <string name="gpsstatus_record_stillimage">گرفتن عکس</string>
+    <string name="gpsstatus_record_textnote">یادداشت متنی</string>
     <!-- edit_waypoint_dialog -->
     <string name="waypoint_name_label">Waypoint Name/text</string>
     <string name="waypoint_name_hint">Enter waypoint name</string>
@@ -105,28 +184,47 @@
     <string name="delete_waypoint_confirm_bt_cancel">Cancel</string>
 
     <!-- Menu -->
-    <string name="menu_settings">Settings</string>
-    <string name="menu_waypointlist">Waypoints</string>
-    <string name="menu_about">About</string>
-    <string name="menu_displaytrack">Display track</string>
-    <string name="menu_stoptracking">Stop &amp; save</string>
-    <string name="menu_newtrack">New track</string>
-    <string name="menu_deletetracks">Delete all tracks</string>
-    <string name="menu_continue">Continue track</string>
-    <string name="menu_stopcurrenttrack">Stop current track</string>
-    <string name="menu_save">Save</string>
-    <string name="menu_cancel">Cancel</string>
-    <string name="menu_export">Export as GPX</string>
-    <string name="menu_osm_upload">OpenStreetMap upload</string>
-    <string name="menu_center_to_gps">Center to GPS</string>
-    <string name="menu_exportall">Export all as GPX</string>
-
+    <!--    <string name="menu_settings">Settings</string>-->
+    <!--    <string name="menu_waypointlist">Waypoints</string>-->
+    <!--    <string name="menu_about">About</string>-->
+    <!--    <string name="menu_displaytrack">Display track</string>-->
+    <!--    <string name="menu_stoptracking">Stop &amp; save</string>-->
+    <!--    <string name="menu_newtrack">New track</string>-->
+    <!--    <string name="menu_deletetracks">Delete all tracks</string>-->
+    <!--    <string name="menu_continue">Continue track</string>-->
+    <!--    <string name="menu_stopcurrenttrack">Stop current track</string>-->
+    <!--    <string name="menu_save">Save</string>-->
+    <!--    <string name="menu_cancel">Cancel</string>-->
+    <!--    <string name="menu_export">Export as GPX</string>-->
+    <!--    <string name="menu_osm_upload">OpenStreetMap upload</string>-->
+    <!--    <string name="menu_center_to_gps">Center to GPS</string>-->
+    <!--    <string name="menu_exportall">Export all as GPX</string>-->
+    <string name="menu_settings">تنظیمات</string>
+    <string name="menu_waypointlist">نقاط بین‌راهی</string>
+    <string name="menu_about">دربارهٔ ما</string>
+    <string name="menu_displaytrack">نمایش مسیر</string>
+    <string name="menu_stoptracking">توقف و ذخیره</string>
+    <string name="menu_newtrack">مسیر جدید</string>
+    <string name="menu_deletetracks">پاک کردن تمامی مسیرها</string>
+    <string name="menu_continue">ادامه‌دادن مسیر</string>
+    <string name="menu_stopcurrenttrack">توقف مسیر جاری</string>
+    <string name="menu_save">ذخیره</string>
+    <string name="menu_cancel">لغو</string>
+    <string name="menu_export">خروجی در قالب GPX</string>
+    <string name="menu_osm_upload">بارگذاری در OpenStreetMap</string>
+    <string name="menu_center_to_gps">مرکز به GPS</string>
+    <string name="menu_exportall">همه را در قالب GPX خروجی بگیر</string>
     <!-- Errors -->
-    <string name="error_externalstorage_not_writable">Unable to write to external storage.</string>
-    <string name="error_create_track_dir">Unable to create track folder %s</string>
-    <string name="error_externalstorage_not_writable_hint">Please check if ext. storage is correctly inserted and mounted.</string>
-    <string name="error_voicerec_failed">Voice recording has failed</string>
-    <string name="error_userlayout_parsing">Error while parsing XML layout file. Please revert to default layout.</string>
+    <!--    <string name="error_externalstorage_not_writable">Unable to write to external storage.</string>-->
+    <!--    <string name="error_create_track_dir">Unable to create track folder %s</string>-->
+    <!--    <string name="error_externalstorage_not_writable_hint">Please check if ext. storage is correctly inserted and mounted.</string>-->
+    <!--    <string name="error_voicerec_failed">Voice recording has failed</string>-->
+    <!--    <string name="error_userlayout_parsing">Error while parsing XML layout file. Please revert to default layout.</string>-->
+    <string name="error_externalstorage_not_writable">نرم‌افزار نمی‌تواند در حافظه خارجی بنویسد.</string>
+    <string name="error_create_track_dir">نرم‌افزار نمی‌تواند پوشهٔ رد %s را بسازد</string>
+    <string name="error_externalstorage_not_writable_hint">لطفاً مطمئن شوید حافظهٔ خارجی دستگاه به‌درستی جاگذاری و سوار (mount) شده باشد.</string>
+    <string name="error_voicerec_failed">ضبط صدا با اشکال مواجه شد</string>
+    <string name="error_userlayout_parsing">خطا هنگام تجزیهٔ فایل چیدمان XML. لطفاً به چیدمان پیشفرض برگردانید.</string>
 
     <!-- messages -->
     <string name="permission_required">Permission required</string>
@@ -138,88 +236,149 @@
     <string name="gps_perms_required">Can\'t continue without GPS permission</string>
 
     <!-- GPX -->
-    <string name="gpx_track_name">Tracked with OSMTracker for Android™</string>
-    <string name="gpx_hdop_approximation_cmt">Warning: HDOP values aren\'t the HDOP as returned by the GPS device. They\'re approximated from the location accuracy in meters.</string>
-
+    <!--    <string name="gpx_track_name">Tracked with OSMTracker for Android™</string>-->
+    <!--    <string name="gpx_hdop_approximation_cmt">Warning: HDOP values aren\'t the HDOP as returned by the GPS device. They\'re approximated from the location accuracy in meters.</string>-->
+<!--    <string name="gpx_track_name">با OSM Tracker for Android™‎ ضبط شده است</string>-->
+    <string name="gpx_track_name">با سامانه فرا زمان ضبط شده است</string>
+    <string name="gpx_hdop_approximation_cmt">هشدار: مقادیر HDOP همان مقادیر HDOP دریافتی از دستگاه GPS نیست؛ بلکه بر اساس دقت مکانی بر حسب متر تقریب زده شده.</string>
     <!-- About screen -->
-    <string name="about">About</string>
-    <string name="about_text">For more information, docs and issue report, please visit the project home page:</string>
-    <string name="about_translate_text">Help translating OSMTracker:</string>
-    <string name="about_debug_info">Debug info</string>
-    <string name="about_export_db">Export database</string>
-    <string name="about_exporting_db">Exporting database&#8230;</string>
-    <string name="about_export_db_result">Database export result: %s</string>
-
+    <!--    <string name="about">About</string>-->
+    <!--    <string name="about_text">For more information, docs and issue report, please visit the project home page:</string>-->
+    <!--    <string name="about_translate_text">Help translating OSMTracker:</string>-->
+    <!--    <string name="about_debug_info">Debug info</string>-->
+    <!--    <string name="about_export_db">Export database</string>-->
+    <!--    <string name="about_exporting_db">Exporting database&#8230;</string>-->
+    <!--    <string name="about_export_db_result">Database export result: %s</string>-->
+    <string name="about">درباره</string>
+    <string name="about_text">برای اطلاعات بیشتر، دیدن مستندات و گزارش مشکل لطفاً از سایت پروژه دیدن فرمایید:</string>
+    <string name="about_translate_text">کمک کنید OSMTracker را ترجمه کنیم:</string>
+    <string name="about_debug_info">اطلاعات debug</string>
+    <string name="about_export_db">خروجی از پایگاه‌داده</string>
+    <string name="about_exporting_db">در حال خروجی‌گرفتن از پایگاه‌داده....</string>
+    <string name="about_export_db_result">نتیجهٔ خروجی پایگاه‌داده: %s</string>
     <!-- Notification -->
-    <string name="notification_ticker_text">OSMTracker is tracking</string>
-    <string name="notification_title">OSMTracker is tracking (#{0})</string>
-    <string name="notification_text">Tap here to display main screen</string>
-
+    <!--    <string name="notification_ticker_text">OSMTracker is tracking</string>-->
+    <!--    <string name="notification_title">OSMTracker is tracking (#{0})</string>-->
+    <!--    <string name="notification_text">Tap here to display main screen</string>-->
+    <string name="notification_ticker_text">فرا زمان درحال ثبت مسیر است</string>
+    <string name="notification_title">فرا زمان درحال ثبت مسیر است (#{0})</string>
+    <string name="notification_text">برای نمایش صفحهٔ اصلی اینجا را لمس کنید</string>
     <!-- Display track -->
-    <string name="displaytrack">Display track</string>
-    <string name="displaytrack_map">Display background map</string>
+    <!--    <string name="displaytrack">Display track</string>-->
+    <!--    <string name="displaytrack_map">Display background map</string>-->
+    <!--    <string name="displaytrack_north">N</string>-->
+    <string name="displaytrack">نمایش مسیر</string>
+    <string name="displaytrack_map">نمایش نقشهٔ پس‌زمنیه</string>
     <string name="displaytrack_north">N</string>
-
     <!-- Track detail -->
-    <string name="trackdetail_save">Save</string>
+    <!--    <string name="trackdetail_save">Save</string>-->
+    <string name="trackdetail_save">ذخیره</string>
 
     <!-- Various -->
-    <string name="various_unit_meters">m</string>
-    <string name="various_accuracy">Accuracy</string>
-    <string name="various_accuracy_with_sats">Accuracy {0}{1} ({2}/{3})</string> <!-- parameters: (accuracy, meters, used sats, visible sats) -->
+    <!--    <string name="various_unit_meters">m</string>-->
+    <!--    <string name="various_accuracy">Accuracy</string>-->
+    <!--    <string name="various_accuracy_with_sats">Accuracy {0}{1} ({2}/{3})</string> &lt;!&ndash; parameters: (accuracy, meters, used sats, visible sats) &ndash;&gt;-->
+    <string name="various_unit_meters">م</string>
+    <string name="various_accuracy">دقت</string>
+    <string name="various_accuracy_with_sats">دقت {0}{1} ({2}/{3})</string>
     <string name="various_waiting_gps_fix">Waiting for GPS fix&#8230; ({0}/{1})</string> <!-- parameters: (used sats, visible sats) -->
-    <string name="various_heading_display">{0}&#176;</string> <!-- parameters: (heading in degrees) -->
-    <string name="various_heading">Wait for heading&#8230;</string>
-    <string name="various_heading_unknown">Heading can\'t be determined</string>
-    <string name="various_export_finished">Export process finished successfully</string>
+    <!--    <string name="various_heading_display">{0}&#176;</string> &lt;!&ndash; parameters: (heading in degrees) &ndash;&gt;-->
+    <!--    <string name="various_heading">Wait for heading&#8230;</string>-->
+    <!--    <string name="various_heading_unknown">Heading can\'t be determined</string>-->
+    <!--    <string name="various_export_finished">Export process finished successfully</string>-->
     <string name="various_waiting_position">Position not available</string>
+    <!--    <string name="various_position_lat_lon">{0} {1} / {2} {3}</string>-->
+    <!--    <string name="various_waiting_gps_fix">در انتظار تثبیت GPS...‏ ({0}/{1})</string>-->
+    <!--parameters: (used sats, visible sats)-->
+    <string name="various_heading_display">{0}°‎</string>
+    <!--parameters: (heading in degrees)-->
+    <string name="various_heading">منتظر جهت حرکت...</string>
+    <string name="various_heading_unknown">سیستم قادر به تشخیص جهت حرکت نیست</string>
+    <string name="various_export_finished">فرآیند برون‌برد با موفقیت پایان یافت</string>
     <string name="various_position_lat_lon">{0} {1} / {2} {3}</string>
-
     <!-- OSM map view -->
-    <string name="displaytrackmap">OpenStreetMap track display</string>
+    <!--    <string name="displaytrackmap">OpenStreetMap track display</string>-->
+    <string name="displaytrackmap">نمایش مسیر اوپن‌استریت‌مپ</string>
+
 
     <!-- Buttons presets messages -->
-    <string name="buttons_presets_context_menu_update_install">Update &amp; Install</string>
-    <string name="buttons_presets_context_menu_delete">Delete</string>
-    <string name="buttons_presets_updating_layout">Updating…</string>
-    <string name="buttons_presets_successful_update">Layout was updated successfully</string>
-    <string name="buttons_presets_unsuccessful_update">Layout was not updated, try again later</string>
-    <string name="buttons_presets_delete_message">Are you sure to delete the {0} layout?</string>
-    <string name="buttons_presets_delete_positive_confirmation">Yes</string>
-    <string name="buttons_presets_successful_delete">The layout was deleted successfully</string>
-    <string name="buttons_presets_icon_directory_deleted">The icon directory was deleted successfully</string>
-    <string name="buttons_presets_icon_directory_does_not_exist">This file didn\'t have any icon directory associated</string>
-    <string name="buttons_presets_unsuccessful_delete">The layout could not be deleted</string>
-
+    <!--    <string name="buttons_presets_context_menu_update_install">Update &amp; Install</string>-->
+    <!--    <string name="buttons_presets_context_menu_delete">Delete</string>-->
+    <!--    <string name="buttons_presets_updating_layout">Updating…</string>-->
+    <!--    <string name="buttons_presets_successful_update">Layout was updated successfully</string>-->
+    <!--    <string name="buttons_presets_unsuccessful_update">Layout was not updated, try again later</string>-->
+    <!--    <string name="buttons_presets_delete_message">Are you sure to delete the {0} layout?</string>-->
+    <!--    <string name="buttons_presets_delete_positive_confirmation">Yes</string>-->
+    <!--    <string name="buttons_presets_successful_delete">The layout was deleted successfully</string>-->
+    <!--    <string name="buttons_presets_icon_directory_deleted">The icon directory was deleted successfully</string>-->
+    <!--    <string name="buttons_presets_icon_directory_does_not_exist">This file didn\'t have any icon directory associated</string>-->
+    <!--    <string name="buttons_presets_unsuccessful_delete">The layout could not be deleted</string>-->
+    <string name="buttons_presets_context_menu_update_install">به‌روزرسانی و نصب</string>
+    <string name="buttons_presets_context_menu_delete">حذف</string>
+    <string name="buttons_presets_updating_layout">در حال به‌روزآوری...</string>
+    <string name="buttons_presets_successful_update">به‌روزرسانی چیدمان با موفقیت انجام شد</string>
+    <string name="buttons_presets_unsuccessful_update">چیدمان به‌روز نشد، بعداً تلاش کنید</string>
+    <string name="buttons_presets_delete_message">آیا چیدمان {0} را حذف می‌کنید؟</string>
+    <string name="buttons_presets_delete_positive_confirmation">بله</string>
+    <string name="buttons_presets_successful_delete">چیدمان با موفقیت حذف شد</string>
+    <string name="buttons_presets_icon_directory_deleted">شاخهٔ icon با موفقیت حذف شد</string>
+    <string name="buttons_presets_icon_directory_does_not_exist">هیچ شاخهٔ icon متناظر با این فایل وجود ندارد</string>
+    <string name="buttons_presets_unsuccessful_delete">چیدمان را نمی‌توان حذف کرد</string>
     <!--Available Layouts messages -->
-    <string name="available_layouts_connection_error">Error: unable to connect to the Internet</string>
-    <string name="available_layouts_response_null_exception">Error: unable to connect to the default custom layouts repository</string>
-    <string name="available_layouts_connecting_message">(Connecting…)</string>
-    <string name="available_layouts_description_dialog_positive_confirmation">Download</string>
-    <string name="available_layouts_not_available_language">Your language is not available select one from the list</string>
-    <string name="available_layouts_language_dialog_title">Available Languages</string>
-    <string name="available_layouts_checking_language_dialog">Checking local language versions</string>
-    <string name="available_layouts_downloading_dialog">Downloading…</string>
-    <string name="available_layouts_successful_download">The layout was downloaded successfully</string>
-    <string name="available_layouts_unsuccessful_download">The layout can\'t be downloaded, try again later</string>
-    <string name="available_layouts_null_response_received">Error retrieving data from server</string>
-
+    <!--    <string name="available_layouts_connection_error">Error: unable to connect to the Internet</string>-->
+    <!--    <string name="available_layouts_response_null_exception">Error: unable to connect to the default custom layouts repository</string>-->
+    <!--    <string name="available_layouts_connecting_message">(Connecting…)</string>-->
+    <!--    <string name="available_layouts_description_dialog_positive_confirmation">Download</string>-->
+    <!--    <string name="available_layouts_not_available_language">Your language is not available select one from the list</string>-->
+    <!--    <string name="available_layouts_language_dialog_title">Available Languages</string>-->
+    <!--    <string name="available_layouts_checking_language_dialog">Checking local language versions</string>-->
+    <!--    <string name="available_layouts_downloading_dialog">Downloading…</string>-->
+    <!--    <string name="available_layouts_successful_download">The layout was downloaded successfully</string>-->
+    <!--    <string name="available_layouts_unsuccessful_download">The layout can\'t be downloaded, try again later</string>-->
+    <!--    <string name="available_layouts_null_response_received">Error retrieving data from server</string>-->
+    <string name="available_layouts_connection_error">خطا: نمی‌توان به اینترنت متصل شد</string>
+    <string name="available_layouts_response_null_exception">خطا: نمی‌توان به مخزن پیشفرض برای چیدمان‌های سفارشی متصل شد</string>
+    <string name="available_layouts_connecting_message">(در حال اتصال...)</string>
+    <string name="available_layouts_description_dialog_positive_confirmation">بارگیری</string>
+    <string name="available_layouts_not_available_language">زبان شما موجود نیست. یکی را از لیست انتخاب کنید</string>
+    <string name="available_layouts_language_dialog_title">زبان‌های موجود</string>
+    <string name="available_layouts_checking_language_dialog">در حال بررسی نسخه‌های زبان محلی</string>
+    <string name="available_layouts_downloading_dialog">در حال بارگیری...</string>
+    <string name="available_layouts_successful_download">چیدمان با موفقیت بارگیری شد</string>
+    <string name="available_layouts_unsuccessful_download">چیدمان بارگیری نمی‌شود. بعداً تلاش کنید</string>
+    <string name="available_layouts_null_response_received">خطا در بازیابی داده‌ها از سرور</string>
     <!-- Github Repository Settings -->
-    <string name="github_repository_settings_default_checkbox">Default</string>
-    <string name="github_repository_settings_custom_checkbox">Custom</string>
-    <string name="github_repository_settings_username">Github username: </string>
-    <string name="github_repository_settings_repository_name">Repository name: </string>
-    <string name="github_repository_settings_branch_name">Branch name: </string>
-    <string name="github_repository_settings_valid_server">Github Repository valid</string>
-    <string name="github_repository_settings_invalid_server">Github Repository invalid</string>
-
+    <!--    <string name="github_repository_settings_default_checkbox">Default</string>-->
+    <!--    <string name="github_repository_settings_custom_checkbox">Custom</string>-->
+    <!--    <string name="github_repository_settings_username">Github username: </string>-->
+    <!--    <string name="github_repository_settings_repository_name">Repository name: </string>-->
+    <!--    <string name="github_repository_settings_branch_name">Branch name: </string>-->
+    <!--    <string name="github_repository_settings_valid_server">Github Repository valid</string>-->
+    <!--    <string name="github_repository_settings_invalid_server">Github Repository invalid</string>-->
+    <string name="github_repository_settings_default_checkbox">پیشفرض</string>
+    <string name="github_repository_settings_custom_checkbox">سفارشی</string>
+    <string name="github_repository_settings_username">نام کاربری گیت‌هاب:</string>
+    <string name="github_repository_settings_repository_name">نام مخزن:</string>
+    <string name="github_repository_settings_branch_name">نام شاخه:</string>
+    <string name="github_repository_settings_valid_server">مخزن گیت‌هاب معتبر</string>
+    <string name="github_repository_settings_invalid_server">مخزن گیت‌هاب نامعتبر</string>
     <!-- App Introduction -->
-    <string name="app_intro">OSMTracker for Android™ Introduction</string>
-    <!-- Intro - slide1 -->
-    <string name="app_intro_slide1_title">Welcome to OSMTracker for Android™ 👋</string>
-    <string name="app_intro_slide1_description">This App is free software that respects your freedom!</string>
-    <!-- Intro - slide2 -->
-    <string name="app_intro_slide2_title">Happy tracking 🗺 😎</string>
-    <string name="app_intro_slide2_description">OSMTracker for Android will use your GPS location to record trackpoints and waypoints, even when the App is running in background.
-\nYour data is not used to support ads.</string>
+    <!--    <string name="app_intro">OSMTracker for Android™ Introduction</string>-->
+    <!--    &lt;!&ndash; Intro - slide1 &ndash;&gt;-->
+    <!--    <string name="app_intro_slide1_title">Welcome to OSMTracker for Android™ 👋</string>-->
+    <!--    <string name="app_intro_slide1_description">This App is free software that respects your freedom!</string>-->
+    <!--    &lt;!&ndash; Intro - slide2 &ndash;&gt;-->
+    <!--    <string name="app_intro_slide2_title">Happy tracking 🗺 😎</string>-->
+<!--    <string name="app_intro_slide2_description">OSMTracker for Android will use your GPS location to record trackpoints and waypoints, even when the App is running in background.-->
+<!--\nYour data is not used to support ads.</string>-->
+        <string name="app_intro_slide2_description">سامانه فرا زمان از موقعیت مکانی GPS شما برای ثبت نقاط مسیر و ایستگاه‌های بین‌راهی استفاده می‌کند، حتی زمانی که برنامه در پس‌زمینه در حال اجرا باشد.</string>
+
+    <!--App Introduction-->
+    <string name="app_intro">مقدمهٔ سامانه ثبت موقعیت فرا زمان</string>
+    <!--Intro - slide1-->
+<!--    <string name="app_intro_slide1_title">به OSMTracker for Android™‎ خوش آمدید 👋</string>-->
+    <string name="app_intro_slide1_title">به سامانه ثبت موقعیت فرا زمان خوش آمدید 👋</string>
+    <string name="app_intro_slide1_description">این اپلیکیشن نرم‌افزاری آزاد است و به آزادی شما احترام می‌گذارد!</string>
+    <!--Intro - slide2-->
+    <string name="app_intro_slide2_title">با ردگیری خوش بگذرانید 🗺 😎</string>
 </resources>

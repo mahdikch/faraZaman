@@ -1,9 +1,12 @@
 package net.osmtracker.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
+import net.osmtracker.OSMTracker
 import net.osmtracker.R
 
 class SplashActivity : AppCompatActivity() {
@@ -17,9 +20,23 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        // بررسی اینکه آیا Intro باید نمایش داده بشه
+//        val showAppIntro = PreferenceManager.getDefaultSharedPreferences(this)
+//            .getBoolean(OSMTracker.Preferences.KEY_DISPLAY_APP_INTRO, OSMTracker.Preferences.VAL_DISPLAY_APP_INTRO)
+        val showAppLogin = PreferenceManager.getDefaultSharedPreferences(this)
+            .getBoolean(OSMTracker.Preferences.KEY_DISPLAY_APP_INTRO, OSMTracker.Preferences.VAL_DISPLAY_APP_LOGIN)
+
         // استفاده از Handler برای تأخیر
         Handler(Looper.getMainLooper()).postDelayed({
-            // بستن SplashActivity برای بازگشت به TrackManager
+            val intent = if (showAppLogin) {
+                // نمایش Intro اگه اولین باره
+                Intent(this, LoginActivity::class.java)
+            } else {
+                // انتقال به TrackManager
+                Intent(this, TrackManager::class.java)
+            }
+            startActivity(intent)
+            // بستن SplashActivity
             finish()
         }, SPLASH_DELAY)
     }

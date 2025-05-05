@@ -17,6 +17,8 @@
   <string name="tracklogger_choose_gallery_camera">گالری تصاویر یا دوربین؟</string>
   <string name="tracklogger_camera">با دوربین عکس بگیر</string>
   <string name="tracklogger_gallery">انتخاب عکس از گالری</string>
+
+
   <!--Waypoint List-->
   <string name="wplist">لیست نقاط بین‌راهی</string>
   <string name="wplist_latitude">عرض جغرافیایی:</string>
@@ -25,6 +27,7 @@
   <string name="wplist_accuracy">دقت:</string>
   <string name="wplist_compass">جهت قطب‌نما:</string>
   <string name="wplist_compass_accuracy">دقت قطب‌نما:</string>
+
   <!--Track Manager-->
   <string name="trackmgr">مدیریت مسیرها</string>
   <string name="trackmgr_tracklist">لیست مسیرها:</string>

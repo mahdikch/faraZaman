@@ -50,6 +50,7 @@ public class OSMTracker {
 
 		// intro flag
 		public final static String KEY_DISPLAY_APP_INTRO = "app.intro";
+		public final static String KEY_DISPLAY_APP_Login = "app.login";
 
 		// Default values
 		public final static String VAL_STORAGE_DIR = "/osmtracker";
@@ -104,6 +105,7 @@ public class OSMTracker {
 
 		// intro flag
 		public final static boolean VAL_DISPLAY_APP_INTRO = true;
+		public final static boolean VAL_DISPLAY_APP_LOGIN = true;
 
 
 	};

@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import saman.zamani.persiandate.PersianDateFormat;
+
 /**
  * Data helper for dialoging with content resolver and filesystem.
  * 
@@ -90,6 +92,7 @@ public class DataHelper {
 	 * Formatter for various files (GPX, media)
 	 */
 	public static final SimpleDateFormat FILENAME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+	public static final PersianDateFormat PERSIAN_FILENAME_FORMATTER = new PersianDateFormat("Y/m/d-H:i:s");
 
 	/**
 	 * Context

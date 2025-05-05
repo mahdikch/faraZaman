@@ -46,6 +46,8 @@ import net.osmtracker.util.FileSystemUtils;
 import java.io.File;
 import java.util.Date;
 
+import saman.zamani.persiandate.PersianDate;
+
 /**
  * Lists existing tracks. Each track is displayed using {@link RecyclerView}
  *
@@ -557,11 +559,12 @@ public class TrackManager extends AppCompatActivity
 	 */
 	private long createNewTrack() throws CreateTrackException {
 		Date startDate = new Date();
+		PersianDate parsianDate = new PersianDate();
 
 		// Create entry in TRACK table
 		ContentValues values = new ContentValues();
 		values.put(TrackContentProvider.Schema.COL_NAME,
-				DataHelper.FILENAME_FORMATTER.format(new Date()));
+				DataHelper.PERSIAN_FILENAME_FORMATTER.format(new PersianDate()));
 		values.put(TrackContentProvider.Schema.COL_START_DATE, startDate.getTime());
 		values.put(TrackContentProvider.Schema.COL_ACTIVE,
 				TrackContentProvider.Schema.VAL_TRACK_ACTIVE);
