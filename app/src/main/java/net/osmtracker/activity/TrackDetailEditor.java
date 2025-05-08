@@ -11,9 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.TrackContentProvider;
-import net.osmtracker.db.model.Track;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.TrackContentProvider;
+import net.osmtracker.data.db.model.Track;
 
 import java.util.Date;
 

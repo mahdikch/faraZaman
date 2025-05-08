@@ -17,11 +17,10 @@ import android.widget.Toast;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.TrackContentProvider.Schema;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.TrackContentProvider.Schema;
 
 import java.io.File;
-import java.util.Date;
 import java.util.UUID;
 
 import saman.zamani.persiandate.PersianDate;

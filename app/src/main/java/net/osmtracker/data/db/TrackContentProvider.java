@@ -1,4 +1,4 @@
-package net.osmtracker.db;
+package net.osmtracker.data.db;
 
 import java.util.ArrayList;
 import java.util.List;

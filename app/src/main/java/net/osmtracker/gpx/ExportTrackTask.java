@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.TrackContentProvider;
 import net.osmtracker.exception.ExportTrackException;
 import net.osmtracker.util.FileSystemUtils;
 
@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
-import static net.osmtracker.db.DataHelper.EXTENSION_GPX;
+import static net.osmtracker.data.db.DataHelper.EXTENSION_GPX;
 import static net.osmtracker.util.FileSystemUtils.getUniqueChildNameFor;
 
 /**

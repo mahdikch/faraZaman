@@ -1,6 +1,6 @@
 package net.osmtracker.data;
 
-import net.osmtracker.db.model.Track;
+import net.osmtracker.data.db.model.Track;
 
 public class TrackMocks {
 

@@ -1,7 +1,7 @@
-package net.osmtracker.db;
+package net.osmtracker.data.db;
 
 import net.osmtracker.R;
-import net.osmtracker.db.model.Track;
+import net.osmtracker.data.db.model.Track;
 import net.osmtracker.activity.TrackManager;
 
 import android.content.Context;

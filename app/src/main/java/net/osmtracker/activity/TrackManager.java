@@ -35,8 +35,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.TrackContentProvider;
 import net.osmtracker.exception.CreateTrackException;
 import net.osmtracker.gpx.ExportToStorageTask;
 import net.osmtracker.gpx.ExportToTempFileTask;

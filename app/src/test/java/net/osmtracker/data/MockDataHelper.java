@@ -2,10 +2,10 @@ package net.osmtracker.data;
 
 import android.content.Context;
 
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.model.Track;
-import net.osmtracker.db.model.TrackPoint;
-import net.osmtracker.db.model.WayPoint;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.model.Track;
+import net.osmtracker.data.db.model.TrackPoint;
+import net.osmtracker.data.db.model.WayPoint;
 
 import java.util.ArrayList;
 import java.util.Date;

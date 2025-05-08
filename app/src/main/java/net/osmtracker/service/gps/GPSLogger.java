@@ -27,8 +27,8 @@ import androidx.core.content.ContextCompat;
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
 import net.osmtracker.activity.TrackLogger;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.TrackContentProvider;
 import net.osmtracker.listener.PressureListener;
 import net.osmtracker.listener.SensorListener;
 

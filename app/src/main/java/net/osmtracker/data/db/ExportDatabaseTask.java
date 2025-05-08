@@ -1,4 +1,4 @@
-package net.osmtracker.db;
+package net.osmtracker.data.db;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

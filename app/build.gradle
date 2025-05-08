@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'jacoco'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -103,7 +106,7 @@ dependencies {
     // Robolectric environment
     testImplementation "androidx.test:core:1.6.1"
     // Mockito framework
-    testImplementation "org.mockito:mockito-core:3.12.4"
+    testImplementation "org.mockito:mockito-core:5.14.1"
 
     testImplementation 'org.powermock:powermock-core:2.0.9'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
@@ -115,6 +118,41 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test:rules:1.6.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1"
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.9.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.11.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.11.0"
+    implementation "com.google.code.gson:gson:2.11.0"
+
+    // OkHttp (برای Interceptor و لاگ)
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
+
+    // Room
+    implementation "androidx.room:room-runtime:2.7.1"
+    implementation "androidx.room:room-ktx:2.7.1"
+    kapt "androidx.room:room-compiler:2.7.1"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.51"
+    kapt "com.google.dagger:hilt-compiler:2.51"
+
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:2.9.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.9.0"
+
+    // View Binding
+    implementation "androidx.activity:activity-ktx:1.10.1"
+
+    // تست
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.mockito:mockito-core:5.14.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.6.1"
 }
 
 repositories {

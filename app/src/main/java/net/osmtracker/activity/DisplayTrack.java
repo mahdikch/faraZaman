@@ -3,7 +3,7 @@ package net.osmtracker.activity;
 import net.osmtracker.OSMTracker;
 import net.osmtracker.util.ThemeValidator;
 import net.osmtracker.view.DisplayTrackView;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.TrackContentProvider;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,8 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.view.ViewGroup.LayoutParams;
 
 /**

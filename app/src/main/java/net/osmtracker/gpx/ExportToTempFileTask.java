@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import net.osmtracker.OSMTracker;
-import net.osmtracker.db.DataHelper;
+import net.osmtracker.data.db.DataHelper;
 import net.osmtracker.exception.ExportTrackException;
 
 import java.io.File;

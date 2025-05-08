@@ -1,11 +1,7 @@
 package net.osmtracker.data;
 
 
-import net.osmtracker.db.model.WayPoint;
-
-import java.util.Date;
-
-import static net.osmtracker.util.UnitTestUtils.createDateFrom;
+import net.osmtracker.data.db.model.WayPoint;
 
 public class WayPointMocks {
 

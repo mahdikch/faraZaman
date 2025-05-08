@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.osmtracker.db.DataHelper;
+import net.osmtracker.data.db.DataHelper;
 
 public class ZipHelper {
 

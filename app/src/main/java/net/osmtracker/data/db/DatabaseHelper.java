@@ -1,4 +1,4 @@
-package net.osmtracker.db;
+package net.osmtracker.data.db;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import net.osmtracker.db.model.Track;
+import net.osmtracker.data.db.model.Track;
 
 /**
  * Helper for managing database.

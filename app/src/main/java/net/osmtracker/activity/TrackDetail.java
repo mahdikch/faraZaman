@@ -9,8 +9,8 @@ import java.util.Map;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.TrackContentProvider;
-import net.osmtracker.db.model.Track;
+import net.osmtracker.data.db.TrackContentProvider;
+import net.osmtracker.data.db.model.Track;
 import net.osmtracker.gpx.ExportToStorageTask;
 import net.osmtracker.util.MercatorProjection;
 
@@ -27,7 +27,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;

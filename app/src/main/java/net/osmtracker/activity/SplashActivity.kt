@@ -8,6 +8,7 @@ import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import net.osmtracker.OSMTracker
 import net.osmtracker.R
+import net.osmtracker.presentation.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 

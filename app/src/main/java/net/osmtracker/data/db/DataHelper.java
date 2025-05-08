@@ -1,4 +1,4 @@
-package net.osmtracker.db;
+package net.osmtracker.data.db;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -8,14 +8,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import net.osmtracker.OSMTracker;
-import net.osmtracker.db.model.Track;
-import net.osmtracker.db.model.TrackPoint;
-import net.osmtracker.db.model.WayPoint;
+import net.osmtracker.data.db.model.Track;
+import net.osmtracker.data.db.model.TrackPoint;
+import net.osmtracker.data.db.model.WayPoint;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

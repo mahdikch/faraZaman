@@ -39,8 +39,8 @@ import androidx.core.content.FileProvider;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.TrackContentProvider;
 import net.osmtracker.layout.GpsStatusRecord;
 import net.osmtracker.layout.UserDefinedLayout;
 import net.osmtracker.listener.PressureListener;

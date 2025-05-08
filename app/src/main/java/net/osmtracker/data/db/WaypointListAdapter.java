@@ -1,4 +1,4 @@
-package net.osmtracker.db;
+package net.osmtracker.data.db;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 

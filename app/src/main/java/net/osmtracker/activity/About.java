@@ -2,8 +2,8 @@ package net.osmtracker.activity;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.DatabaseHelper;
-import net.osmtracker.db.ExportDatabaseTask;
+import net.osmtracker.data.db.DatabaseHelper;
+import net.osmtracker.data.db.ExportDatabaseTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,7 +18,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.File;

@@ -3,7 +3,7 @@ package net.osmtracker.view;
 import java.text.DecimalFormat;
 
 import net.osmtracker.R;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.TrackContentProvider;
 import net.osmtracker.util.ArrayUtils;
 import net.osmtracker.util.MercatorProjection;
 

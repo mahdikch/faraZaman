@@ -1,4 +1,4 @@
-package net.osmtracker.db.model;
+package net.osmtracker.data.db.model;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.osmtracker.R;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.TrackContentProvider;
 
 import android.content.ContentResolver;
 import android.database.Cursor;

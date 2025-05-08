@@ -1,8 +1,8 @@
-package net.osmtracker.db.model;
+package net.osmtracker.data.db.model;
 
 import android.database.Cursor;
 
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.TrackContentProvider;
 
 /**
  * WayPoint and TrackPoint inherit from this object Point

@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.osmtracker.R;
-import net.osmtracker.db.TracklistAdapter;
+import net.osmtracker.data.db.TracklistAdapter;
 
 public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.TrackItemVH> {
 

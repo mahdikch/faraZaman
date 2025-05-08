@@ -10,8 +10,8 @@ import android.util.Log;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.model.Track;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.model.Track;
 import net.osmtracker.exception.ExportTrackException;
 
 import java.io.File;

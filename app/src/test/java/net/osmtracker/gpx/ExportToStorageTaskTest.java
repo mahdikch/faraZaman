@@ -5,7 +5,7 @@ import static junit.framework.TestCase.assertNull;
 import static net.osmtracker.OSMTracker.Preferences;
 import static net.osmtracker.OSMTracker.Preferences.KEY_OUTPUT_FILENAME;
 import static net.osmtracker.OSMTracker.Preferences.VAL_OUTPUT_FILENAME;
-import static net.osmtracker.db.TrackContentProvider.Schema;
+import static net.osmtracker.data.db.TrackContentProvider.Schema;
 import static net.osmtracker.util.UnitTestUtils.createDateFrom;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -25,8 +25,8 @@ import android.preference.PreferenceManager;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
-import net.osmtracker.db.model.Track;
+import net.osmtracker.data.db.DataHelper;
+import net.osmtracker.data.db.model.Track;
 import net.osmtracker.exception.ExportTrackException;
 
 import org.junit.After;

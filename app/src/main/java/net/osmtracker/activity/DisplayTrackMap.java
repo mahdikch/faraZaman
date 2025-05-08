@@ -20,7 +20,7 @@ import android.view.MotionEvent;
 
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.TrackContentProvider;
 import net.osmtracker.overlay.WayPointsOverlay;
 
 import org.osmdroid.api.IMapController;

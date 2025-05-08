@@ -1,15 +1,12 @@
-package net.osmtracker.activity
+package net.osmtracker.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import net.osmtracker.OSMTracker
-import net.osmtracker.R
+import net.osmtracker.activity.Intro
 import net.osmtracker.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

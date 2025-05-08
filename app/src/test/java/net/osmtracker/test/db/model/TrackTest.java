@@ -3,9 +3,8 @@ package net.osmtracker.test.db.model;
 import android.content.ContentResolver;
 import android.database.Cursor;
 
-import net.osmtracker.db.TrackContentProvider;
-import net.osmtracker.db.model.Track;
-import static net.osmtracker.db.TrackContentProvider.Schema.*;
+import net.osmtracker.data.db.TrackContentProvider;
+import net.osmtracker.data.db.model.Track;
 
 import org.junit.Test;
 

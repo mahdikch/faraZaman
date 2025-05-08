@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.osmtracker.R;
-import net.osmtracker.db.TrackContentProvider;
+import net.osmtracker.data.db.TrackContentProvider;
 
 import org.osmdroid.api.IMapView;
 import org.osmdroid.util.GeoPoint;

@@ -3,7 +3,7 @@ package net.osmtracker.listener;
 import java.text.DecimalFormat;
 
 import net.osmtracker.R;
-import net.osmtracker.db.DataHelper;
+import net.osmtracker.data.db.DataHelper;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
