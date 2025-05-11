@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/gpsstatus_record_tvHeading"
         android:layout_width="0dip"
+        android:fontFamily="@font/iran_sans"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_weight=".5"
@@ -18,6 +19,8 @@
     <TextView
         android:id="@+id/gpsstatus_record_tvAccuracy"
         android:layout_width="0dip"
+        android:fontFamily="@font/iran_sans"
+
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_weight="1"

@@ -281,7 +281,8 @@
     <string name="various_unit_meters">م</string>
     <string name="various_accuracy">دقت</string>
     <string name="various_accuracy_with_sats">دقت {0}{1} ({2}/{3})</string>
-    <string name="various_waiting_gps_fix">Waiting for GPS fix&#8230; ({0}/{1})</string> <!-- parameters: (used sats, visible sats) -->
+<!--    <string name="various_waiting_gps_fix">Waiting for GPS fix&#8230; ({0}/{1})</string> &lt;!&ndash; parameters: (used sats, visible sats) &ndash;&gt;-->
+    <string name="various_waiting_gps_fix">در انتظار پایدار شدن gps&#8230; ({0}/{1})</string> <!-- parameters: (used sats, visible sats) -->
     <!--    <string name="various_heading_display">{0}&#176;</string> &lt;!&ndash; parameters: (heading in degrees) &ndash;&gt;-->
     <!--    <string name="various_heading">Wait for heading&#8230;</string>-->
     <!--    <string name="various_heading_unknown">Heading can\'t be determined</string>-->
