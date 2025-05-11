@@ -78,7 +78,7 @@
     <!--    <string name="trackmgr_exportall_confirm">All tracks will be exported, which could take a long time. Are you sure?</string>-->
     <!--    <string name="trackmgr_prepare_for_share_error">Unable to process the track: {0}</string>-->
     <string name="trackmgr">مدیریت مسیرها</string>
-    <string name="trackmgr_tracklist">لیست ماموریت ها:</string>
+    <string name="trackmgr_tracklist">ماموریت ها</string>
     <string name="trackmgr_waypoints_count">نقاط بین‌راهی:</string>
     <string name="trackmgr_trackpoints_count">نقاط مسیر:</string>
     <string name="trackmgr_empty">شما هیچ مسیری ندارید.</string>

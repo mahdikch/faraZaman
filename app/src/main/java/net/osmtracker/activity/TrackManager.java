@@ -97,6 +97,8 @@ public class TrackManager extends AppCompatActivity
 
 		Toolbar myToolbar = findViewById(R.id.my_toolbar);
 		setSupportActionBar(myToolbar);
+//		myToolbar.setTitle("ماموریت ها");
+//		myToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
 
 		if (savedInstanceState != null) {
 			prevItemVisible = savedInstanceState.getInt(PREV_VISIBLE, -1);
@@ -122,10 +124,11 @@ public class TrackManager extends AppCompatActivity
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 		// Adding a horizontal divider
-		DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-		dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider)); // Using a custom drawable
+//		DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+//		dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
+		// Using a custom drawable
 
-		recyclerView.addItemDecoration(dividerItemDecoration);
+//		recyclerView.addItemDecoration(dividerItemDecoration);
 	}
 
 	@Override
@@ -162,12 +165,12 @@ public class TrackManager extends AppCompatActivity
 				LinearLayoutManager.VERTICAL, false);
 		recyclerView.setLayoutManager(layoutManager);
 		// adds a divider decoration if not already present
-		if (!hasDivider) {
-			DividerItemDecoration did = new DividerItemDecoration(recyclerView.getContext(),
-					layoutManager.getOrientation());
-			recyclerView.addItemDecoration(did);
-			hasDivider = true;
-		}
+//		if (!hasDivider) {
+//			DividerItemDecoration did = new DividerItemDecoration(recyclerView.getContext(),
+//					layoutManager.getOrientation());
+//			recyclerView.addItemDecoration(did);
+//			hasDivider = true;
+//		}
 		recyclerView.setHasFixedSize(true);
 		Cursor cursor = getContentResolver().query(
 				TrackContentProvider.CONTENT_URI_TRACK, null, null, null,

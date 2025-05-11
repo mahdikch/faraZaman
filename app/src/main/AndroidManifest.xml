@@ -50,7 +50,8 @@
         <activity
             android:name=".activity.TrackManager"
             android:exported="true"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            ></activity>
         <activity
             android:name=".activity.TrackLogger"
             android:label="@string/tracklogger"
