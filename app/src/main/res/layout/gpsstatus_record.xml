@@ -13,6 +13,7 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_weight=".5"
         android:gravity="center"
+        android:textColor="@color/colorPrimaryTextLight"
         android:text="@string/various_heading" >
     </TextView>
     
@@ -20,6 +21,7 @@
         android:id="@+id/gpsstatus_record_tvAccuracy"
         android:layout_width="0dip"
         android:fontFamily="@font/iran_sans"
+        android:textColor="@color/colorPrimaryTextLight"
 
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical|center_horizontal"

@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import androidx.core.content.ContextCompat;
+
 /**
  * Reads an user defined layout, using a pull parser,
  * and instantiate corresponding objects (Layouts, Buttons)
@@ -256,6 +258,10 @@ public class UserDefinedLayoutReader {
      */
     public void inflateButton(TableRow row) {
         Button button = new Button(row.getContext());
+        button.setTextColor(ContextCompat.getColor(row.getContext(), R.color.colorPrimaryTextLight));
+        button.setElevation(6f); // سایه (در واحد dp)
+        button.setBackgroundTintList(ContextCompat.getColorStateList(row.getContext(), R.color.colorPrimaryText));
+
         TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT,
                 TableRow.LayoutParams.FILL_PARENT, 1);
 

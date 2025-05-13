@@ -46,7 +46,7 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
      * Provide a reference to the type of views
      */
     public class TrackItemVH extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnCreateContextMenuListener{
+            implements View.OnClickListener, View.OnCreateContextMenuListener {
 
         private final TextView vId;
         private final TextView vNameOrStartDate;
@@ -54,6 +54,7 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
         private final TextView vTps;
         private final ImageView vStatus;
         private final ImageView vUploadStatus;
+        private final ImageView vOptions;
 
         public TrackItemVH(View view) {
             super(view);
@@ -64,7 +65,7 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
             vTps = (TextView) view.findViewById(R.id.trackmgr_item_tps);
             vStatus = (ImageView) view.findViewById(R.id.trackmgr_item_statusicon);
             vUploadStatus = (ImageView) view.findViewById(R.id.trackmgr_item_upload_statusicon);
-
+            vOptions = (ImageView) view.findViewById(R.id.trackmgr_item_options);
             // listeners
             view.setOnClickListener(this);
             view.setOnCreateContextMenuListener(this);

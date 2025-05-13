@@ -96,7 +96,9 @@ public class TrackManager extends AppCompatActivity
 		setContentView(R.layout.trackmanager);
 
 		Toolbar myToolbar = findViewById(R.id.my_toolbar);
+		setTitle("ماموریت ها");
 		setSupportActionBar(myToolbar);
+
 //		myToolbar.setTitle("ماموریت ها");
 //		myToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
 

@@ -7,12 +7,9 @@
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    >
-
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layoutDirection="rtl"
@@ -26,17 +23,18 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <ImageButton
                 android:id="@+id/trackmgr_item_options"
-                android:layout_marginLeft="4dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/baseline_more_vert_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/trackmgr_item_id_symbol"
                 android:layout_width="wrap_content"
@@ -73,7 +71,7 @@
             android:id="@+id/waypoints_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toEndOf="@id/id_container"
@@ -102,7 +100,7 @@
             android:id="@+id/trackmgr_item_trackpoints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:duplicateParentState="false"
             android:text="@string/trackmgr_trackpoints_count"
@@ -127,13 +125,14 @@
             android:id="@+id/icons_container"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:duplicateParentState="false"
-            android:minWidth="32dp"
+            android:minWidth="48dp"
             android:paddingHorizontal="4dp"
             android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+
 
             <ImageView
                 android:id="@+id/trackmgr_item_statusicon"
@@ -141,12 +140,11 @@
                 android:layout_height="24dp"
                 android:background="@null"
                 android:contentDescription="@string/acc.track_status"
-                android:duplicateParentState="false"
                 android:padding="2dp"
                 android:src="@android:drawable/presence_online"
                 android:stateListAnimator="@null"
                 app:layout_constraintBottom_toTopOf="@id/trackmgr_item_upload_statusicon"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/trackmgr_item_options"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -156,12 +154,11 @@
                 android:layout_height="24dp"
                 android:background="@null"
                 android:contentDescription="@string/acc.upload_status"
-                android:duplicateParentState="false"
                 android:padding="2dp"
                 android:src="@android:drawable/stat_sys_upload_done"
                 android:stateListAnimator="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/trackmgr_item_options"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/trackmgr_item_statusicon" />
         </androidx.constraintlayout.widget.ConstraintLayout>

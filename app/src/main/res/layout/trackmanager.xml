@@ -14,13 +14,7 @@
 		android:elevation="4dp"
 		android:background="?attr/colorPrimary" />
 
-	<TextView
-		android:layout_height="wrap_content"
-		android:gravity="center_horizontal"
-		android:layout_width="fill_parent"
-		style="@android:style/TextAppearance.Large"
-		android:text="@string/trackmgr_tracklist"
-		android:paddingBottom="5dp"/>
+
 
 	<androidx.coordinatorlayout.widget.CoordinatorLayout
 		android:layout_width="fill_parent"
