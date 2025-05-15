@@ -44,6 +44,7 @@
                 android:duplicateParentState="false"
                 android:padding="2dp"
                 android:text="#"
+                android:textColor="@color/colorPrimaryTextLight"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -52,6 +53,8 @@
                 android:layout_height="wrap_content"
                 android:duplicateParentState="false"
                 android:text="{id}"
+                android:textColor="@color/colorPrimaryTextLight"
+
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -64,6 +67,8 @@
             android:duplicateParentState="false"
             android:ellipsize="none"
             android:singleLine="true"
+            android:textColor="@color/colorPrimaryTextLight"
+
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:layout_constraintEnd_toStartOf="@id/icons_container"
             app:layout_constraintStart_toEndOf="@id/id_container"
@@ -85,6 +90,8 @@
                 android:layout_height="wrap_content"
                 android:duplicateParentState="false"
                 android:text="@string/trackmgr_waypoints_count"
+                android:textColor="@color/colorPrimaryTextLight"
+
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold" />
 
@@ -95,6 +102,8 @@
                 android:layout_marginStart="4dp"
                 android:duplicateParentState="false"
                 android:text="{x}"
+                android:textColor="@color/colorPrimaryTextLight"
+
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -108,6 +117,8 @@
             android:text="@string/trackmgr_trackpoints_count"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="bold"
+            android:textColor="@color/colorPrimaryTextLight"
+
             app:layout_constraintStart_toEndOf="@id/id_container"
             app:layout_constraintTop_toBottomOf="@id/waypoints_container" />
 
@@ -118,6 +129,8 @@
             android:layout_marginStart="4dp"
             android:duplicateParentState="false"
             android:text="{y}"
+            android:textColor="@color/colorPrimaryTextLight"
+
             android:textAppearance="?android:attr/textAppearanceSmall"
             app:layout_constraintBottom_toBottomOf="@id/trackmgr_item_trackpoints"
             app:layout_constraintStart_toEndOf="@id/trackmgr_item_trackpoints"
@@ -140,6 +153,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@null"
+
                 android:contentDescription="@string/acc.track_status"
                 android:duplicateParentState="false"
                 android:padding="2dp"

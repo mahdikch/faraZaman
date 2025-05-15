@@ -1,5 +1,7 @@
 package net.osmtracker.activity;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.ContextMenu;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,11 +38,38 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
         return cursorAdapter;
     }
 
+    public void deleteTrack(int position, Runnable onCancel) {
+        Cursor cursor = cursorAdapter.getCursor();
+        if (cursor.moveToPosition(position)) {
+            @SuppressLint("Range") long trackId = cursor.getLong(cursor.getColumnIndex("_id"));
+            // نمایش دیالوگ تأیید
+            new AlertDialog.Builder(context)
+                    .setTitle(R.string.trackmgr_contextmenu_delete)
+                    .setMessage(R.string.trackmgr_delete_confirm)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        mHandler.deleteTrackItem(trackId);
+
+                    })
+                    .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                        // اگه لغو شد، RecyclerView رو به‌روز کن
+                        if (onCancel != null) {
+                            onCancel.run();
+                        }
+                        notifyItemChanged(position);
+                    })
+                    .show();
+        }
+    }
+
     public interface TrackListRecyclerViewAdapterListener {
         void onClick(long trackId);
 
+        void deleteTrackItem(long trackId);
+
         void onCreateContextMenu(ContextMenu contextMenu, View view,
                                  ContextMenu.ContextMenuInfo contextMenuInfo, long trackId);
+
+        void onShowPopupMenu(PopupMenu popupMenu, long trackId);
     }
 
     /**
@@ -67,8 +97,21 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
             vUploadStatus = (ImageView) view.findViewById(R.id.trackmgr_item_upload_statusicon);
             vOptions = (ImageView) view.findViewById(R.id.trackmgr_item_options);
             // listeners
+//            vOptions.setOnCreateContextMenuListener(this);
+            vOptions.setOnClickListener(v -> {
+                long trackId;
+                try {
+                    trackId = Long.parseLong(getvId().getText().toString());
+                } catch (NumberFormatException e) {
+                    trackId = -1; // مدیریت خطا
+                }
+                // ایجاد و نمایش PopupMenu
+                PopupMenu popupMenu = new PopupMenu(context, vOptions);
+                mHandler.onShowPopupMenu(popupMenu, trackId);
+                popupMenu.show();
+            });
             view.setOnClickListener(this);
-            view.setOnCreateContextMenuListener(this);
+//            view.setOnCreateContextMenuListener(this);
         }
 
         public TextView getvId() {

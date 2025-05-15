@@ -10,7 +10,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/darker_gray"
         android:gravity="bottom"
         android:orientation="horizontal"
         android:padding="3dp"
@@ -19,6 +18,10 @@
         <Button
             android:id="@+id/trackdetail_btn_ok"
             android:layout_width="fill_parent"
+            android:backgroundTint="#263238"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/iran_sans"
+
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/trackdetail_save" />
@@ -26,6 +29,10 @@
         <Button
             android:id="@+id/trackdetail_btn_cancel"
             android:layout_width="fill_parent"
+            android:backgroundTint="#263238"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/iran_sans"
+
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/menu_cancel" />

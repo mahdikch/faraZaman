@@ -58,8 +58,8 @@ public class OSMTracker {
 		public final static String VAL_UI_THEME = "net.osmtracker:style/DefaultTheme";
 		public final static boolean VAL_GPS_CHECKSTARTUP = true;
 		public final static boolean VAL_GPS_IGNORE_CLOCK = false;
-		public final static String VAL_GPS_LOGGING_INTERVAL = "0";
-		public final static String VAL_GPS_LOGGING_MIN_DISTANCE = "0";
+		public final static String VAL_GPS_LOGGING_INTERVAL = "3";
+		public final static String VAL_GPS_LOGGING_MIN_DISTANCE = "8";
 		public final static boolean VAL_USE_BAROMETER = false;
 		
 		public final static String VAL_OUTPUT_FILENAME_NAME = "name";

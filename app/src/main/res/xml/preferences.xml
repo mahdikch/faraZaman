@@ -99,13 +99,13 @@
 			android:title="@string/prefs_display_always_on"
 			android:summary="@string/prefs_display_always_on_summary"
 			android:defaultValue="true" />
-		<ListPreference
-			android:entries="@array/prefs_theme_keys"
-			android:title="@string/prefs_theme"
-			android:entryValues="@array/prefs_theme_values"
-			android:key="ui.theme"
-			android:summary="@string/prefs_theme_summary"
-			android:defaultValue="@style/DefaultTheme" />
+<!--		<ListPreference-->
+<!--			android:entries="@array/prefs_theme_keys"-->
+<!--			android:title="@string/prefs_theme"-->
+<!--			android:entryValues="@array/prefs_theme_values"-->
+<!--			android:key="ui.theme"-->
+<!--			android:summary="@string/prefs_theme_summary"-->
+<!--			android:defaultValue="@style/DefaultTheme" />-->
 		<PreferenceScreen android:key="prefs_ui_buttons_layout" android:title="@string/prefs_ui_buttons_layout" android:summary="@string/prefs_ui_buttons_layout_summary">
 			<intent android:action="launch_buttons_presets" />
 		</PreferenceScreen>
