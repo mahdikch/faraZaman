@@ -1,4 +1,6 @@
+
 package net.osmtracker.service.gps;
+
 import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -32,7 +34,7 @@ import net.osmtracker.listener.PressureListener;
 import net.osmtracker.listener.SensorListener;
 
 /**
- * GPS logging service with dynamic MAX_ACCEPTABLE_DISTANCE based on user speed.
+ * GPS logging service with dynamic MAX_ACCEPTABLE_DISTANCE based on user speed, optimized for driving.
  *
  * @author Nicolas Guillaumin
  */
@@ -74,17 +76,17 @@ public class GPSLogger extends Service implements LocationListener {
 	private long gpsLoggingMinDistance;
 
 	// Maximum acceptable accuracy (meters)
-	private static final float MAX_ACCEPTABLE_ACCURACY = 20.0f; // 20 meters
+	private static final float MAX_ACCEPTABLE_ACCURACY = 30.0f; // 30 meters (increased for driving)
 
 	// Maximum acceptable speed change (meters per second)
-	private static final float MAX_SPEED_DELTA = 5.56f; // 20 km/h (~5.56 m/s)
+	private static final float MAX_SPEED_DELTA = 8.33f; // 30 km/h (~8.33 m/s, increased for driving)
 
 	// Minimum and maximum acceptable distance (meters)
 	private static final float MIN_ACCEPTABLE_DISTANCE = 10.0f; // 10 meters
-	private static final float MAX_ACCEPTABLE_DISTANCE = 1000.0f; // 1000 meters
+	private static final float MAX_ACCEPTABLE_DISTANCE = 2000.0f; // 2000 meters (increased for high speeds)
 
 	// Safety factor for dynamic distance calculation
-	private static final float DISTANCE_SAFETY_FACTOR = 1.5f; // 50% extra margin
+	private static final float DISTANCE_SAFETY_FACTOR = 2.0f; // 100% extra margin (increased for flexibility)
 
 	// Sensors for magnetic orientation and pressure
 	private SensorListener sensorListener = new SensorListener();
@@ -263,7 +265,8 @@ public class GPSLogger extends Service implements LocationListener {
 				", Speed=" + (location.hasSpeed() ? location.getSpeed() : "N/A") + " m/s" +
 				", Lat=" + location.getLatitude() +
 				", Lon=" + location.getLongitude() +
-				", Time=" + location.getTime());
+				", Time=" + location.getTime() +
+				", TimeDiff=" + (lastLocation != null ? (location.getTime() - lastLocation.getTime()) : "N/A") + " ms");
 
 		// Check if the location is acceptable
 		if (!isLocationAcceptable(location)) {
@@ -272,7 +275,8 @@ public class GPSLogger extends Service implements LocationListener {
 					", Speed=" + (location.hasSpeed() ? location.getSpeed() : "N/A") +
 					", SpeedDelta=" + (lastLocation != null && location.hasSpeed() && lastLocation.hasSpeed() ? Math.abs(location.getSpeed() - lastLocation.getSpeed()) : "N/A") +
 					", Distance=" + (lastLocation != null ? location.distanceTo(lastLocation) : "N/A") +
-					", DynamicMaxDistance=" + dynamicMaxDistance);
+					", DynamicMaxDistance=" + dynamicMaxDistance +
+					", TimeDiff=" + (lastLocation != null ? (location.getTime() - lastLocation.getTime()) : "N/A") + " ms");
 			return;
 		}
 
@@ -315,21 +319,27 @@ public class GPSLogger extends Service implements LocationListener {
 			}
 		}
 
-		// Prefer GPS_PROVIDER over NETWORK_PROVIDER
-		if (LocationManager.NETWORK_PROVIDER.equals(location.getProvider()) && isGpsProviderAvailable()) {
-			return false;
+		// Allow NETWORK_PROVIDER if GPS is not available
+		if (LocationManager.NETWORK_PROVIDER.equals(location.getProvider()) && !isGpsProviderAvailable()) {
+			return true;
 		}
 
 		return true;
 	}
 
 	/**
-	 * Calculates dynamic maximum acceptable distance based on speed and time interval.
+	 * Calculates dynamic maximum acceptable distance based on speed and actual time interval.
 	 */
 	private float calculateDynamicMaxDistance(Location location) {
 		float speed = location.hasSpeed() ? location.getSpeed() : 0; // m/s
-		// Use gpsLoggingInterval (in seconds) as the time interval
-		float timeInterval = gpsLoggingInterval / 1000.0f; // Convert ms to seconds
+		// Use actual time difference if available, otherwise gpsLoggingInterval
+		float timeInterval = gpsLoggingInterval / 1000.0f; // Default to gpsLoggingInterval (in seconds)
+		if (lastLocation != null) {
+			long timeDiff = location.getTime() - lastLocation.getTime();
+			if (timeDiff > 0) {
+				timeInterval = timeDiff / 1000.0f; // Convert ms to seconds
+			}
+		}
 		// Calculate distance: distance = speed * time * safety_factor
 		float dynamicDistance = speed * timeInterval * DISTANCE_SAFETY_FACTOR;
 		// Apply minimum and maximum bounds
