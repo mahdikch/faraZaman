@@ -8,6 +8,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -66,6 +67,9 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
 
         void deleteTrackItem(long trackId);
 
+        void stopTrack(long trackId, boolean stopOrResume);
+        void endMission(long trackId);
+
         void onCreateContextMenu(ContextMenu contextMenu, View view,
                                  ContextMenu.ContextMenuInfo contextMenuInfo, long trackId);
 
@@ -85,6 +89,8 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
         private final ImageView vStatus;
         private final ImageView vUploadStatus;
         private final ImageView vOptions;
+        private final Button stopOrResume;
+        private final Button end;
 
         public TrackItemVH(View view) {
             super(view);
@@ -96,6 +102,35 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
             vStatus = (ImageView) view.findViewById(R.id.trackmgr_item_statusicon);
             vUploadStatus = (ImageView) view.findViewById(R.id.trackmgr_item_upload_statusicon);
             vOptions = (ImageView) view.findViewById(R.id.trackmgr_item_options);
+            stopOrResume = (Button) view.findViewById(R.id.stop_or_resume);
+            end = (Button) view.findViewById(R.id.end_mission);
+            end.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    long trackId;
+                    try {
+                        trackId = Long.parseLong(getvId().getText().toString());
+                    } catch (NumberFormatException e) {
+                        trackId = -1; // مدیریت خطا
+                    }                    mHandler.endMission(trackId);
+                }
+            });
+            stopOrResume.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    long trackId;
+                    try {
+                        trackId = Long.parseLong(getvId().getText().toString());
+                    } catch (NumberFormatException e) {
+                        trackId = -1; // مدیریت خطا
+                    }
+                    if (stopOrResume.getText() == "توقف")
+                        mHandler.stopTrack(trackId, true);
+                    else
+                        mHandler.stopTrack(trackId, false);
+
+                }
+            });
             // listeners
 //            vOptions.setOnCreateContextMenuListener(this);
             vOptions.setOnClickListener(v -> {

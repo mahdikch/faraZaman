@@ -8,7 +8,7 @@
     <color name="colorAccent">#39796b</color>
     <color name="colorPrimaryText">#ffffff</color>
     <color name="user_defined_button_text_color">#FFFF4081</color>
-    <color name="red">#BC1313</color>
+    <color name="red">#FD3333</color>
     <!-- Map buttons -->
     <color name="btnBorder">#000000</color>
     <color name="map_btnBackground">#19303234</color>

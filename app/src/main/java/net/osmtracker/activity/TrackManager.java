@@ -32,6 +32,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,8 +120,15 @@ public class TrackManager extends AppCompatActivity
             prevItemVisible = savedInstanceState.getInt(PREV_VISIBLE, -1);
         }
 
-        FloatingActionButton fab = findViewById(R.id.trackmgr_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+//        FloatingActionButton fab = findViewById(R.id.trackmgr_fab);
+        Button startMissionBtn = findViewById(R.id.start_track);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startTrackLoggerForNewTrack();
+//            }
+//        });
+        startMissionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTrackLoggerForNewTrack();
@@ -159,7 +167,7 @@ public class TrackManager extends AppCompatActivity
             // Is any track active?
             currentTrackId = DataHelper.getActiveTrackId(getContentResolver());
             if (currentTrackId != TRACK_ID_NO_TRACK) {
-                Snackbar.make(findViewById(R.id.trackmgr_fab),
+                Snackbar.make(findViewById(R.id.start_track),
                                 getResources().getString(R.string.trackmgr_continuetrack_hint)
                                         .replace("{0}", Long.toString(currentTrackId)), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -174,7 +182,7 @@ public class TrackManager extends AppCompatActivity
      * Configures and initializes the RecyclerView for displaying the list of tracks.
      */
     private void setRecyclerView() {
-         recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -193,7 +201,7 @@ public class TrackManager extends AppCompatActivity
 
         recyclerViewAdapter = new TrackListRVAdapter(this, cursor, this);
         recyclerView.setAdapter(recyclerViewAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(this, recyclerViewAdapter,recyclerView));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(this, recyclerViewAdapter, recyclerView));
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
@@ -392,7 +400,7 @@ public class TrackManager extends AppCompatActivity
                                         }
                                     }).show();
                 } else {
-                    Snackbar.make(findViewById(R.id.trackmgr_fab),
+                    Snackbar.make(findViewById(R.id.start_track),
                             getResources().getString(R.string.various_export_finished),
                             Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     updateTrackItemsInRecyclerView();
@@ -606,6 +614,35 @@ public class TrackManager extends AppCompatActivity
     public void deleteTrackItem(long trackId) {
         stopActiveTrack();
         deleteTrack(trackId);
+    }
+
+    @Override
+    public void stopTrack(long trackId, boolean stopOrResume) {
+        if (stopOrResume)
+            stopActiveTrack();
+        else {
+            if (currentTrackId != trackId) {
+                setActiveTrack(trackId);
+            }
+            // Start the TrackLogger activity to begin logging the selected track
+            Intent i = new Intent(this, TrackLogger.class);
+            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, trackId);
+            tryStartTrackLogger(i);
+        }
+
+
+    }
+
+    @Override
+    public void endMission(long trackId) {
+        if (writeExternalStoragePermissionGranted()) {
+            uploadTrack(trackId);
+        } else {
+            Log.e(TAG, "OsmUploadWrite - Permission asked");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    RC_WRITE_PERMISSIONS_UPLOAD);
+        }
     }
 
     /**
@@ -895,7 +932,8 @@ public class TrackManager extends AppCompatActivity
         private final Drawable deleteIcon;
         private final Drawable background;
         private final RecyclerView recyclerView;
-        SwipeToDeleteCallback(Context context, TrackListRVAdapter adapter,RecyclerView recyclerView) {
+
+        SwipeToDeleteCallback(Context context, TrackListRVAdapter adapter, RecyclerView recyclerView) {
             super(0, ItemTouchHelper.RIGHT); // فقط Swipe به راست
             this.adapter = adapter;
             this.deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete);

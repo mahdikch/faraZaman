@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +57,8 @@ public class TracklistAdapter extends CursorAdapter {
 		TextView vTps = (TextView) v.findViewById(R.id.trackmgr_item_tps);
 		ImageView vStatus = (ImageView) v.findViewById(R.id.trackmgr_item_statusicon);
 		ImageView vUploadStatus = (ImageView) v.findViewById(R.id.trackmgr_item_upload_statusicon);
+		Button stopOrResume = (Button) v.findViewById(R.id.stop_or_resume);
+		Button end = (Button) v.findViewById(R.id.end_mission);
 
 		// Is track active ?
 		int active = cursor.getInt(cursor.getColumnIndex(TrackContentProvider.Schema.COL_ACTIVE));
@@ -63,9 +66,13 @@ public class TracklistAdapter extends CursorAdapter {
 			// Yellow clock icon for Active
 			vStatus.setImageResource(android.R.drawable.presence_away);
 			vStatus.setVisibility(View.VISIBLE);
+			stopOrResume.setText("توقف");
+
 		} else if (cursor.isNull(cursor.getColumnIndex(TrackContentProvider.Schema.COL_EXPORT_DATE))) {
 			// Hide green circle icon: Track not yet exported
 			vStatus.setVisibility(View.GONE);
+			stopOrResume.setText("ادامه");
+
 		} else {
 			// Show green circle icon (don't assume already visible with this drawable; may be a re-query)
 			vStatus.setImageResource(android.R.drawable.presence_online);
