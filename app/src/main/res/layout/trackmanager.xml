@@ -46,19 +46,38 @@
 <!--			android:layout_margin="16dp"-->
 <!--			android:contentDescription="@string/trackmgr_newtrack_hint"-->
 <!--			android:src="@drawable/ic_fab_add_track" />-->
+<LinearLayout
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_gravity="bottom"
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/start_track"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="شروع ماموریت جدید"
-			app:cornerRadius="4dp"
-			android:layout_gravity="bottom"
-			android:backgroundTint="#263238"
-			android:layout_margin="8dp"
-			android:textColor="#FFFFFF"
-			android:fontFamily="@font/iran_sans"
-			android:padding="12dp" />
+	android:weightSum="2">
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/start_track"
+		android:layout_width="0dp"
+		android:layout_weight="1"
+		android:layout_height="wrap_content"
+		android:text="شروع ماموریت جدید"
+		app:cornerRadius="4dp"
+		android:backgroundTint="@color/green"
+		android:layout_margin="8dp"
+		android:textColor="#FFFFFF"
+		android:fontFamily="@font/iran_sans"
+		android:padding="12dp" />
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/submit_violation"
+		android:layout_width="0dp"
+		android:layout_weight="1"
+		android:layout_height="wrap_content"
+		android:text="ثبت تخلف"
+		app:cornerRadius="4dp"
+		android:backgroundTint="#263238"
+		android:layout_margin="8dp"
+		android:textColor="#FFFFFF"
+		android:fontFamily="@font/iran_sans"
+		android:padding="12dp" />
+</LinearLayout>
 
 	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -3,7 +3,7 @@
     <!-- Generic strings -->
     <string name="app_name">فرا زمان</string>
     <string name="app_short_name">فرا زمان</string>
-<!--    <string name="app_description">Inspired by OSMTracker on Windows Mobile, it allows you to track your journeys, mark significant way points (Voice recording, photos), export them in GPX format for later use with Open Street Map tools like JOSM.</string>-->
+    <!--    <string name="app_description">Inspired by OSMTracker on Windows Mobile, it allows you to track your journeys, mark significant way points (Voice recording, photos), export them in GPX format for later use with Open Street Map tools like JOSM.</string>-->
     <string name="app_description">سامانه فرا زمان در موبایل، به شما امکان می‌دهد سفرهای خود را پیگیری کنید، نقاط مسیر مهم را علامت‌گذاری کنید (ضبط صدا، عکس)، و آنها را با فرمت GPX برای استفاده بعدی با ابزارهای نقشه خیابان باز مانند JOSM صادر کنید.</string>
 
     <!-- TrackLogger -->
@@ -63,8 +63,8 @@
     <!--    <string name="trackmgr_contextmenu_resume">Resume tracking</string>-->
     <!--    <string name="trackmgr_contextmenu_delete">Delete</string>-->
     <string name="trackmgr_contextmenu_export">دریافت خروجی</string>
-<!--    <string name="trackmgr_contextmenu_export">Eport</string>-->
-<!--    <string name="trackmgr_contextmenu_share">Share</string>-->
+    <!--    <string name="trackmgr_contextmenu_export">Eport</string>-->
+    <!--    <string name="trackmgr_contextmenu_share">Share</string>-->
     <string name="trackmgr_contextmenu_share">اشتراک گذاری</string>
     <!--    <string name="trackmgr_contextmenu_osm_upload">Upload to OpenStreetMap</string>-->
     <!--    <string name="trackmgr_contextmenu_display">Display</string>-->
@@ -88,7 +88,7 @@
     <string name="trackmgr_contextmenu_stop">توقف ماموریت</string>
     <string name="trackmgr_contextmenu_resume">ادامهٔ ماموریت</string>
     <string name="trackmgr_contextmenu_delete">حذف</string>
-<!--    <string name="trackmgr_contextmenu_osm_upload">بارگذاری در OpenStreetMap</string>-->
+    <!--    <string name="trackmgr_contextmenu_osm_upload">بارگذاری در OpenStreetMap</string>-->
     <string name="trackmgr_contextmenu_osm_upload">اتمام ماموریت</string>
     <string name="trackmgr_contextmenu_display">نمایش</string>
     <string name="trackmgr_contextmenu_details">جزئیات</string>
@@ -113,7 +113,7 @@
     <!--    <string name="trackdetail_export_notyet">(Not exported yet)</string>-->
     <!--    <string name="trackdetail_osm_upload_notyet">(Not uploaded yet)</string>-->
     <!--    <string name="trackdetail_export_display">Display</string>-->
-<!--    <string name="trackdetail_name">Name</string>-->
+    <!--    <string name="trackdetail_name">Name</string>-->
     <string name="trackdetail_name">نام</string>
     <!--    <string name="trackdetail_description">Description</string>-->
     <!--    <string name="trackdetail_tags">Tags (comma separated)</string>-->
@@ -238,7 +238,7 @@
     <!-- GPX -->
     <!--    <string name="gpx_track_name">Tracked with OSMTracker for Android™</string>-->
     <!--    <string name="gpx_hdop_approximation_cmt">Warning: HDOP values aren\'t the HDOP as returned by the GPS device. They\'re approximated from the location accuracy in meters.</string>-->
-<!--    <string name="gpx_track_name">با OSM Tracker for Android™‎ ضبط شده است</string>-->
+    <!--    <string name="gpx_track_name">با OSM Tracker for Android™‎ ضبط شده است</string>-->
     <string name="gpx_track_name">با سامانه فرا زمان ضبط شده است</string>
     <string name="gpx_hdop_approximation_cmt">هشدار: مقادیر HDOP همان مقادیر HDOP دریافتی از دستگاه GPS نیست؛ بلکه بر اساس دقت مکانی بر حسب متر تقریب زده شده.</string>
     <!-- About screen -->
@@ -281,7 +281,7 @@
     <string name="various_unit_meters">م</string>
     <string name="various_accuracy">دقت</string>
     <string name="various_accuracy_with_sats">دقت {0}{1} ({2}/{3})</string>
-<!--    <string name="various_waiting_gps_fix">Waiting for GPS fix&#8230; ({0}/{1})</string> &lt;!&ndash; parameters: (used sats, visible sats) &ndash;&gt;-->
+    <!--    <string name="various_waiting_gps_fix">Waiting for GPS fix&#8230; ({0}/{1})</string> &lt;!&ndash; parameters: (used sats, visible sats) &ndash;&gt;-->
     <string name="various_waiting_gps_fix">در انتظار پایدار شدن gps&#8230; ({0}/{1})</string> <!-- parameters: (used sats, visible sats) -->
     <!--    <string name="various_heading_display">{0}&#176;</string> &lt;!&ndash; parameters: (heading in degrees) &ndash;&gt;-->
     <!--    <string name="various_heading">Wait for heading&#8230;</string>-->
@@ -370,14 +370,14 @@
     <!--    <string name="app_intro_slide1_description">This App is free software that respects your freedom!</string>-->
     <!--    &lt;!&ndash; Intro - slide2 &ndash;&gt;-->
     <!--    <string name="app_intro_slide2_title">Happy tracking 🗺 😎</string>-->
-<!--    <string name="app_intro_slide2_description">OSMTracker for Android will use your GPS location to record trackpoints and waypoints, even when the App is running in background.-->
-<!--\nYour data is not used to support ads.</string>-->
-        <string name="app_intro_slide2_description">سامانه فرا زمان از موقعیت مکانی GPS شما برای ثبت نقاط مسیر و ایستگاه‌های بین‌راهی استفاده می‌کند، حتی زمانی که برنامه در پس‌زمینه در حال اجرا باشد.</string>
+    <!--    <string name="app_intro_slide2_description">OSMTracker for Android will use your GPS location to record trackpoints and waypoints, even when the App is running in background.-->
+    <!--\nYour data is not used to support ads.</string>-->
+    <string name="app_intro_slide2_description">سامانه فرا زمان از موقعیت مکانی GPS شما برای ثبت نقاط مسیر و ایستگاه‌های بین‌راهی استفاده می‌کند، حتی زمانی که برنامه در پس‌زمینه در حال اجرا باشد.</string>
 
     <!--App Introduction-->
     <string name="app_intro">مقدمهٔ سامانه ثبت موقعیت فرا زمان</string>
     <!--Intro - slide1-->
-<!--    <string name="app_intro_slide1_title">به OSMTracker for Android™‎ خوش آمدید 👋</string>-->
+    <!--    <string name="app_intro_slide1_title">به OSMTracker for Android™‎ خوش آمدید 👋</string>-->
     <string name="app_intro_slide1_title">به سامانه ثبت موقعیت فرا زمان خوش آمدید 👋</string>
     <string name="app_intro_slide1_description">این اپلیکیشن نرم‌افزاری آزاد است و به آزادی شما احترام می‌گذارد!</string>
     <!--Intro - slide2-->

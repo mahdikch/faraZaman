@@ -11,6 +11,7 @@
     <color name="red">#FD3333</color>
     <!-- Map buttons -->
     <color name="btnBorder">#000000</color>
+    <color name="green">#06BA0D</color>
     <color name="map_btnBackground">#19303234</color>
     <color name="map_onClickBackground">#303234</color>
 

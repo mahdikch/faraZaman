@@ -122,6 +122,8 @@ public class TrackManager extends AppCompatActivity
 
 //        FloatingActionButton fab = findViewById(R.id.trackmgr_fab);
         Button startMissionBtn = findViewById(R.id.start_track);
+        Button submitViolationBtn = findViewById(R.id.submit_violation);
+
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -134,7 +136,13 @@ public class TrackManager extends AppCompatActivity
                 startTrackLoggerForNewTrack();
             }
         });
-
+        Intent intent = new Intent( this , SubmitViolationActivity.class);
+        submitViolationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
         // should check if is the first time using the app
 //		boolean showAppIntro = PreferenceManager.getDefaultSharedPreferences(this)
 //				.getBoolean(OSMTracker.Preferences.KEY_DISPLAY_APP_INTRO,

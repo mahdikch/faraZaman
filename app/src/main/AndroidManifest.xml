@@ -20,18 +20,22 @@
         android:name=".MyApplication"
         android:description="@string/app_description"
         android:icon="@drawable/ic_launcher"
-        android:supportsRtl="true"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.SubmitViolationFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SubmitViolationActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.login.LoginActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".activity.SplashActivity"
-            android:exported="true"
-           >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,15 +49,12 @@
 
         <activity
             android:name=".activity.Intro"
-            android:label="@string/app_intro"
-             />
+            android:label="@string/app_intro" />
         <activity
             android:name=".activity.TrackManager"
-            android:exported="true"
-            ></activity>
+            android:exported="true" />
         <activity
             android:name=".activity.TrackLogger"
-
             android:label="@string/tracklogger"
             android:launchMode="singleTop" />
         <activity
