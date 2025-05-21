@@ -5,8 +5,8 @@
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:fontFamily">@font/iran_sans</item>
 <!--      Customize your theme here.-->
-<!--        <item name="colorPrimary">@color/colorPrimaryText</item>-->
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryText</item>
+<!--        <item name="colorPrimary">@color/colorPrimaryDark</item>-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="background">@color/colorPrimaryText</item>

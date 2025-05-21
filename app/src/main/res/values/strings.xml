@@ -10,6 +10,74 @@
         <item>ایتم دوم</item>
         <item>ایتم سوم</item>
     </string-array>
+ <string-array name="employer">
+        <item> شهرداری رشت منطقه 1</item>
+        <item> شهرداری رشت منطقه 2</item>
+        <item> شهرداری رشت منطقه 3</item>
+        <item> شهرداری رشت منطقه 4</item>
+        <item> شهرداری رشت منطقه 5</item>
+    </string-array>
+ <string-array name="contract_number1">
+     <item>58772-عمران کارون بختیاری</item>
+    </string-array>
+ <string-array name="contract_number2">
+     <item>58788-سبز زیور</item>
+    </string-array>
+ <string-array name="contract_number3">
+     <item>58790-دهکده سبزپوش</item>
+    </string-array>
+ <string-array name="contract_number4">
+     <item>58796-دهکده سبزپوش</item>
+    </string-array>
+ <string-array name="contract_number5">
+     <item>58804-سبز زیور</item>
+    </string-array>
+    <string-array name="violation_group">
+        <item>فصل اول- نظافت عمومی دستی</item>
+        <item>فصل دوم- نظافت عمومی نیمه مکانیزه و مکانیزه</item>
+        <item>فصل سوم- تهیه مخازن فلزی ذخیره سازی</item>
+        <item>فصل چهارم- تهیه مخازن غیر فلزی ذخیره سازی</item>
+        <item>فصل پنجم- نگهداری مخازن ذخیره سازی پسماند عادی</item>
+    </string-array>
+    <string-array name="defect1">
+        <item>نظافت نا مناسب دستی با عرض بیشتر از 15 تا 20  متر</item>
+        <item>عدم نظافت دستی معابر با عرض بیشتر از 25 تا 45  متر</item>
+        <item>نظافت نا مناسب دستی با عرض بیشتر از 25 تا 45  متر</item>
+        <item>نظافت نا مناسب دستی با عرض تا 15 متر</item>
+        <item>عدم حفظو نگهداری معابر</item>
+        <item>عدم برف روبی دستی معابر</item>
+    </string-array>
+    <string-array name="defect2">
+        <item>عدم امحا شعار نویسی و موارد مشابه</item>
+        <item>عدم رعایت برنامه زمانبندی و ساعات کاری ماشین آلات جاروب</item>
+        <item>عدم استفاده از نازل های آب پاش و انتشار گرد و غبار توسط ماشین جاروب </item>
+        <item>تخطی از سرعت مجاز ماشین جاروب خیابانی </item>
+        <item>عدم حفظو نگهداری معابر</item>
+        <item>عدم برف روبی دستی معابر</item>
+    </string-array>
+    <string-array name="defect3">
+        <item>عدم تهیه مخازن گالوانیزه و فلزی</item>
+    </string-array>
+    <string-array name="defect4">
+        <item>عدم تهیه کارتن پلاست</item>
+        <item>عدم تهیه مخازن پلی اتیلن </item>
+    </string-array>
+    <string-array name="defect5">
+        <item>عدم نگهداری زیر مخزنی های نصب شده برای مخازن ثابت</item>
+        <item>عدم نایلکس گذاری روزانه مخازن معابر </item>
+        <item>عدم نظافت اطراف مخازن گالوانیزه و پلی اتیلنی </item>
+        <item>عدم نگهداری مخزن متحرک گالوانیزه چهار چرخ</item>
+        <item>عدم نگهداری مخزن متحرک پلب اتیلنی چهار چرخ</item>
+    </string-array>
+    <string-array name="season_of_price">
+        <item>نقص صورت گرفته انتخابی فصل و آیتم فهرست بها مرتبط ندارد</item>
+        <item>عدم نایلکس گذاری روزانه مخازن معابر </item>
+        <item>عدم نظافت اطراف مخازن گالوانیزه و پلی اتیلنی </item>
+        <item>عدم نگهداری مخزن متحرک گالوانیزه چهار چرخ</item>
+        <item>عدم نگهداری مخزن متحرک پلب اتیلنی چهار چرخ</item>
+    </string-array>
+
+
     <!-- TrackLogger -->
     <!--    <string name="tracklogger">Track logger</string>-->
     <!--    <string name="tracklogger_waiting_gps">Waiting for GPS fix to enable buttons&#8230;</string>-->
