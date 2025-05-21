@@ -5,7 +5,11 @@
     <string name="app_short_name">فرا زمان</string>
     <!--    <string name="app_description">Inspired by OSMTracker on Windows Mobile, it allows you to track your journeys, mark significant way points (Voice recording, photos), export them in GPX format for later use with Open Street Map tools like JOSM.</string>-->
     <string name="app_description">سامانه فرا زمان در موبایل، به شما امکان می‌دهد سفرهای خود را پیگیری کنید، نقاط مسیر مهم را علامت‌گذاری کنید (ضبط صدا، عکس)، و آنها را با فرمت GPX برای استفاده بعدی با ابزارهای نقشه خیابان باز مانند JOSM صادر کنید.</string>
-
+    <string-array name="test">
+        <item>ایتم اول</item>
+        <item>ایتم دوم</item>
+        <item>ایتم سوم</item>
+    </string-array>
     <!-- TrackLogger -->
     <!--    <string name="tracklogger">Track logger</string>-->
     <!--    <string name="tracklogger_waiting_gps">Waiting for GPS fix to enable buttons&#8230;</string>-->

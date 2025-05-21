@@ -1,11 +1,13 @@
 package net.osmtracker.activity;
 
 
-
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,7 +52,14 @@ public class SubmitViolationActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_submit_violation);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+        Button submitViolation = findViewById(R.id.submit_violation);
+        Intent intent = new Intent(this, SubmitViolationFormActivity.class);
+        submitViolation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
         // Initialize OSM view
         Configuration.getInstance().load(this, prefs);
 
@@ -85,16 +94,18 @@ public class SubmitViolationActivity extends AppCompatActivity {
         findViewById(R.id.displaytrackmap_imgZoomCenter).setOnClickListener(view -> {
             centerToGpsPos = true;
             if (currentPosition != null) {
-                osmViewController.animateTo(currentPosition,CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS);
+                osmViewController.animateTo(currentPosition, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS);
             }
         });
     }
+
     public void selectTileSource() {
         String mapTile = prefs.getString(OSMTracker.Preferences.KEY_UI_MAP_TILE, OSMTracker.Preferences.VAL_UI_MAP_TILE_MAPNIK);
         Log.e("TileMapName active", mapTile);
         //osmView.setTileSource(selectMapTile(mapTile));
         osmView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
     }
+
     public void setTileDpiScaling() {
         osmView.setTilesScaledToDpi(true);
     }

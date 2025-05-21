@@ -7,5 +7,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.SubmitViolationFormActivity">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropdown_menu"
+        android:layout_width="match_parent"
+        android:layout_marginTop="24dp"
+style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
 
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#1E88E5">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete"
+
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="12dp"
+            android:padding="12dp"
+            android:layout_height="wrap_content"
+            android:text="انتخاب کنید"
+            android:hint="تاریخ ثبت عملکرد"
+            android:fontFamily="@font/iran_sans"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
