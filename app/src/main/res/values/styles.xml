@@ -6,11 +6,13 @@
         <item name="android:fontFamily">@font/iran_sans</item>
 <!--      Customize your theme here.-->
         <item name="colorPrimary">@color/colorPrimaryText</item>
+<!--        <item name="colorPrimary">@color/colorPrimaryText</item>-->
 <!--        <item name="colorPrimary">@color/colorPrimaryDark</item>-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="background">@color/colorPrimaryText</item>
-        <item name="backgroundColor">@color/colorPrimaryText</item>
+        <item name="background">@color/green</item>
+        <item name="backgroundColor">@color/green</item>
+        <item name="materialAlertDialogBodyTextStyle">@color/green</item>
 
 
 

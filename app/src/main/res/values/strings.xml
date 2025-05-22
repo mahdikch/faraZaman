@@ -69,12 +69,32 @@
         <item>عدم نگهداری مخزن متحرک گالوانیزه چهار چرخ</item>
         <item>عدم نگهداری مخزن متحرک پلب اتیلنی چهار چرخ</item>
     </string-array>
-    <string-array name="season_of_price">
+    <string-array name="season_of_price1">
+        <item>فصل اول- نظافت عمومی دستی (سنتی)-نظافت دستی</item>
+    </string-array>
+    <string-array name="season_of_price2">
         <item>نقص صورت گرفته انتخابی فصل و آیتم فهرست بها مرتبط ندارد</item>
-        <item>عدم نایلکس گذاری روزانه مخازن معابر </item>
-        <item>عدم نظافت اطراف مخازن گالوانیزه و پلی اتیلنی </item>
-        <item>عدم نگهداری مخزن متحرک گالوانیزه چهار چرخ</item>
-        <item>عدم نگهداری مخزن متحرک پلب اتیلنی چهار چرخ</item>
+
+    </string-array>
+    <string-array name="season_of_price3">
+        <item>فصل سوم - تهیه مخازن فلزی ذخیره سازی - مخلوط با مخازن متحرک</item>
+
+    </string-array>
+    <string-array name="season_of_price4">
+        <item>نقص صورت گرفته انتخابی فصل و آیتم فهرست بها مرتبط ندارد</item>
+
+    </string-array>
+    <string-array name="season_of_price5">
+        <item>نقص صورت گرفته انتخابی فصل و آیتم فهرست بها مرتبط ندارد</item>
+
+    </string-array>
+    <string-array name="price_list3">
+        <item>030102 - مخزن متحرک گالوانیزه دارای چهار چرخ با درپوش با ظرفیت 660 لیتر پسماند عادی</item>
+
+    </string-array>
+    <string-array name="price_list1">
+        <item>010102 - نظافت دستی معابر با عرض بیشتر از 15 تا 25 متر</item>
+
     </string-array>
 
 
