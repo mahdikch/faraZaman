@@ -185,7 +185,7 @@
     <string name="trackmgr_contextmenu_display">نمایش</string>
     <string name="trackmgr_contextmenu_details">جزئیات</string>
     <string name="trackmgr_contextmenu_title">مسیر #{0}</string>
-    <string name="trackmgr_delete_confirm">مسیر #{0} پاک خواهد شد</string>
+    <string name="trackmgr_delete_confirm">مسیر پاک شود؟</string>
     <string name="trackmgr_deleteall_confirm">تمامی مسیرها پاک خواهد شد. آیا مطمئن هستید؟</string>
     <string name="trackmgr_exporting">در حال خروجی‌گرفتن از مسیر #{0}...</string>
     <string name="trackmgr_exporting_prepare">در حال آماده‌سازی فایل خروجی...</string>
@@ -342,7 +342,7 @@
     <!--    <string name="about_exporting_db">Exporting database&#8230;</string>-->
     <!--    <string name="about_export_db_result">Database export result: %s</string>-->
     <string name="about">درباره</string>
-    <string name="about_text">برای اطلاعات بیشتر، دیدن مستندات و گزارش مشکل لطفاً از سایت پروژه دیدن فرمایید:</string>
+    <string name="about_text">شرکت تجارت فناوران سبز در حوزه محیط زیست با ارائه راه حل های میتنی بر فناوری اطلاعات و ارتباطات و بهره گیری از فناوری های نوین فهالیت مینماید و به صورت تخصصی باارائه نرمافزارهای سازمان پایه در زمینه مدیریت خدمات شهری و پسماند در خدمت شهرداری ها و محیط زیست کشور است. </string>
     <string name="about_translate_text">کمک کنید OSMTracker را ترجمه کنیم:</string>
     <string name="about_debug_info">اطلاعات debug</string>
     <string name="about_export_db">خروجی از پایگاه‌داده</string>
@@ -471,7 +471,7 @@
     <!--Intro - slide1-->
     <!--    <string name="app_intro_slide1_title">به OSMTracker for Android™‎ خوش آمدید 👋</string>-->
     <string name="app_intro_slide1_title">به سامانه ثبت موقعیت فرا زمان خوش آمدید 👋</string>
-    <string name="app_intro_slide1_description">این اپلیکیشن نرم‌افزاری آزاد است و به آزادی شما احترام می‌گذارد!</string>
+    <string name="app_intro_slide1_description">این اپلیکیشن ابزاری است در کمک به ثبت موقعیت و ثبت تخلف!</string>
     <!--Intro - slide2-->
-    <string name="app_intro_slide2_title">با ردگیری خوش بگذرانید 🗺 😎</string>
+    <string name="app_intro_slide2_title">خیلی راحت ردگیری کنید 🗺 😎</string>
 </resources>

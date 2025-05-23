@@ -25,7 +25,7 @@ class Intro : AppIntro() {
             AppIntroFragment.createInstance(
                 title = getString(R.string.app_intro_slide1_title),
                 titleColorRes = R.color.appintro_background_color,
-                imageDrawable = R.drawable.ic_launcher,
+                imageDrawable = R.drawable.farazaman_logo,
                 backgroundColorRes = R.color.appintro_default_selected_color,
                 description = getString(R.string.app_intro_slide1_description),
                 descriptionColorRes = R.color.appintro_background_color
@@ -37,7 +37,7 @@ class Intro : AppIntro() {
             AppIntroFragment.createInstance(
                 title = getString(R.string.app_intro_slide2_title),
                 titleColorRes = R.color.appintro_background_color,
-                imageDrawable = R.drawable.ic_launcher,
+                imageDrawable = R.drawable.farazaman_logo,
                 backgroundColorRes = R.color.appintro_default_selected_color,
                 description = getString(R.string.app_intro_slide2_description),
                 descriptionColorRes = R.color.appintro_background_color

@@ -5,11 +5,11 @@
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:fontFamily">@font/iran_sans</item>
 <!--      Customize your theme here.-->
-        <item name="colorPrimary">@color/colorPrimaryText</item>
+        <item name="colorPrimary">@color/green</item>
 <!--        <item name="colorPrimary">@color/colorPrimaryText</item>-->
 <!--        <item name="colorPrimary">@color/colorPrimaryDark</item>-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/green</item>
         <item name="background">@color/green</item>
         <item name="backgroundColor">@color/green</item>
         <item name="materialAlertDialogBodyTextStyle">@color/green</item>

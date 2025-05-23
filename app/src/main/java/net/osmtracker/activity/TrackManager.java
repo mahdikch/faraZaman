@@ -37,6 +37,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -233,24 +234,24 @@ public class TrackManager extends AppCompatActivity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (currentTrackId != -1) {
-            // Currently tracking. Display "Continue" option
-            menu.findItem(R.id.trackmgr_menu_continuetrack).setVisible(true);
-
-            // Display a 'stop tracking' option
-            menu.findItem(R.id.trackmgr_menu_stopcurrenttrack).setVisible(true);
-        } else {
-            // Not currently tracking. Remove "Continue" option
-            menu.findItem(R.id.trackmgr_menu_continuetrack).setVisible(false);
-
-            // Remove the 'stop tracking' option
-            menu.findItem(R.id.trackmgr_menu_stopcurrenttrack).setVisible(false);
-        }
+//        if (currentTrackId != -1) {
+//            // Currently tracking. Display "Continue" option
+//            menu.findItem(R.id.trackmgr_menu_continuetrack).setVisible(true);
+//
+//            // Display a 'stop tracking' option
+//            menu.findItem(R.id.trackmgr_menu_stopcurrenttrack).setVisible(true);
+//        } else {
+//            // Not currently tracking. Remove "Continue" option
+//            menu.findItem(R.id.trackmgr_menu_continuetrack).setVisible(false);
+//
+//            // Remove the 'stop tracking' option
+//            menu.findItem(R.id.trackmgr_menu_stopcurrenttrack).setVisible(false);
+//        }
 
         // Remove "delete all" button if no tracks
         int tracksCount = recyclerViewAdapter.getItemCount();
         menu.findItem(R.id.trackmgr_menu_deletetracks).setVisible(tracksCount > 0);
-        menu.findItem(R.id.trackmgr_menu_exportall).setVisible(tracksCount > 0);
+//        menu.findItem(R.id.trackmgr_menu_exportall).setVisible(tracksCount > 0);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -258,21 +259,21 @@ public class TrackManager extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.trackmgr_menu_newtrack:
-                startTrackLoggerForNewTrack();
-                break;
-            case R.id.trackmgr_menu_continuetrack:
-                Intent i = new Intent(this, TrackLogger.class);
-                i.putExtra(TrackLogger.STATE_IS_TRACKING, true);
-                i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
-                tryStartTrackLogger(i);
-                break;
-            case R.id.trackmgr_menu_stopcurrenttrack:
-                stopActiveTrack();
-                break;
+//            case R.id.trackmgr_menu_newtrack:
+//                startTrackLoggerForNewTrack();
+//                break;
+//            case R.id.trackmgr_menu_continuetrack:
+//                Intent i = new Intent(this, TrackLogger.class);
+//                i.putExtra(TrackLogger.STATE_IS_TRACKING, true);
+//                i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
+//                tryStartTrackLogger(i);
+//                break;
+//            case R.id.trackmgr_menu_stopcurrenttrack:
+//                stopActiveTrack();
+//                break;
             case R.id.trackmgr_menu_deletetracks:
                 // Confirm and delete all track
-                new AlertDialog.Builder(this)
+                new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.trackmgr_contextmenu_delete)
                         .setMessage(getResources().getString(R.string.trackmgr_deleteall_confirm))
                         .setCancelable(true)
@@ -284,22 +285,22 @@ public class TrackManager extends AppCompatActivity
                                 dialog.dismiss();
                             }
                         })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        .setNegativeButton("بیخیال", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                             }
                         }).create().show();
                 break;
-            case R.id.trackmgr_menu_exportall:
-                // Confirm
-                if (!writeExternalStoragePermissionGranted()) {
-                    Log.e(TAG, "ExportAllWrite - Permission asked");
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            RC_WRITE_PERMISSIONS_EXPORT_ALL);
-                } else exportTracks(false);
-                break;
+//            case R.id.trackmgr_menu_exportall:
+//                // Confirm
+//                if (!writeExternalStoragePermissionGranted()) {
+//                    Log.e(TAG, "ExportAllWrite - Permission asked");
+//                    ActivityCompat.requestPermissions(this,
+//                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                            RC_WRITE_PERMISSIONS_EXPORT_ALL);
+//                } else exportTracks(false);
+//                break;
             case R.id.trackmgr_menu_settings:
                 // Start settings activity
                 startActivity(new Intent(this, Preferences.class));
@@ -395,7 +396,7 @@ public class TrackManager extends AppCompatActivity
             protected void onPostExecute(Boolean success) {
                 dialog.dismiss();
                 if (!success) {
-                    new AlertDialog.Builder(context).setTitle(android.R.string.dialog_alert_title)
+                    new MaterialAlertDialogBuilder(context).setTitle(android.R.string.dialog_alert_title)
                             .setMessage(context.getResources()
                                     .getString(R.string.trackmgr_export_error)
                                     .replace("{0}", super.getErrorMsg()))
@@ -424,13 +425,13 @@ public class TrackManager extends AppCompatActivity
         contextMenuSelectedTrackid = trackId;
 
         menu.setHeaderTitle(getResources().getString(R.string.trackmgr_contextmenu_title).replace("{0}", Long.toString(contextMenuSelectedTrackid)));
-        if (currentTrackId == contextMenuSelectedTrackid) {
-            // the selected one is the active track, so we will show the stop item
-            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(true);
-        } else {
-            // the selected item is not active, so we need to hide the stop item
-            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(false);
-        }
+//        if (currentTrackId == contextMenuSelectedTrackid) {
+//            // the selected one is the active track, so we will show the stop item
+//            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(true);
+//        } else {
+//            // the selected item is not active, so we need to hide the stop item
+//            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(false);
+//        }
         menu.setHeaderTitle(getResources().getString(R.string.trackmgr_contextmenu_title).replace("{0}", Long.toString(contextMenuSelectedTrackid)));
         if (currentTrackId == contextMenuSelectedTrackid) {
             // User has pressed the active track, hide the delete option
@@ -455,12 +456,13 @@ public class TrackManager extends AppCompatActivity
         Menu menu = popupMenu.getMenu();
         if (currentTrackId == contextMenuSelectedTrackid) {
             // مسیر انتخاب‌شده، مسیر فعال است: نمایش گزینه "توقف" و حذف گزینه "حذف"
-            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(true);
+//            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(true);
             menu.removeItem(R.id.trackmgr_contextmenu_delete);
-        } else {
-            // مسیر انتخاب‌شده غیرفعال است: مخفی کردن گزینه "توقف"
-            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(false);
         }
+//        else {
+//            // مسیر انتخاب‌شده غیرفعال است: مخفی کردن گزینه "توقف"
+//            menu.findItem(R.id.trackmgr_contextmenu_stop).setVisible(false);
+//        }
 
         // مدیریت کلیک روی گزینه‌های منو
         popupMenu.setOnMenuItemClickListener(item -> {
@@ -474,25 +476,25 @@ public class TrackManager extends AppCompatActivity
         Intent i;
 
         switch (item.getItemId()) {
-            case R.id.trackmgr_contextmenu_stop:
-                // stop the active track
-                stopActiveTrack();
-                break;
-            case R.id.trackmgr_contextmenu_resume:
-                // Activate the selected track if it is different from the currently active one
-                // (or if no track is currently active)
-                if (currentTrackId != contextMenuSelectedTrackid) {
-                    setActiveTrack(contextMenuSelectedTrackid);
-                }
-                // Start the TrackLogger activity to begin logging the selected track
-                i = new Intent(this, TrackLogger.class);
-                i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, contextMenuSelectedTrackid);
-                tryStartTrackLogger(i);
-                break;
+//            case R.id.trackmgr_contextmenu_stop:
+//                // stop the active track
+//                stopActiveTrack();
+//                break;
+//            case R.id.trackmgr_contextmenu_resume:
+//                // Activate the selected track if it is different from the currently active one
+//                // (or if no track is currently active)
+//                if (currentTrackId != contextMenuSelectedTrackid) {
+//                    setActiveTrack(contextMenuSelectedTrackid);
+//                }
+//                // Start the TrackLogger activity to begin logging the selected track
+//                i = new Intent(this, TrackLogger.class);
+//                i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, contextMenuSelectedTrackid);
+//                tryStartTrackLogger(i);
+//                break;
 
             case R.id.trackmgr_contextmenu_delete:
                 // Confirm and delete selected track
-                new AlertDialog.Builder(this)
+                new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.trackmgr_contextmenu_delete)
                         .setMessage(getResources().getString(R.string.trackmgr_delete_confirm)
                                 .replace("{0}", Long.toString(contextMenuSelectedTrackid)))
@@ -513,27 +515,27 @@ public class TrackManager extends AppCompatActivity
                         }).create().show();
                 break;
 
-            case R.id.trackmgr_contextmenu_export:
-                if (writeExternalStoragePermissionGranted()) {
-                    exportTracks(true);
-                } else {
-                    Log.e(TAG, "ExportAsGPXWrite - Permission asked");
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            RC_WRITE_PERMISSIONS_EXPORT_ONE);
-                }
-                break;
+//            case R.id.trackmgr_contextmenu_export:
+//                if (writeExternalStoragePermissionGranted()) {
+//                    exportTracks(true);
+//                } else {
+//                    Log.e(TAG, "ExportAsGPXWrite - Permission asked");
+//                    ActivityCompat.requestPermissions(this,
+//                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                            RC_WRITE_PERMISSIONS_EXPORT_ONE);
+//                }
+//                break;
 
-            case R.id.trackmgr_contextmenu_share:
-                if (writeExternalStoragePermissionGranted()) {
-                    prepareAndShareTrack(contextMenuSelectedTrackid, this);
-                } else {
-                    Log.e(TAG, "Share GPX - Permission asked");
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            RC_WRITE_PERMISSIONS_SHARE);
-                }
-                break;
+//            case R.id.trackmgr_contextmenu_share:
+//                if (writeExternalStoragePermissionGranted()) {
+//                    prepareAndShareTrack(contextMenuSelectedTrackid, this);
+//                } else {
+//                    Log.e(TAG, "Share GPX - Permission asked");
+//                    ActivityCompat.requestPermissions(this,
+//                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                            RC_WRITE_PERMISSIONS_SHARE);
+//                }
+//                break;
 
             case R.id.trackmgr_contextmenu_osm_upload:
                 if (writeExternalStoragePermissionGranted()) {
@@ -696,7 +698,7 @@ public class TrackManager extends AppCompatActivity
             protected void onPostExecute(Boolean success) {
                 dialog.dismiss();
                 if (!success) {
-                    new AlertDialog.Builder(context)
+                    new MaterialAlertDialogBuilder(context)
                             .setTitle(android.R.string.dialog_alert_title)
                             .setMessage(context.getResources()
                                     .getString(R.string.trackmgr_prepare_for_share_error)

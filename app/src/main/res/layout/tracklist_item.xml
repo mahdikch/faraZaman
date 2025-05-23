@@ -7,6 +7,7 @@
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp"
     app:cardCornerRadius="12dp"
+    android:backgroundTint="@color/withe"
     app:cardElevation="4dp">
 
 
@@ -30,7 +31,7 @@
 
             <ImageButton
                 android:id="@+id/trackmgr_item_options"
-                android:layout_width="24dp"
+                android:layout_width="48dp"
                 android:layout_height="24dp"
                 android:layout_marginLeft="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -151,8 +152,8 @@
 
             <ImageView
                 android:id="@+id/trackmgr_item_statusicon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:background="@null"
 
                 android:contentDescription="@string/acc.track_status"

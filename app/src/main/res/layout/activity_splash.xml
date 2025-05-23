@@ -9,7 +9,7 @@
         android:layout_width="256dp"
         android:layout_height="256dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/farazaman_logo"
         android:contentDescription="@string/app_name" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -17,11 +17,11 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_below="@id/imageView"
-        android:text="@string/app_name"
-        android:textColor="@color/map_onClickBackground"
-        android:textSize="48dp"
+        android:text="تحولی نوین در شهر"
+        android:textColor="@color/green"
+        android:textSize="36sp"
         android:fontFamily="@font/iran_sans"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="48dp"
         android:textStyle="bold" />
 
 </RelativeLayout>

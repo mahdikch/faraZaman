@@ -16,6 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import net.osmtracker.R;
 import net.osmtracker.data.db.TracklistAdapter;
 
@@ -44,14 +46,14 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
         if (cursor.moveToPosition(position)) {
             @SuppressLint("Range") long trackId = cursor.getLong(cursor.getColumnIndex("_id"));
             // نمایش دیالوگ تأیید
-            new AlertDialog.Builder(context)
+            new MaterialAlertDialogBuilder(context)
                     .setTitle(R.string.trackmgr_contextmenu_delete)
                     .setMessage(R.string.trackmgr_delete_confirm)
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    .setPositiveButton("بله", (dialog, which) -> {
                         mHandler.deleteTrackItem(trackId);
 
                     })
-                    .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                    .setNegativeButton("خیر", (dialog, which) -> {
                         // اگه لغو شد، RecyclerView رو به‌روز کن
                         if (onCancel != null) {
                             onCancel.run();

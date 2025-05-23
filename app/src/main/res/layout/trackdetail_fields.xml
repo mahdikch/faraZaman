@@ -44,6 +44,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/trackdetail_item_tags_lay"
         android:layout_width="fill_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_below="@id/trackdetail_item_description"
         app:boxBackgroundMode="outline"
@@ -60,6 +61,7 @@
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
     <Spinner
+        android:visibility="gone"
         android:id="@+id/trackdetail_item_osm_visibility"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
