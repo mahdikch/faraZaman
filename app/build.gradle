@@ -108,7 +108,9 @@ dependencies {
     testImplementation "androidx.test:core:1.6.1"
     // Mockito framework
     testImplementation "org.mockito:mockito-core:5.14.1"
-
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
     testImplementation 'org.powermock:powermock-core:2.0.9'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
