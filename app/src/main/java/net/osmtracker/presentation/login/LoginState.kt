@@ -1,9 +1,9 @@
 package net.osmtracker.presentation.login
 
-import net.osmtracker.domain.model.User
+import net.osmtracker.data.model.res.LoginResponse
 
 sealed class LoginState {
     object Loading : LoginState()
-    data class Success(val user: User) : LoginState()
+    data class Success(val response: LoginResponse) : LoginState()
     data class Error(val message: String) : LoginState()
 }

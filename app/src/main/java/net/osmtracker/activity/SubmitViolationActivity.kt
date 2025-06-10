@@ -1,219 +1,291 @@
-package net.osmtracker.activity;
+package net.osmtracker.activity
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import net.osmtracker.OSMTracker
+import net.osmtracker.R
+import net.osmtracker.data.model.RoadData
+import net.osmtracker.service.remote.RoadService
+import org.osmdroid.api.IMapController
+import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.CustomZoomButtonsController
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
+import javax.inject.Inject
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+@AndroidEntryPoint
+class SubmitViolationActivity : AppCompatActivity() {
+    private lateinit var locationManager: LocationManager
+    private lateinit var prefs: SharedPreferences
+    private lateinit var osmView: MapView
+    private lateinit var osmViewController: IMapController
+    private var userLocationMarker: Marker? = null
+    private var centerToGpsPos = true
+    private var currentPosition = GeoPoint(35.7627, 51.3353)
+    private var zoomedToTrackAlready = false
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+    @Inject
+    lateinit var roadService: RoadService
 
-import android.Manifest;
-import net.osmtracker.OSMTracker;
-import net.osmtracker.R;
-import net.osmtracker.data.db.TrackContentProvider;
+    private lateinit var roadNameTextView: TextView
+    private lateinit var roadTypeTextView: TextView
+    private lateinit var speedLimitTextView: TextView
 
-import org.osmdroid.api.IMapController;
-import org.osmdroid.config.Configuration;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.CustomZoomButtonsController;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Marker;
+    companion object {
+        private const val DEFAULT_ZOOM = 16
+        private const val CURRENT_SCROLL_X = "currentScrollX"
+        private const val CURRENT_CENTER_TO_GPS_POS = "currentCenterToGpsPos"
+        private const val CURRENT_SCROLL_Y = "currentScrollY"
+        private const val CENTER_DEFAULT_ZOOM_LEVEL = 18.0
+        private const val CURRENT_ZOOM = "currentZoom"
+        private const val CURRENT_ZOOMED_TO_TRACK = "currentZoomedToTrack"
+        private const val LAST_ZOOM = "lastZoomLevel"
+        private const val ANIMATION_DURATION_MS = 1000L
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
 
-public class SubmitViolationActivity extends AppCompatActivity {
-    private LocationManager locationManager;
-    private SharedPreferences prefs = null;
-    private MapView osmView;
-    private IMapController osmViewController;
-    private static final int DEFAULT_ZOOM = 16;
-    private static final String CURRENT_SCROLL_X = "currentScrollX";
-    private boolean centerToGpsPos = true;
-    private GeoPoint currentPosition=new GeoPoint(35.7627,51.3353);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_submit_violation)
 
-    private Marker userLocationMarker;
-    /**
-     * Key for keeping scrolled top position of OSM view across activity re-creation
-     */
-    private static final String CURRENT_CENTER_TO_GPS_POS = "currentCenterToGpsPos";
-    private static final String CURRENT_SCROLL_Y = "currentScrollY";
-    private static final double CENTER_DEFAULT_ZOOM_LEVEL = 18;
-    private static final String CURRENT_ZOOM = "currentZoom";
-    private static final String CURRENT_ZOOMED_TO_TRACK = "currentZoomedToTrack";
-    private boolean zoomedToTrackAlready = false;
-    private static final String LAST_ZOOM = "lastZoomLevel";
-    private static final long ANIMATION_DURATION_MS = 1000;
+        initializeViews()
+        initializeLocationManager()
+        initializePreferences()
+        initializeMap(savedInstanceState)
+        setupSubmitButton()
+        setupZoomControls()
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_submit_violation);
+    private fun initializeViews() {
+        roadNameTextView = findViewById(R.id.road_name)
+        roadTypeTextView = findViewById(R.id.road_type)
+        speedLimitTextView = findViewById(R.id.speed_limit)
+    }
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
+    private fun initializeLocationManager() {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (hasLocationPermission()) {
+            startGettingLocation()
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(
+                    this,
                     Manifest.permission.ACCESS_COARSE_LOCATION
-            }, 1);
-        } else {
-            startGettingLocation();
+                ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    private fun initializePreferences() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(this)
+    }
+
+    private fun initializeMap(savedInstanceState: Bundle?) {
+        Configuration.getInstance().load(this, prefs)
+        osmView = findViewById(R.id.map_view)
+        osmView.apply {
+            setMultiTouchControls(true)
+            getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER)
+            setKeepScreenOn(
+                prefs.getBoolean(
+                    OSMTracker.Preferences.KEY_UI_DISPLAY_KEEP_ON,
+                    OSMTracker.Preferences.VAL_UI_DISPLAY_KEEP_ON
+                )
+            )
         }
 
+        osmViewController = osmView.controller
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Button submitViolation = findViewById(R.id.submit_violation);
-        Intent intent = new Intent(this, SubmitViolationFormActivity.class);
-        submitViolation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
-            }
-        });
-        // Initialize OSM view
-        Configuration.getInstance().load(this, prefs);
-
-        osmView = findViewById(R.id.map_view);
-        // pinch to zoom
-        osmView.setMultiTouchControls(true);
-        osmView.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
-        // we'll use osmView to define if the screen is always on or not
-        osmView.setKeepScreenOn(prefs.getBoolean(OSMTracker.Preferences.KEY_UI_DISPLAY_KEEP_ON, OSMTracker.Preferences.VAL_UI_DISPLAY_KEEP_ON));
-        osmViewController = osmView.getController();
-//osmViewController.animateTo();
-        // Check if there is a saved zoom level
         if (savedInstanceState != null) {
-            osmViewController.setZoom(savedInstanceState.getInt(CURRENT_ZOOM, DEFAULT_ZOOM));
-            osmView.scrollTo(savedInstanceState.getInt(CURRENT_SCROLL_X, 0),
-                    savedInstanceState.getInt(CURRENT_SCROLL_Y, 0));
-            centerToGpsPos = savedInstanceState.getBoolean(CURRENT_CENTER_TO_GPS_POS, centerToGpsPos);
-            zoomedToTrackAlready = savedInstanceState.getBoolean(CURRENT_ZOOMED_TO_TRACK, zoomedToTrackAlready);
+            osmViewController.setZoom(savedInstanceState.getInt(CURRENT_ZOOM, DEFAULT_ZOOM))
+            osmView.scrollTo(
+                savedInstanceState.getInt(CURRENT_SCROLL_X, 0),
+                savedInstanceState.getInt(CURRENT_SCROLL_Y, 0)
+            )
+            centerToGpsPos = savedInstanceState.getBoolean(CURRENT_CENTER_TO_GPS_POS, centerToGpsPos)
+            zoomedToTrackAlready = savedInstanceState.getBoolean(CURRENT_ZOOMED_TO_TRACK, zoomedToTrackAlready)
         } else {
-            // Try to get last zoom Level from Shared Preferences
-            SharedPreferences settings = getPreferences(MODE_PRIVATE);
-            osmViewController.setZoom(settings.getInt(LAST_ZOOM, DEFAULT_ZOOM));
+            getPreferences(MODE_PRIVATE).getInt(LAST_ZOOM, DEFAULT_ZOOM).let {
+                osmViewController.setZoom(it)
+            }
         }
 
-        selectTileSource();
-
-        setTileDpiScaling();
-
-        // Register listeners for zoom buttons
-        findViewById(R.id.displaytrackmap_imgZoomIn).setOnClickListener(v -> osmViewController.zoomIn());
-        findViewById(R.id.displaytrackmap_imgZoomOut).setOnClickListener(v -> osmViewController.zoomOut());
-        findViewById(R.id.displaytrackmap_imgZoomCenter).setOnClickListener(view -> {
-            centerToGpsPos = true;
-            if (currentPosition != null) {
-                osmViewController.animateTo(currentPosition, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS);
-            }
-        });
+        selectTileSource()
+        setTileDpiScaling()
     }
-    private void startGettingLocation() {
+
+    private fun setupSubmitButton() {
+        findViewById<Button>(R.id.submit_violation).setOnClickListener {
+            startActivity(Intent(this, SubmitViolationFormActivity::class.java))
+        }
+    }
+
+    private fun setupZoomControls() {
+        findViewById<View>(R.id.displaytrackmap_imgZoomIn).setOnClickListener {
+            osmViewController.zoomIn()
+        }
+        findViewById<View>(R.id.displaytrackmap_imgZoomOut).setOnClickListener {
+            osmViewController.zoomOut()
+        }
+        findViewById<View>(R.id.displaytrackmap_imgZoomCenter).setOnClickListener {
+            centerToGpsPos = true
+            currentPosition?.let { position ->
+                osmViewController.animateTo(position, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS)
+            }
+        }
+    }
+
+    private fun startGettingLocation() {
         try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                // ثبت درخواست لوکیشن از GPS و Network
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
-
-                // دریافت آخرین موقعیت موجود (اگر هست)
-//                Location lastKnownGps = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                Location lastKnownNetwork = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//
-//                if (lastKnownGps != null) {
-//                    currentPosition = new GeoPoint(lastKnownGps.getLatitude(), lastKnownGps.getLongitude());
-//                    osmViewController.animateTo(currentPosition, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS);
-//                } else if (lastKnownNetwork != null) {
-//                    currentPosition = new GeoPoint(lastKnownNetwork.getLatitude(), lastKnownNetwork.getLongitude());
-//                    osmViewController.animateTo(currentPosition, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS);
-//                }
+            if (hasLocationPermission()) {
+                locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    1000L,
+                    1f,
+                    locationListener
+                )
+                locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    1000L,
+                    1f,
+                    locationListener
+                )
             }
-        } catch (SecurityException e) {
-            e.printStackTrace();
+        } catch (e: SecurityException) {
+            e.printStackTrace()
         }
     }
-    private LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            currentPosition = new GeoPoint(location.getLatitude(), location.getLongitude());
+
+    private val locationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            currentPosition = GeoPoint(location.latitude, location.longitude)
+            
             if (userLocationMarker == null) {
-                userLocationMarker = new Marker(osmView);
-                userLocationMarker.setPosition(currentPosition);
-                userLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                userLocationMarker.setTitle("موقعیت فعلی");
-                osmView.getOverlays().add(userLocationMarker);
+                userLocationMarker = Marker(osmView).apply {
+                    position = currentPosition
+                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    title = "موقعیت فعلی"
+                }
+                osmView.overlays.add(userLocationMarker)
             } else {
-                userLocationMarker.setPosition(currentPosition);
+                userLocationMarker?.position = currentPosition
             }
 
             if (centerToGpsPos) {
-                osmViewController.animateTo(currentPosition, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS);
+                osmViewController.animateTo(currentPosition, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS)
             }
 
-            osmView.invalidate();
+            // Fetch road data for the current location
+            fetchRoadData(location.latitude, location.longitude)
+
+            osmView.invalidate()
         }
 
-        @Override public void onStatusChanged(String provider, int status, Bundle extras) {}
-        @Override public void onProviderEnabled(String provider) {}
-        @Override public void onProviderDisabled(String provider) {}
-    };
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+        override fun onProviderEnabled(provider: String) {}
+        override fun onProviderDisabled(provider: String) {}
+    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) {
-            boolean granted = true;
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    granted = false;
-                    break;
+    private fun fetchRoadData(latitude: Double, longitude: Double) {
+        lifecycleScope.launch {
+            try {
+                val token = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                    .getString("ACCESS_TOKEN", null)
+                
+                if (token == null) {
+                    Log.e("SubmitViolationActivity", "No access token found")
+                    return@launch
                 }
+
+                val roadData = roadService.getRoadData(latitude, longitude, 10, "Bearer $token")
+                roadData.firstOrNull()?.let { updateRoadInfo(it) }
+            } catch (e: Exception) {
+                Log.e("SubmitViolationActivity", "Error fetching road data", e)
             }
-            if (granted) {
-                startGettingLocation();
+        }
+    }
+
+    private fun updateRoadInfo(roadData: RoadData) {
+        roadNameTextView.text = roadData.name
+        roadTypeTextView.text = roadData.fclass
+        speedLimitTextView.text = "${roadData.maxspeed} km/h"
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                startGettingLocation()
             } else {
-                Log.w("SubmitViolationActivity", "Location permission denied");
+                Log.w("TAG", "Location permission denied")
             }
         }
     }
-    public void selectTileSource() {
-        String mapTile = prefs.getString(OSMTracker.Preferences.KEY_UI_MAP_TILE, OSMTracker.Preferences.VAL_UI_MAP_TILE_MAPNIK);
-        Log.e("TileMapName active", mapTile);
-        //osmView.setTileSource(selectMapTile(mapTile));
-        osmView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+
+    private fun selectTileSource() {
+        val mapTile = prefs.getString(
+            OSMTracker.Preferences.KEY_UI_MAP_TILE,
+            OSMTracker.Preferences.VAL_UI_MAP_TILE_MAPNIK
+        )
+        Log.e("TileMapName active", mapTile ?: "")
+        osmView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
     }
 
-    public void setTileDpiScaling() {
-        osmView.setTilesScaledToDpi(true);
+    private fun setTileDpiScaling() {
+        osmView.setTilesScaledToDpi(true)
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.removeUpdates(locationListener);
+
+    override fun onPause() {
+        super.onPause()
+        if (hasLocationPermission()) {
+            locationManager.removeUpdates(locationListener)
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            startGettingLocation();
+    override fun onResume() {
+        super.onResume()
+        if (hasLocationPermission()) {
+            startGettingLocation()
         }
     }
-}
+} 

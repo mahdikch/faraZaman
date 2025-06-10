@@ -2,13 +2,14 @@ package net.osmtracker
 
 import android.app.Application
 import android.content.Context
-//import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.HiltAndroidApp
 import net.osmtracker.util.LocaleUtil
 import java.util.Locale
-//@HiltAndroidApp
-class MyApplication:Application() {
+
+@HiltAndroidApp
+class MyApplication : Application() {
     override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(LocaleUtil.setLocale(base!!,"fa"))
+        super.attachBaseContext(LocaleUtil.setLocale(base!!, "fa"))
     }
     override fun onCreate() {
         super.onCreate()
