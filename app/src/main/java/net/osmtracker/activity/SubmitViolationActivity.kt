@@ -30,7 +30,11 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polyline
 import javax.inject.Inject
+import net.osmtracker.data.db.TrackContentProvider
+import android.database.Cursor
+import android.graphics.Color
 
 @AndroidEntryPoint
 class SubmitViolationActivity : AppCompatActivity() {
@@ -42,6 +46,8 @@ class SubmitViolationActivity : AppCompatActivity() {
     private var centerToGpsPos = true
     private var currentPosition = GeoPoint(35.7627, 51.3353)
     private var zoomedToTrackAlready = false
+    private var trackId: Long = -1
+    private var trackPolyline: Polyline? = null
 
     @Inject
     lateinit var roadService: RoadService
@@ -61,11 +67,14 @@ class SubmitViolationActivity : AppCompatActivity() {
         private const val LAST_ZOOM = "lastZoomLevel"
         private const val ANIMATION_DURATION_MS = 1000L
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        const val EXTRA_TRACK_ID = "track_id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_submit_violation)
+
+        trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1)
 
         initializeViews()
         initializeLocationManager()
@@ -73,6 +82,10 @@ class SubmitViolationActivity : AppCompatActivity() {
         initializeMap(savedInstanceState)
         setupSubmitButton()
         setupZoomControls()
+        
+        if (trackId != -1L) {
+            displayTrackPoints()
+        }
     }
 
     private fun initializeViews() {
@@ -286,6 +299,40 @@ class SubmitViolationActivity : AppCompatActivity() {
         super.onResume()
         if (hasLocationPermission()) {
             startGettingLocation()
+        }
+    }
+
+    private fun displayTrackPoints() {
+        val cursor = contentResolver.query(
+            TrackContentProvider.trackPointsUri(trackId),
+            null,
+            null,
+            null,
+            null
+        )
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val points = mutableListOf<GeoPoint>()
+                do {
+                    val lat = it.getDouble(it.getColumnIndexOrThrow(TrackContentProvider.Schema.COL_LATITUDE))
+                    val lon = it.getDouble(it.getColumnIndexOrThrow(TrackContentProvider.Schema.COL_LONGITUDE))
+                    points.add(GeoPoint(lat, lon))
+                } while (it.moveToNext())
+
+                if (points.isNotEmpty()) {
+                    trackPolyline = Polyline(osmView).apply {
+                        outlinePaint.color = Color.RED
+                        outlinePaint.strokeWidth = 5f
+                        setPoints(points)
+                    }
+                    osmView.overlays.add(trackPolyline)
+                    osmView.invalidate()
+
+                    // Center map on first point
+                    osmViewController.animateTo(points.first(), CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS)
+                }
+            }
         }
     }
 } 

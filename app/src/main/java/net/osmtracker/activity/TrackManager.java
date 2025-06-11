@@ -354,8 +354,19 @@ public class TrackManager extends AppCompatActivity
             Intent i = new Intent(this, TrackLogger.class);
             // New track
             currentTrackId = createNewTrack();
-            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
-            tryStartTrackLogger(i);
+//            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
+//            tryStartTrackLogger(i);
+            if (writeExternalStoragePermissionGranted()) {
+                displayTrack(currentTrackId);
+            } else {
+                Log.e(TAG, "DisplayTrackMapWrite - Permission asked");
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_WRITE_STORAGE_DISPLAY_TRACK);
+            }
+            // Also open SubmitViolationActivity with the track ID
+//            Intent violationIntent = new Intent(this, SubmitViolationActivity.class);
+//            violationIntent.putExtra(SubmitViolationActivity.EXTRA_TRACK_ID, currentTrackId);
+//            startActivity(violationIntent);
         } catch (CreateTrackException cte) {
             Toast.makeText(this,
                     getResources().getString(R.string.trackmgr_newtrack_error).replace("{0}",
@@ -606,11 +617,18 @@ public class TrackManager extends AppCompatActivity
     public void onClick(long trackId) {
         Intent i;
         if (trackId == currentTrackId) {
+            if (writeExternalStoragePermissionGranted()) {
+                displayTrack(trackId);
+            } else {
+                Log.e(TAG, "DisplayTrackMapWrite - Permission asked");
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_WRITE_STORAGE_DISPLAY_TRACK);
+            }
             // continue recording the current track
-            i = new Intent(this, TrackLogger.class);
-            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
-            i.putExtra(TrackLogger.STATE_IS_TRACKING, true);
-            tryStartTrackLogger(i);
+//            i = new Intent(this, TrackLogger.class);
+//            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
+//            i.putExtra(TrackLogger.STATE_IS_TRACKING, true);
+//            tryStartTrackLogger(i);
 
         } else {
             // show track info
