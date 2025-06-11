@@ -123,7 +123,7 @@ public class TrackManager extends AppCompatActivity
 
 //        FloatingActionButton fab = findViewById(R.id.trackmgr_fab);
         Button startMissionBtn = findViewById(R.id.start_track);
-        Button submitViolationBtn = findViewById(R.id.submit_violation);
+//        Button submitViolationBtn = findViewById(R.id.submit_violation);
 
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -138,12 +138,12 @@ public class TrackManager extends AppCompatActivity
             }
         });
         Intent intent = new Intent( this , SubmitViolationActivity.class);
-        submitViolationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
-            }
-        });
+//        submitViolationBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(intent);
+//            }
+//        });
         // should check if is the first time using the app
 //		boolean showAppIntro = PreferenceManager.getDefaultSharedPreferences(this)
 //				.getBoolean(OSMTracker.Preferences.KEY_DISPLAY_APP_INTRO,
@@ -354,15 +354,15 @@ public class TrackManager extends AppCompatActivity
             Intent i = new Intent(this, TrackLogger.class);
             // New track
             currentTrackId = createNewTrack();
-//            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
-//            tryStartTrackLogger(i);
-            if (writeExternalStoragePermissionGranted()) {
-                displayTrack(currentTrackId);
-            } else {
-                Log.e(TAG, "DisplayTrackMapWrite - Permission asked");
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_WRITE_STORAGE_DISPLAY_TRACK);
-            }
+            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
+            tryStartTrackLogger(i);
+//            if (writeExternalStoragePermissionGranted()) {
+//                displayTrack(currentTrackId);
+//            } else {
+//                Log.e(TAG, "DisplayTrackMapWrite - Permission asked");
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_WRITE_STORAGE_DISPLAY_TRACK);
+//            }
             // Also open SubmitViolationActivity with the track ID
 //            Intent violationIntent = new Intent(this, SubmitViolationActivity.class);
 //            violationIntent.putExtra(SubmitViolationActivity.EXTRA_TRACK_ID, currentTrackId);
