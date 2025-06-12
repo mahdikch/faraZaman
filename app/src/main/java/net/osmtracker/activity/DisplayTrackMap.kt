@@ -1,40 +1,56 @@
-package net.osmtracker.activity;
+package net.osmtracker.activity
 
-import android.app.Activity;
-import android.content.ContentUris;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.ContentObserver;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-
-import net.osmtracker.OSMTracker;
-import net.osmtracker.R;
-import net.osmtracker.data.db.TrackContentProvider;
-import net.osmtracker.overlay.WayPointsOverlay;
-
-import org.osmdroid.api.IMapController;
-import org.osmdroid.config.Configuration;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.CustomZoomButtonsController;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Polyline;
-import org.osmdroid.views.overlay.ScaleBarOverlay;
-import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.app.AlertDialog
+import android.content.ContentUris
+import android.content.Intent
+import android.content.ServiceConnection
+import android.content.SharedPreferences
+import android.database.ContentObserver
+import android.database.Cursor
+import android.graphics.Color
+import android.graphics.Paint
+import android.location.LocationManager
+import android.os.Bundle
+import android.os.Handler
+import android.preference.PreferenceManager
+import android.provider.Settings
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import net.osmtracker.OSMTracker
+import net.osmtracker.R
+import net.osmtracker.activity.TrackLogger.Companion
+import net.osmtracker.data.db.TrackContentProvider
+import net.osmtracker.data.model.RoadData
+import net.osmtracker.layout.GpsStatusRecord
+import net.osmtracker.layout.GpsStatusRecordDisplay
+import net.osmtracker.listener.PressureListener
+import net.osmtracker.listener.SensorListener
+import net.osmtracker.overlay.WayPointsOverlay
+import net.osmtracker.service.gps.GPSLogger
+import net.osmtracker.service.gps.GPSLoggerServiceConnection
+import net.osmtracker.service.gps.GPSLoggerServiceConnectionDisplay
+import net.osmtracker.service.remote.RoadService
+import org.osmdroid.api.IMapController
+import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.CustomZoomButtonsController
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Polyline
+import org.osmdroid.views.overlay.ScaleBarOverlay
+import org.osmdroid.views.overlay.mylocation.SimpleLocationOverlay
+import javax.inject.Inject
 
 /**
  * Display current track over an OSM map.
@@ -44,457 +60,383 @@ import java.util.List;
  * Otherwise {@link DisplayTrack} is used (track only, no OSM background tiles).
  *
  * @author Viesturs Zarins
- *
  */
-public class DisplayTrackMap extends Activity {
-
-	private static final String TAG = DisplayTrackMap.class.getSimpleName();
-
-	/**
-	 * Key for keeping the zoom level in the saved instance bundle
-	 */
-	private static final String CURRENT_ZOOM = "currentZoom";
-
-	/**
-	 * Key for keeping scrolled left position of OSM view activity re-creation
-	 */
-	private static final String CURRENT_SCROLL_X = "currentScrollX";
-
-	/**
-	 * Key for keeping scrolled top position of OSM view across activity re-creation
-	 */
-	private static final String CURRENT_SCROLL_Y = "currentScrollY";
-
-	/**
-	 * Key for keeping whether the map display should be centered to the gps location
-	 */
-	private static final String CURRENT_CENTER_TO_GPS_POS = "currentCenterToGpsPos";
-
-	/**
-	 * Key for keeping whether the map display was zoomed and centered
-	 * on an old track id loaded from the database (boolean {@link #zoomedToTrackAlready})
-	 */
-	private static final String CURRENT_ZOOMED_TO_TRACK = "currentZoomedToTrack";
-
-	/**
-	 * Key for keeping the last zoom level across app. restart
-	 */
-	private static final String LAST_ZOOM = "lastZoomLevel";
-
-	/**
-	 * Default zoom level
-	 */
-	private static final int DEFAULT_ZOOM = 16;
-
-	/**
-	 * Default zoom level for center with zoom
-	 */
-	private static final double CENTER_DEFAULT_ZOOM_LEVEL = 18;
-
-	/**
-	 * Animation duration in milliseconds for center with zoom
-	 */
-	private static final long ANIMATION_DURATION_MS = 1000;
-
-	/**
-	 * Main OSM view
-	 */
-	private MapView osmView;
-
-	/**
-	 * Controller to interact with view
-	 */
-	private IMapController osmViewController;
-
-	/**
-	 * OSM view overlay that displays current location
-	 */
-	private SimpleLocationOverlay myLocationOverlay;
-
-	/**
-	 * OSM view overlay that displays current path
-	 */
-	private Polyline polyline;
-
-	/**
-	 * OSM view overlay that displays waypoints
-	 */
-	private WayPointsOverlay wayPointsOverlay;
-
-	/**
-	 * OSM view overlay for the map scale bar
-	 */
-	private ScaleBarOverlay scaleBarOverlay;
-
-	/**
-	 * Current track id
-	 */
-	private long currentTrackId;
-
-	/**
-	 * whether the map display should be centered to the gps location
-	 */
-	private boolean centerToGpsPos = true;
-
-	/**
-	 * whether the map display was already zoomed and centered
-	 * on an old track loaded from the database (should be done only once).
-	 */
-	private boolean zoomedToTrackAlready = false;
-
-	/**
-	 * the last position we know
-	 */
-	private GeoPoint currentPosition;
-
-	/**
-	 * The row id of the last location read from the database that has been added to the
-	 * list of layout points. Using this we to reduce DB load by only reading new points.
-	 * Initially null, to indicate that no data has yet been read.
-	 */
-	private Integer lastTrackPointIdProcessed = null;
-
-	/**
-	 * Observes changes on track points
-	 */
-	private ContentObserver trackpointContentObserver;
-
-	/**
-	 * Keeps the SharedPreferences
-	 */
-	private SharedPreferences prefs = null;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// loading the preferences
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		setContentView(R.layout.displaytrackmap);
-
-		currentTrackId = getIntent().getExtras().getLong(TrackContentProvider.Schema.COL_TRACK_ID);
-		setTitle(getTitle() + ": #" + currentTrackId);
-
-		// Initialize OSM view
-		Configuration.getInstance().load(this, prefs);
-
-		osmView = findViewById(R.id.displaytrackmap_osmView);
-		// pinch to zoom
-		osmView.setMultiTouchControls(true);
-		osmView.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
-		// we'll use osmView to define if the screen is always on or not
-		osmView.setKeepScreenOn(prefs.getBoolean(OSMTracker.Preferences.KEY_UI_DISPLAY_KEEP_ON, OSMTracker.Preferences.VAL_UI_DISPLAY_KEEP_ON));
-		osmViewController = osmView.getController();
-
-		// Check if there is a saved zoom level
-		if (savedInstanceState != null) {
-			osmViewController.setZoom(savedInstanceState.getInt(CURRENT_ZOOM, DEFAULT_ZOOM));
-			osmView.scrollTo(savedInstanceState.getInt(CURRENT_SCROLL_X, 0),
-					savedInstanceState.getInt(CURRENT_SCROLL_Y, 0));
-			centerToGpsPos = savedInstanceState.getBoolean(CURRENT_CENTER_TO_GPS_POS, centerToGpsPos);
-			zoomedToTrackAlready = savedInstanceState.getBoolean(CURRENT_ZOOMED_TO_TRACK, zoomedToTrackAlready);
-		} else {
-			// Try to get last zoom Level from Shared Preferences
-			SharedPreferences settings = getPreferences(MODE_PRIVATE);
-			osmViewController.setZoom(settings.getInt(LAST_ZOOM, DEFAULT_ZOOM));
-		}
-
-		selectTileSource();
-
-		setTileDpiScaling();
-
-		createOverlays();
-
-		// Create content observer for track points
-		trackpointContentObserver = new ContentObserver(new Handler()) {
-			@Override
-			public void onChange(boolean selfChange) {
-				pathChanged();
-			}
-		};
-
-		// Register listeners for zoom buttons
-		findViewById(R.id.displaytrackmap_imgZoomIn).setOnClickListener(v -> osmViewController.zoomIn());
-		findViewById(R.id.displaytrackmap_imgZoomOut).setOnClickListener(v -> osmViewController.zoomOut());
-		findViewById(R.id.displaytrackmap_imgZoomCenter).setOnClickListener(view -> {
-			centerToGpsPos = true;
-			if (currentPosition != null) {
-				osmViewController.animateTo(currentPosition,CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS);
-			}
-		});
-	}
-
-	/**
-	 * Sets the map tile provider according to the user's demands in the settings.
-	 */
-	public void selectTileSource() {
-		String mapTile = prefs.getString(OSMTracker.Preferences.KEY_UI_MAP_TILE, OSMTracker.Preferences.VAL_UI_MAP_TILE_MAPNIK);
-		Log.e("TileMapName active", mapTile);
-		//osmView.setTileSource(selectMapTile(mapTile));
-		osmView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
-	}
-
-	/**
-	 * Make text on map better readable on high DPI displays
-	 */
-	public void setTileDpiScaling() {
-		osmView.setTilesScaledToDpi(true);
-	}
-
-
-//	/**
-//	 * Returns a ITileSource for the map according to the selected mapTile
-//	 * String. The default is mapnik.
-//	 *
-//	 * @param mapTile String that is the name of the tile provider
-//	 * @return ITileSource with the selected Tile-Source
-//	 */
-//	private ITileSource selectMapTile(String mapTile) {
-//		try {
-//			Field f = TileSourceFactory.class.getField(mapTile);
-//			return (ITileSource) f.get(null);
-//		} catch (Exception e) {
-//			Log.e(TAG, "Invalid tile source '"+mapTile+"'", e);
-//			Log.e(TAG, "Default tile source selected: '" + TileSourceFactory.DEFAULT_TILE_SOURCE.name() +"'");
-//			return TileSourceFactory.DEFAULT_TILE_SOURCE;
-//		}
-//	}
-
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putInt(CURRENT_ZOOM, osmView.getZoomLevel());
-		outState.putInt(CURRENT_SCROLL_X, osmView.getScrollX());
-		outState.putInt(CURRENT_SCROLL_Y, osmView.getScrollY());
-		outState.putBoolean(CURRENT_CENTER_TO_GPS_POS, centerToGpsPos);
-		outState.putBoolean(CURRENT_ZOOMED_TO_TRACK, zoomedToTrackAlready);
-		super.onSaveInstanceState(outState);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		resumeActivity();
-	}
-
-	private void resumeActivity() {
-		// setKeepScreenOn depending on user's preferences
-		osmView.setKeepScreenOn(prefs.getBoolean(OSMTracker.Preferences.KEY_UI_DISPLAY_KEEP_ON, OSMTracker.Preferences.VAL_UI_DISPLAY_KEEP_ON));
-
-		// Register content observer for any track point changes
-		getContentResolver().registerContentObserver(
-				TrackContentProvider.trackPointsUri(currentTrackId),
-				true, trackpointContentObserver);
-
-		// Forget the last waypoint read from the DB
-		// This ensures that all waypoints for the track will be reloaded
-		// from the database to populate the path layout
-		lastTrackPointIdProcessed = null;
-
-		// Reload path
-		pathChanged();
-
-		selectTileSource();
-
-		setTileDpiScaling();
-
-		// Refresh way points
-		wayPointsOverlay.refresh();
-	}
-
-	@Override
-	protected void onPause() {
-		// Unregister content observer
-		getContentResolver().unregisterContentObserver(trackpointContentObserver);
-
-		// Clear the points list.
-		polyline.setPoints(new ArrayList<>());
-
-		super.onPause();
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-
-		// Save zoom level in shared preferences
-		SharedPreferences settings = getPreferences(MODE_PRIVATE);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt(LAST_ZOOM, osmView.getZoomLevel());
-		editor.apply();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.displaytrackmap_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		menu.findItem(R.id.displaytrackmap_menu_center_to_gps).setEnabled((!centerToGpsPos && currentPosition != null));
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.displaytrackmap_menu_center_to_gps:
-				centerToGpsPos = true;
-				if (currentPosition != null) {
-					osmViewController.animateTo(currentPosition);
-				}
-				break;
-			case R.id.displaytrackmap_menu_settings:
-				// Start settings activity
-				startActivity(new Intent(this, Preferences.class));
-				break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_MOVE:
-				if (currentPosition != null)
-					centerToGpsPos = false;
-				break;
-		}
-		return super.onTouchEvent(event);
-	}
-
-	/**
-	 * Creates overlays over the OSM view
-	 */
-	private void createOverlays() {
-		DisplayMetrics metrics = new DisplayMetrics();
-		this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-		// set with to hopefully DPI independent 0.5mm
-		polyline = new Polyline();
-		Paint paint = polyline.getOutlinePaint();
-		paint.setColor(Color.BLUE);
-		paint.setStrokeWidth((float) (metrics.densityDpi / 25.4 / 2));
-		osmView.getOverlayManager().add(polyline);
-
-		myLocationOverlay = new SimpleLocationOverlay(this);
-		osmView.getOverlays().add(myLocationOverlay);
-
-		wayPointsOverlay = new WayPointsOverlay(this, currentTrackId);
-		osmView.getOverlays().add(wayPointsOverlay);
-
-		scaleBarOverlay = new ScaleBarOverlay(osmView);
-		osmView.getOverlays().add(scaleBarOverlay);
-	}
-
-	/**
-	 * On track path changed, update the two overlays and repaint view.
-	 * If {@link #lastTrackPointIdProcessed} is null, this is the initial call
-	 * from {@link #onResume()}, and not the periodic call from
-	 * {@link ContentObserver#onChange(boolean) trackpointContentObserver.onChange(boolean)}
-	 * while recording.
-	 */
-	private void pathChanged() {
-		if (isFinishing()) {
-			return;
-		}
-
-		// See if the track is active.
-		// If not, we'll calculate initial track bounds
-		// while retrieving from the database.
-		// (the first point will overwrite these lat/lon bounds.)
-		boolean doInitialBoundsCalc = false;
-		double minLat = 91.0, minLon = 181.0;
-		double maxLat = -91.0, maxLon = -181.0;
-		if ((!zoomedToTrackAlready) && (lastTrackPointIdProcessed == null)) {
-			final String[] proj_active = {TrackContentProvider.Schema.COL_ACTIVE};
-			Cursor cursor = getContentResolver().query(
-					ContentUris.withAppendedId(TrackContentProvider.CONTENT_URI_TRACK, currentTrackId),
-					proj_active, null, null, null);
-			if (cursor != null && cursor.moveToFirst()) {
-				int colIndex = cursor.getColumnIndex(TrackContentProvider.Schema.COL_ACTIVE);
-				if (colIndex != -1) {
-					doInitialBoundsCalc =
-							(cursor.getInt(colIndex) == TrackContentProvider.Schema.VAL_TRACK_INACTIVE);
-				}
-				cursor.close();
-			}
-		}
-
-		// Projection: The columns to retrieve. Here, we want the latitude, 
-		// longitude and primary key only
-		String[] projection = {TrackContentProvider.Schema.COL_LATITUDE, TrackContentProvider.Schema.COL_LONGITUDE, TrackContentProvider.Schema.COL_ID};
-		// Selection: The where clause to use
-		String selection = null;
-		// SelectionArgs: The parameter replacements to use for the '?' in the selection		
-		String[] selectionArgs = null;
-
-		// Only request the track points that we have not seen yet
-		// If we have processed any track points in this session then
-		// lastTrackPointIdProcessed will not be null. We only want 
-		// to see data from rows with a primary key greater than lastTrackPointIdProcessed  
-		if (lastTrackPointIdProcessed != null) {
-			selection = TrackContentProvider.Schema.COL_ID + " > ?";
-			List<String> selectionArgsList = new ArrayList<>();
-			selectionArgsList.add(lastTrackPointIdProcessed.toString());
-			selectionArgs = selectionArgsList.toArray(new String[1]);
-		}
-
-		// Retrieve any points we have not yet seen
-		Cursor c = getContentResolver().query(
-				TrackContentProvider.trackPointsUri(currentTrackId),
-				projection, selection, selectionArgs, TrackContentProvider.Schema.COL_ID + " asc");
-
-		if (c != null) {
-			int numberOfPointsRetrieved = c.getCount();
-			if (numberOfPointsRetrieved > 0) {
-				c.moveToFirst();
-				double lastLat = 0;
-				double lastLon = 0;
-				int primaryKeyColumnIndex = c.getColumnIndex(TrackContentProvider.Schema.COL_ID);
-				int latitudeColumnIndex = c.getColumnIndex(TrackContentProvider.Schema.COL_LATITUDE);
-				int longitudeColumnIndex = c.getColumnIndex(TrackContentProvider.Schema.COL_LONGITUDE);
-
-				// Add each new point to the track
-				while (!c.isAfterLast()) {
-					lastLat = c.getDouble(latitudeColumnIndex);
-					lastLon = c.getDouble(longitudeColumnIndex);
-					lastTrackPointIdProcessed = c.getInt(primaryKeyColumnIndex);
-					polyline.addPoint(new GeoPoint(lastLat, lastLon));
-					if (doInitialBoundsCalc) {
-						if (lastLat < minLat) minLat = lastLat;
-						if (lastLon < minLon) minLon = lastLon;
-						if (lastLat > maxLat) maxLat = lastLat;
-						if (lastLon > maxLon) maxLon = lastLon;
-					}
-					c.moveToNext();
-				}
-
-				// Last point is current position.
-				currentPosition = new GeoPoint(lastLat, lastLon);
-				myLocationOverlay.setLocation(currentPosition);
-				if (centerToGpsPos) {
-					osmViewController.setCenter(currentPosition);
-				}
-
-				// Repaint
-				osmView.invalidate();
-				if (doInitialBoundsCalc && (numberOfPointsRetrieved > 1)) {
-					// osmdroid-3.0.8 hangs if we directly call zoomToSpan during initial onResume,
-					// so post a Runnable instead for after it's done initializing.
-					final double north = maxLat, east = maxLon, south = minLat, west = minLon;
-					osmView.post(() -> {
-						osmViewController.zoomToSpan((int) (north - south), (int) (east - west));
-						osmViewController.setCenter(new GeoPoint((north + south) / 2, (east + west) / 2));
-						zoomedToTrackAlready = true;
-					});
-				}
-			}
-			c.close();
-		}
-	}
-}
+@AndroidEntryPoint
+class DisplayTrackMap : AppCompatActivity() {
+
+    companion object {
+
+        private const val TAG = "DisplayTrackMap"
+        private const val CURRENT_ZOOM = "currentZoom"
+        private const val CURRENT_SCROLL_X = "currentScrollX"
+        private const val CURRENT_SCROLL_Y = "currentScrollY"
+        private const val CURRENT_CENTER_TO_GPS_POS = "currentCenterToGpsPos"
+        private const val CURRENT_ZOOMED_TO_TRACK = "currentZoomedToTrack"
+        private const val LAST_ZOOM = "lastZoomLevel"
+        private const val DEFAULT_ZOOM = 16
+        private const val CENTER_DEFAULT_ZOOM_LEVEL = 18.0
+        private const val ANIMATION_DURATION_MS = 1000L
+    }
+
+    private lateinit var osmView: MapView
+    private lateinit var osmViewController: IMapController
+    private lateinit var myLocationOverlay: SimpleLocationOverlay
+    private lateinit var polyline: Polyline
+    private lateinit var wayPointsOverlay: WayPointsOverlay
+    private lateinit var scaleBarOverlay: ScaleBarOverlay
+    private lateinit var prefs: SharedPreferences
+
+    private var currentTrackId: Long = 0
+    private var centerToGpsPos = true
+    private var zoomedToTrackAlready = false
+    private var currentPosition: GeoPoint? = null
+    private var lastTrackPointIdProcessed: Int? = null
+    private lateinit var trackpointContentObserver: ContentObserver
+    private var gpsLoggerServiceIntent: Intent? = null
+    private var sensorListener: SensorListener? = null
+    private var pressureListener: PressureListener? = null
+    @Inject
+    lateinit var roadService: RoadService
+    private var checkGPSFlag = true
+    private var gpsLogger: GPSLogger? = null
+
+    private lateinit var roadNameTextView: TextView
+    private lateinit var roadTypeTextView: TextView
+    private lateinit var speedLimitTextView: TextView
+    private var gpsLoggerConnection: ServiceConnection = GPSLoggerServiceConnectionDisplay(this)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currentTrackId = intent.extras?.getLong(TrackContentProvider.Schema.COL_TRACK_ID) ?: 0
+        gpsLoggerServiceIntent = Intent(this, GPSLogger::class.java).apply {
+            putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId)
+        }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        setContentView(R.layout.displaytrackmap)
+
+        title = "${title}: #$currentTrackId"
+
+        initializeViews()
+        initializeMap(savedInstanceState)
+        setupZoomControls()
+        setupSubmitButton()
+        sensorListener = SensorListener()
+        pressureListener = PressureListener()
+    }
+
+    private fun checkGPSProvider() {
+        val lm = getSystemService(LOCATION_SERVICE) as LocationManager
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.tracklogger_gps_disabled)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setMessage(getString(R.string.tracklogger_gps_disabled_hint))
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+                .setNegativeButton(android.R.string.no) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .create().show()
+            checkGPSFlag = false
+        }
+    }
+    private fun setupSubmitButton() {
+        findViewById<Button>(R.id.submit_violation).setOnClickListener {
+            startActivity(Intent(this, SubmitViolationFormActivity::class.java))
+        }
+    }
+    private fun initializeViews() {
+        roadNameTextView = findViewById(R.id.road_name)
+        roadTypeTextView = findViewById(R.id.road_type)
+        speedLimitTextView = findViewById(R.id.speed_limit)
+    }
+    fun setGpsLogger(l: GPSLogger) { gpsLogger = l }
+    private fun initializeMap(savedInstanceState: Bundle?) {
+        Configuration.getInstance().load(this, prefs)
+
+        osmView = findViewById(R.id.displaytrackmap_osmView)
+        osmView.setMultiTouchControls(true)
+        osmView.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
+        osmView.keepScreenOn = prefs.getBoolean(OSMTracker.Preferences.KEY_UI_DISPLAY_KEEP_ON, OSMTracker.Preferences.VAL_UI_DISPLAY_KEEP_ON)
+        osmViewController = osmView.controller
+
+        if (savedInstanceState != null) {
+            osmViewController.setZoom(savedInstanceState.getInt(CURRENT_ZOOM, DEFAULT_ZOOM))
+            osmView.scrollTo(
+                savedInstanceState.getInt(CURRENT_SCROLL_X, 0),
+                savedInstanceState.getInt(CURRENT_SCROLL_Y, 0)
+            )
+            centerToGpsPos = savedInstanceState.getBoolean(CURRENT_CENTER_TO_GPS_POS, centerToGpsPos)
+            zoomedToTrackAlready = savedInstanceState.getBoolean(CURRENT_ZOOMED_TO_TRACK, zoomedToTrackAlready)
+        } else {
+            val settings = getPreferences(MODE_PRIVATE)
+            osmViewController.setZoom(settings.getInt(LAST_ZOOM, DEFAULT_ZOOM))
+        }
+
+        selectTileSource()
+        setTileDpiScaling()
+        createOverlays()
+
+        trackpointContentObserver = object : ContentObserver(Handler()) {
+            override fun onChange(selfChange: Boolean) {
+                pathChanged()
+            }
+        }
+    }
+
+    private fun setupZoomControls() {
+        findViewById<View>(R.id.displaytrackmap_imgZoomIn).setOnClickListener { osmViewController.zoomIn() }
+        findViewById<View>(R.id.displaytrackmap_imgZoomOut).setOnClickListener { osmViewController.zoomOut() }
+        findViewById<View>(R.id.displaytrackmap_imgZoomCenter).setOnClickListener {
+            centerToGpsPos = true
+            currentPosition?.let { pos ->
+                osmViewController.animateTo(pos, CENTER_DEFAULT_ZOOM_LEVEL, ANIMATION_DURATION_MS)
+            }
+        }
+    }
+
+    private fun fetchRoadData(latitude: Double, longitude: Double) {
+        lifecycleScope.launch {
+            try {
+                val token = prefs.getString("ACCESS_TOKEN", null)
+                
+                if (token == null) {
+                    Log.e(TAG, "No access token found")
+                    return@launch
+                }
+
+                val roadData = roadService.getRoadData(latitude, longitude, 10, "Bearer $token")
+                roadData.firstOrNull()?.let {
+                    updateRoadInfo(it) }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error fetching road data", e)
+            }
+        }
+    }
+
+    private fun updateRoadInfo(roadData: RoadData) {
+        roadNameTextView.text = "نام خیابان: ${roadData.name}"
+        roadTypeTextView.text = "نوع خیابان: ${roadData.fclass}"
+        speedLimitTextView.text = "محدودیت سرعت: ${roadData.maxspeed} km/h"
+    }
+
+    fun selectTileSource() {
+        val mapTile = prefs.getString(OSMTracker.Preferences.KEY_UI_MAP_TILE, OSMTracker.Preferences.VAL_UI_MAP_TILE_MAPNIK)
+        Log.e("TileMapName active", mapTile ?: "")
+        osmView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
+    }
+
+    fun setTileDpiScaling() {
+        osmView.setTilesScaledToDpi(true)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(CURRENT_ZOOM, osmView.zoomLevel)
+        outState.putInt(CURRENT_SCROLL_X, osmView.scrollX)
+        outState.putInt(CURRENT_SCROLL_Y, osmView.scrollY)
+        outState.putBoolean(CURRENT_CENTER_TO_GPS_POS, centerToGpsPos)
+        outState.putBoolean(CURRENT_ZOOMED_TO_TRACK, zoomedToTrackAlready)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        resumeActivity()
+
+        if (checkGPSFlag && prefs?.getBoolean(OSMTracker.Preferences.KEY_GPS_CHECKSTARTUP, OSMTracker.Preferences.VAL_GPS_CHECKSTARTUP) == true) {
+            checkGPSProvider()
+        }
+        (findViewById<View>(R.id.gpsStatus) as GpsStatusRecordDisplay).requestLocationUpdates(true)
+        startService(gpsLoggerServiceIntent)
+        gpsLoggerServiceIntent?.let { bindService(it, gpsLoggerConnection, 0) }
+        sensorListener?.register(this)
+        pressureListener?.register(this, prefs?.getBoolean(OSMTracker.Preferences.KEY_USE_BAROMETER, OSMTracker.Preferences.VAL_USE_BAROMETER) == true)
+
+    }
+
+    private fun resumeActivity() {
+        osmView.keepScreenOn = prefs.getBoolean(OSMTracker.Preferences.KEY_UI_DISPLAY_KEEP_ON, OSMTracker.Preferences.VAL_UI_DISPLAY_KEEP_ON)
+
+        contentResolver.registerContentObserver(
+            TrackContentProvider.trackPointsUri(currentTrackId),
+            true, trackpointContentObserver
+        )
+
+        lastTrackPointIdProcessed = null
+        pathChanged()
+        selectTileSource()
+        setTileDpiScaling()
+        wayPointsOverlay.refresh()
+    }
+
+    override fun onPause() {
+        contentResolver.unregisterContentObserver(trackpointContentObserver)
+        polyline.setPoints(emptyList())
+        (findViewById<View>(R.id.gpsStatus) as GpsStatusRecordDisplay).requestLocationUpdates(false)
+
+        gpsLogger?.let {
+            if (!it.isTracking) {
+                Log.v(TAG, "Service is not tracking, trying to stopService()")
+                unbindService(gpsLoggerConnection)
+                stopService(gpsLoggerServiceIntent)
+            } else {
+                unbindService(gpsLoggerConnection)
+            }
+        }
+        sensorListener?.unregister()
+        pressureListener?.unregister()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val settings = getPreferences(MODE_PRIVATE)
+        settings.edit().apply {
+            putInt(LAST_ZOOM, osmView.zoomLevel)
+            apply()
+        }
+    }
+    fun getGpsLogger(): GPSLogger? = gpsLogger
+    fun getCurrentTrackId(): Long = currentTrackId
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.displaytrackmap_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.findItem(R.id.displaytrackmap_menu_center_to_gps).isEnabled = !centerToGpsPos && currentPosition != null
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.displaytrackmap_menu_center_to_gps -> {
+                centerToGpsPos = true
+                currentPosition?.let { osmViewController.animateTo(it) }
+            }
+            R.id.displaytrackmap_menu_settings -> {
+                startActivity(Intent(this, Preferences::class.java))
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_MOVE && currentPosition != null) {
+            centerToGpsPos = false
+        }
+        return super.onTouchEvent(event)
+    }
+
+    private fun createOverlays() {
+        val metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+
+        polyline = Polyline()
+        val paint = polyline.outlinePaint
+        paint.color = Color.BLUE
+        paint.strokeWidth = (metrics.densityDpi / 25.4f / 2)
+        osmView.overlayManager.add(polyline)
+
+        myLocationOverlay = SimpleLocationOverlay(this)
+        osmView.overlays.add(myLocationOverlay)
+
+        wayPointsOverlay = WayPointsOverlay(this, currentTrackId)
+        osmView.overlays.add(wayPointsOverlay)
+
+        scaleBarOverlay = ScaleBarOverlay(osmView)
+        osmView.overlays.add(scaleBarOverlay)
+    }
+
+    private fun pathChanged() {
+        if (isFinishing) return
+
+        var doInitialBoundsCalc = false
+        var minLat = 91.0
+        var minLon = 181.0
+        var maxLat = -91.0
+        var maxLon = -181.0
+
+        if (!zoomedToTrackAlready && lastTrackPointIdProcessed == null) {
+            val projActive = arrayOf(TrackContentProvider.Schema.COL_ACTIVE)
+            contentResolver.query(
+                ContentUris.withAppendedId(TrackContentProvider.CONTENT_URI_TRACK, currentTrackId),
+                projActive, null, null, null
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val colIndex = cursor.getColumnIndex(TrackContentProvider.Schema.COL_ACTIVE)
+                    if (colIndex != -1) {
+                        doInitialBoundsCalc = cursor.getInt(colIndex) == TrackContentProvider.Schema.VAL_TRACK_INACTIVE
+                    }
+                }
+            }
+        }
+
+        val projection = arrayOf(
+            TrackContentProvider.Schema.COL_LATITUDE,
+            TrackContentProvider.Schema.COL_LONGITUDE,
+            TrackContentProvider.Schema.COL_ID
+        )
+
+        var selection: String? = null
+        var selectionArgs: Array<String>? = null
+
+        if (lastTrackPointIdProcessed != null) {
+            selection = "${TrackContentProvider.Schema.COL_ID} > ?"
+            selectionArgs = arrayOf(lastTrackPointIdProcessed.toString())
+        }
+
+        contentResolver.query(
+            TrackContentProvider.trackPointsUri(currentTrackId),
+            projection, selection, selectionArgs, "${TrackContentProvider.Schema.COL_ID} asc"
+        )?.use { c ->
+            val numberOfPointsRetrieved = c.count
+            if (numberOfPointsRetrieved > 0) {
+                c.moveToFirst()
+                var lastLat = 0.0
+                var lastLon = 0.0
+                val primaryKeyColumnIndex = c.getColumnIndex(TrackContentProvider.Schema.COL_ID)
+                val latitudeColumnIndex = c.getColumnIndex(TrackContentProvider.Schema.COL_LATITUDE)
+                val longitudeColumnIndex = c.getColumnIndex(TrackContentProvider.Schema.COL_LONGITUDE)
+
+                while (!c.isAfterLast) {
+                    lastLat = c.getDouble(latitudeColumnIndex)
+                    lastLon = c.getDouble(longitudeColumnIndex)
+                    lastTrackPointIdProcessed = c.getInt(primaryKeyColumnIndex)
+                    polyline.addPoint(GeoPoint(lastLat, lastLon))
+                    if (doInitialBoundsCalc) {
+                        if (lastLat < minLat) minLat = lastLat
+                        if (lastLon < minLon) minLon = lastLon
+                        if (lastLat > maxLat) maxLat = lastLat
+                        if (lastLon > maxLon) maxLon = lastLon
+                    }
+                    c.moveToNext()
+                }
+
+                currentPosition = GeoPoint(lastLat, lastLon)
+                myLocationOverlay.setLocation(currentPosition)
+                if (centerToGpsPos) {
+                    osmViewController.setCenter(currentPosition)
+                }
+
+                // Fetch road data for the current position
+                fetchRoadData(lastLat, lastLon)
+
+                osmView.invalidate()
+                if (doInitialBoundsCalc && numberOfPointsRetrieved > 1) {
+                    val north = maxLat
+                    val east = maxLon
+                    val south = minLat
+                    val west = minLon
+                    osmView.post {
+                        osmViewController.zoomToSpan((north - south).toInt(), (east - west).toInt())
+                        osmViewController.setCenter(GeoPoint((north + south) / 2, (east + west) / 2))
+                        zoomedToTrackAlready = true
+                    }
+                }
+            }
+        }
+    }
+} 

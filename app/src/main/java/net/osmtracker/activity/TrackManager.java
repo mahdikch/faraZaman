@@ -351,7 +351,8 @@ public class TrackManager extends AppCompatActivity
     private void startTrackLoggerForNewTrack() {
         // Start track logger activity
         try {
-            Intent i = new Intent(this, TrackLogger.class);
+//            Intent i = new Intent(this, TrackLogger.class);
+            Intent i = new Intent(this, DisplayTrackMap.class);
             // New track
             currentTrackId = createNewTrack();
             i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
@@ -653,7 +654,7 @@ public class TrackManager extends AppCompatActivity
                 setActiveTrack(trackId);
             }
             // Start the TrackLogger activity to begin logging the selected track
-            Intent i = new Intent(this, TrackLogger.class);
+            Intent i = new Intent(this, DisplayTrackMap.class);
             i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, trackId);
             tryStartTrackLogger(i);
         }
