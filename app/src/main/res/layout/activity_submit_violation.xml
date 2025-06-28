@@ -59,7 +59,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
-        android:background="@drawable/ic_zoom_in"
+        android:background="@drawable/zoom_in"
         android:contentDescription="Zoom In"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +69,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
-        android:background="@drawable/ic_zoom_out"
+        android:background="@drawable/zoom_out"
         android:contentDescription="Zoom Out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/displaytrackmap_imgZoomIn" />
@@ -79,7 +79,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
-        android:background="@drawable/ic_my_location"
+        android:background="@drawable/gps_center"
         android:contentDescription="Center on my location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/displaytrackmap_imgZoomOut" />

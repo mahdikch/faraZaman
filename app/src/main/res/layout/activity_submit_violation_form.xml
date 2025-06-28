@@ -81,7 +81,7 @@
                     app:boxStrokeColor="#1E88E5">
 
                     <AutoCompleteTextView
-                        android:id="@+id/employer"
+                        android:id="@+id/organs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/iran_sans"
@@ -112,7 +112,7 @@
                     app:boxStrokeColor="#1E88E5">
 
                     <AutoCompleteTextView
-                        android:id="@+id/contract_number"
+                        android:id="@+id/contracts"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/iran_sans"
@@ -142,7 +142,7 @@
                     app:boxStrokeColor="#1E88E5">
 
                     <AutoCompleteTextView
-                        android:id="@+id/violation_group"
+                        android:id="@+id/billCleaningViolationGroups"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/iran_sans"
@@ -172,7 +172,7 @@
                     app:boxStrokeColor="#1E88E5">
 
                     <AutoCompleteTextView
-                        android:id="@+id/defect"
+                        android:id="@+id/billCleaningViolations"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/iran_sans"
@@ -212,7 +212,7 @@
                         app:boxStrokeColor="#1E88E5">
 
                         <AutoCompleteTextView
-                            android:id="@+id/season_of_price"
+                            android:id="@+id/billCleaningItemGroups"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/iran_sans"
@@ -245,7 +245,7 @@
                         app:boxStrokeColor="#1E88E5">
 
                         <AutoCompleteTextView
-                            android:id="@+id/price_list"
+                            android:id="@+id/billOriginCleaningItems"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/iran_sans"

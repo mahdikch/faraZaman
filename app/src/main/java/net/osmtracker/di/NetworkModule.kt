@@ -1,9 +1,13 @@
 package net.osmtracker.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import net.osmtracker.data.api.FormDataApiService
+import net.osmtracker.data.repository.FormDataRepository
 import net.osmtracker.service.remote.AuthService
 import net.osmtracker.service.remote.RoadService
 import okhttp3.OkHttpClient
@@ -20,16 +24,18 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        
         return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
+            .addInterceptor(loggingInterceptor)
             .build()
     }
-
+    
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
@@ -38,6 +44,21 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+    
+    @Provides
+    @Singleton
+    fun provideFormDataApiService(retrofit: Retrofit): FormDataApiService {
+        return retrofit.create(FormDataApiService::class.java)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideFormDataRepository(
+        apiService: FormDataApiService,
+        @ApplicationContext context: Context
+    ): FormDataRepository {
+        return FormDataRepository(apiService, context)
     }
 
     @Provides

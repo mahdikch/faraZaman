@@ -105,6 +105,9 @@ public class TrackManager extends AppCompatActivity
     // To check if the RecyclerView already has a DividerItemDecoration added
     private boolean hasDivider;
 
+    // Store the track ID that was clicked when requesting permission
+    private long permissionRequestTrackId = TRACK_ID_NO_TRACK;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -554,6 +557,8 @@ public class TrackManager extends AppCompatActivity
                     uploadTrack(contextMenuSelectedTrackid);
                 } else {
                     Log.e(TAG, "OsmUploadWrite - Permission asked");
+                    // Store the track ID for use in permission callback
+                    permissionRequestTrackId = contextMenuSelectedTrackid;
                     ActivityCompat.requestPermissions(this,
                             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             RC_WRITE_PERMISSIONS_UPLOAD);
@@ -565,6 +570,8 @@ public class TrackManager extends AppCompatActivity
                     displayTrack(contextMenuSelectedTrackid);
                 } else {
                     Log.e(TAG, "DisplayTrackMapWrite - Permission asked");
+                    // Store the track ID for use in permission callback
+                    permissionRequestTrackId = contextMenuSelectedTrackid;
                     ActivityCompat.requestPermissions(this,
                             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_WRITE_STORAGE_DISPLAY_TRACK);
                 }
@@ -589,15 +596,15 @@ public class TrackManager extends AppCompatActivity
         Log.e(TAG, "On Display Track");
         // Start display track activity, with or without OSM background
         Intent i;
-        boolean useOpenStreetMapBackground = PreferenceManager
-                .getDefaultSharedPreferences(this).getBoolean(
-                        OSMTracker.Preferences.KEY_UI_DISPLAYTRACK_OSM,
-                        OSMTracker.Preferences.VAL_UI_DISPLAYTRACK_OSM);
-        if (useOpenStreetMapBackground) {
+//        boolean useOpenStreetMapBackground = PreferenceManager
+//                .getDefaultSharedPreferences(this).getBoolean(
+//                        OSMTracker.Preferences.KEY_UI_DISPLAYTRACK_OSM,
+//                        OSMTracker.Preferences.VAL_UI_DISPLAYTRACK_OSM);
+//        if (useOpenStreetMapBackground) {
             i = new Intent(this, DisplayTrackMap.class);
-        } else {
-            i = new Intent(this, DisplayTrack.class);
-        }
+//        } else {
+//            i = new Intent(this, DisplayTrack.class);
+//        }
         i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, trackId);
         startActivity(i);
     }
@@ -616,26 +623,15 @@ public class TrackManager extends AppCompatActivity
 
     @Override
     public void onClick(long trackId) {
-        Intent i;
-        if (trackId == currentTrackId) {
-            if (writeExternalStoragePermissionGranted()) {
-                displayTrack(trackId);
-            } else {
-                Log.e(TAG, "DisplayTrackMapWrite - Permission asked");
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_WRITE_STORAGE_DISPLAY_TRACK);
-            }
-            // continue recording the current track
-//            i = new Intent(this, TrackLogger.class);
-//            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId);
-//            i.putExtra(TrackLogger.STATE_IS_TRACKING, true);
-//            tryStartTrackLogger(i);
-
+        // Always open DisplayTrackMap when a track item is clicked
+        if (writeExternalStoragePermissionGranted()) {
+            displayTrack(trackId);
         } else {
-            // show track info
-            i = new Intent(this, TrackDetail.class);
-            i.putExtra(TrackContentProvider.Schema.COL_TRACK_ID, trackId);
-            startActivity(i);
+            Log.e(TAG, "DisplayTrackMapWrite - Permission asked");
+            // Store the track ID for use in permission callback
+            permissionRequestTrackId = trackId;
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_WRITE_STORAGE_DISPLAY_TRACK);
         }
     }
 
@@ -668,6 +664,8 @@ public class TrackManager extends AppCompatActivity
             uploadTrack(trackId);
         } else {
             Log.e(TAG, "OsmUploadWrite - Permission asked");
+            // Store the track ID for use in permission callback
+            permissionRequestTrackId = trackId;
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     RC_WRITE_PERMISSIONS_UPLOAD);
@@ -897,7 +895,7 @@ public class TrackManager extends AppCompatActivity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.e(TAG, "Result - Permission granted");
                     // permission was granted, yay!
-                    displayTrack(contextMenuSelectedTrackid);
+                    displayTrack(permissionRequestTrackId);
                 } else {
 
                     // permission denied, boo! Disable the
@@ -914,8 +912,8 @@ public class TrackManager extends AppCompatActivity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.e(TAG, "Result - Permission granted");
                     // permission was granted, yay!
-                    displayTrack(contextMenuSelectedTrackid);
-                    prepareAndShareTrack(contextMenuSelectedTrackid, this);
+                    displayTrack(permissionRequestTrackId);
+                    prepareAndShareTrack(permissionRequestTrackId, this);
                 } else {
 
                     // permission denied, boo! Disable the
@@ -932,7 +930,7 @@ public class TrackManager extends AppCompatActivity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.e(TAG, "Result - Permission granted");
                     // permission was granted, yay!
-                    uploadTrack(contextMenuSelectedTrackid);
+                    uploadTrack(permissionRequestTrackId);
                 } else {
 
                     // permission denied, boo! Disable the

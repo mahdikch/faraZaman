@@ -23,6 +23,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -108,6 +109,15 @@ class DisplayTrackMap : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentTrackId = intent.extras?.getLong(TrackContentProvider.Schema.COL_TRACK_ID) ?: 0
+        
+        // Validate track ID
+        if (currentTrackId <= 0) {
+            Log.e(TAG, "Invalid track ID: $currentTrackId")
+            Toast.makeText(this, "خطا: شناسه مسیر نامعتبر است", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+        
         gpsLoggerServiceIntent = Intent(this, GPSLogger::class.java).apply {
             putExtra(TrackContentProvider.Schema.COL_TRACK_ID, currentTrackId)
         }
