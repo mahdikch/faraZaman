@@ -10,7 +10,7 @@ interface RoadService {
     suspend fun getRoadData(
         @Query("lat") latitude: Double,
         @Query("lng") longitude: Double,
-        @Query("buffer") buffer: Int = 10,
+        @Query("buffer") buffer: Int = 30,
         @Header("Authorization") token: String
     ): List<RoadData>
 } 

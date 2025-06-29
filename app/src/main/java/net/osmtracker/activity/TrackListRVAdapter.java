@@ -114,7 +114,9 @@ public class TrackListRVAdapter extends RecyclerView.Adapter<TrackListRVAdapter.
                         trackId = Long.parseLong(getvId().getText().toString());
                     } catch (NumberFormatException e) {
                         trackId = -1; // مدیریت خطا
-                    }                    mHandler.endMission(trackId);
+                    }
+
+                    mHandler.endMission(trackId);
                 }
             });
             stopOrResume.setOnClickListener(new View.OnClickListener() {

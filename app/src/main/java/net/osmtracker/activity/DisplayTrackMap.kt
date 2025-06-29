@@ -217,7 +217,7 @@ class DisplayTrackMap : AppCompatActivity() {
                     return@launch
                 }
 
-                val roadData = roadService.getRoadData(latitude, longitude, 10, "Bearer $token")
+                val roadData = roadService.getRoadData(latitude, longitude, 30, "Bearer $token")
                 roadData.firstOrNull()?.let {
                     updateRoadInfo(it) }
             } catch (e: Exception) {

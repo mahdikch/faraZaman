@@ -660,7 +660,9 @@ public class TrackManager extends AppCompatActivity
 
     @Override
     public void endMission(long trackId) {
+        stopTrack(trackId,true);
         if (writeExternalStoragePermissionGranted()) {
+
             uploadTrack(trackId);
         } else {
             Log.e(TAG, "OsmUploadWrite - Permission asked");
@@ -705,10 +707,27 @@ public class TrackManager extends AppCompatActivity
         // Create temp file that will remain in cache
         new ExportToTempFileTask(context, trackId) {
             @Override
-            protected void executionCompleted() {
-                // Creates a zip file with the trace and its multimedia files
-                File zipFile = ZipHelper.zipCacheFiles(context, trackId, this.getTmpFile());
-                shareFile(zipFile, context);
+            protected void executionCompleted(boolean success) {                // Creates a zip file with the trace and its multimedia files
+                if (success) { // <--- ADD THIS CONDITIONAL CHECK
+                    // Creates a zip file with the trace and its multimedia files
+                    File zipFile = ZipHelper.zipCacheFiles(context, trackId, this.getTmpFile());
+                    shareFile(zipFile, context);
+                } else {
+                    // Handle the case where export to temp file failed
+                    new MaterialAlertDialogBuilder(context)
+                            .setTitle(android.R.string.dialog_alert_title)
+                            .setMessage(context.getResources()
+                                    .getString(R.string.trackmgr_prepare_for_share_error)
+                                    .replace("{0}", Long.toString(trackId)) + ": " + getErrorMsg()) // Optionally show error message
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
             }
 
             @Override
@@ -729,7 +748,7 @@ public class TrackManager extends AppCompatActivity
                             })
                             .show();
                 } else {
-                    executionCompleted();
+                    executionCompleted(success);
                 }
             }
         }.execute();

@@ -246,7 +246,7 @@ class SubmitViolationActivity : AppCompatActivity() {
                     return@launch
                 }
 
-                val roadData = roadService.getRoadData(latitude, longitude, 10, "Bearer $token")
+                val roadData = roadService.getRoadData(latitude, longitude, 30, "Bearer $token")
                 roadData.firstOrNull()?.let { updateRoadInfo(it) }
             } catch (e: Exception) {
                 Log.e("SubmitViolationActivity", "Error fetching road data", e)
@@ -290,16 +290,16 @@ class SubmitViolationActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (hasLocationPermission()) {
-            locationManager.removeUpdates(locationListener)
-        }
+//        if (hasLocationPermission()) {
+//            locationManager.removeUpdates(locationListener)
+//        }
     }
 
     override fun onResume() {
         super.onResume()
-        if (hasLocationPermission()) {
-            startGettingLocation()
-        }
+//        if (hasLocationPermission()) {
+//            startGettingLocation()
+//        }
     }
 
     private fun displayTrackPoints() {

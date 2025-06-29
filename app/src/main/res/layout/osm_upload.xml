@@ -25,6 +25,7 @@
             android:textColor="#FFFFFF"
             android:text="@string/osm_upload_ok" />
 
+
         <Button
             android:id="@+id/osm_upload_btn_cancel"
             android:layout_width="fill_parent"

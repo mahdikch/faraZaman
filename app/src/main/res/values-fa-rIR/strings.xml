@@ -73,6 +73,7 @@
   <!--OSM upload-->
   <string name="osm_upload">بارگذاری در OpenStreetMap</string>
   <string name="osm_upload_ok">ذخیره و بارگذاری</string>
+  <string name="osm_upload_custom">آپلود به سرور</string>
   <string name="osm_upload_tmpfile_failed">تهیهٔ خروجی مسیر بر روی فایل موقت ناموفق بود</string>
   <string name="osm_upload_oauth_failed">تأیید حساب کاربری در OSM ناموفق بود</string>
   <string name="osm_upload_sending">در حال ارسال مسیر #{0}...</string>

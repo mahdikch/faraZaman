@@ -246,6 +246,7 @@
     <!--    <string name="osm_upload_sucess">OpenStreetMap upload succeeded</string>-->
     <string name="osm_upload">بارگذاری در OpenStreetMap</string>
     <string name="osm_upload_ok">ذخیره و بارگذاری</string>
+    <string name="osm_upload_custom">آپلود به سرور</string>
     <string name="osm_upload_tmpfile_failed">تهیهٔ خروجی مسیر بر روی فایل موقت ناموفق بود</string>
     <string name="osm_upload_oauth_failed">تأیید حساب کاربری در OSM ناموفق بود</string>
     <string name="osm_upload_sending">در حال ارسال مسیر #{0}...</string>
@@ -331,7 +332,7 @@
     <!--    <string name="gpx_track_name">Tracked with OSMTracker for Android™</string>-->
     <!--    <string name="gpx_hdop_approximation_cmt">Warning: HDOP values aren\'t the HDOP as returned by the GPS device. They\'re approximated from the location accuracy in meters.</string>-->
     <!--    <string name="gpx_track_name">با OSM Tracker for Android™‎ ضبط شده است</string>-->
-    <string name="gpx_track_name">با سامانه فرا زمان ضبط شده است</string>
+    <string name="gpx_track_name">recorded by farazaman</string>
     <string name="gpx_hdop_approximation_cmt">هشدار: مقادیر HDOP همان مقادیر HDOP دریافتی از دستگاه GPS نیست؛ بلکه بر اساس دقت مکانی بر حسب متر تقریب زده شده.</string>
     <!-- About screen -->
     <!--    <string name="about">About</string>-->

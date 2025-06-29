@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-
+import java.util.Locale;
 import net.osmtracker.OSMTracker;
 import net.osmtracker.R;
 import net.osmtracker.data.db.DataHelper;
@@ -23,8 +23,10 @@ import net.osmtracker.util.FileSystemUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -121,6 +123,7 @@ public abstract class ExportTrackTask extends AsyncTask<Void, Long, Boolean> {
 		this.context = context;
 		this.trackIds = trackIds;
 		pointDateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+		pointDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US); // یا Locale.ROOT
 	}
 
 	@Override
@@ -249,6 +252,7 @@ public abstract class ExportTrackTask extends AsyncTask<Void, Long, Boolean> {
 					DataHelper.setTrackExportDate(trackId, System.currentTimeMillis(), cr);
 				}
 			} catch (IOException ioe) {
+				Log.e(TAG, "IOException during GPX file writing or media copying.", ioe); // <--- این رو اضافه کنید
 				throw new ExportTrackException(ioe.getMessage());
 			} finally {
 				cTrackPoints.close();
@@ -288,9 +292,20 @@ public abstract class ExportTrackTask extends AsyncTask<Void, Long, Boolean> {
 
 		Writer writer = null;
 		try {
+			File parentDir = target.getParentFile();
+			if (parentDir != null && !parentDir.exists()) {
+				boolean dirsCreated = parentDir.mkdirs();
+				if (!dirsCreated) {
+					// اگر دایرکتوری‌ها ایجاد نشدند، خطا رو لاگ کنید
+					Log.e(TAG, "Failed to create parent directories for GPX file: " + parentDir.getAbsolutePath());
+					throw new IOException("Failed to create parent directories for GPX file: " + parentDir.getAbsolutePath());
+				} else {
+					Log.d(TAG, "Created parent directories for GPX file: " + parentDir.getAbsolutePath());
+				}
+			}
 
-			writer = new BufferedWriter(new FileWriter(target));
-
+//			writer = new BufferedWriter(new FileWriter(target));
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(target), "UTF-8"));
 			writer.write(XML_HEADER + "\n");
 			writer.write(TAG_GPX + "\n");
 
