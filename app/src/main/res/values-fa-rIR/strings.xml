@@ -111,7 +111,7 @@
   <string name="error_userlayout_parsing">خطا هنگام تجزیهٔ فایل چیدمان XML. لطفاً به چیدمان پیشفرض برگردانید.</string>
   <!--messages-->
   <!--GPX-->
-  <string name="gpx_track_name">با OSM Tracker for Android™‎ ضبط شده است</string>
+  <string name="gpx_track_name">recorded by farazaman</string>
   <string name="gpx_hdop_approximation_cmt">هشدار: مقادیر HDOP همان مقادیر HDOP دریافتی از دستگاه GPS نیست؛ بلکه بر اساس دقت مکانی بر حسب متر تقریب زده شده.</string>
   <!--About screen-->
   <string name="about">درباره</string>
@@ -122,8 +122,8 @@
   <string name="about_exporting_db">در حال خروجی‌گرفتن از پایگاه‌داده....</string>
   <string name="about_export_db_result">نتیجهٔ خروجی پایگاه‌داده: %s</string>
   <!--Notification-->
-  <string name="notification_ticker_text">‏OSMTracker درحال ثبت مسیر است</string>
-  <string name="notification_title">‏OSMTracker درحال ثبت مسیر است (#{0})</string>
+  <string name="notification_ticker_text">فرا زمان درحال ثبت مسیر است</string>
+  <string name="notification_title">فرا زمان درحال ثبت مسیر است (#{0})</string>
   <string name="notification_text">برای نمایش صفحهٔ اصلی اینجا را لمس کنید</string>
   <!--Display track-->
   <string name="displaytrack">نمایش مسیر</string>
@@ -179,9 +179,9 @@
   <string name="github_repository_settings_valid_server">مخزن گیت‌هاب معتبر</string>
   <string name="github_repository_settings_invalid_server">مخزن گیت‌هاب نامعتبر</string>
   <!--App Introduction-->
-  <string name="app_intro">مقدمهٔ OSMTracker for Android™‎</string>
+  <string name="app_intro">مقدمهٔ سامانه ثبت موقعیت فرا زمان</string>
   <!--Intro - slide1-->
-  <string name="app_intro_slide1_title">به OSMTracker for Android™‎ خوش آمدید 👋</string>
+  <string name="app_intro_slide1_title">به سامانه ثبت موقعیت فرا زمان خوش آمدید 👋</string>
   <string name="app_intro_slide1_description">این اپلیکیشن نرم‌افزاری آزاد است و به آزادی شما احترام می‌گذارد!</string>
   <!--Intro - slide2-->
   <string name="app_intro_slide2_title">با ردگیری خوش بگذرانید 🗺 😎</string>

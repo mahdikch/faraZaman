@@ -57,6 +57,7 @@
                         android:id="@+id/Date_of_performance_registration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/calendar_days"
                         android:fontFamily="@font/iran_sans"
                         android:paddingVertical="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -184,76 +185,67 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_marginHorizontal="4dp"
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
 
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:text="فصل‌های فهرست بها" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:text="فصل‌های فهرست بها" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:paddingVertical="4dp"
-                        app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#1E88E5">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/billCleaningItemGroups"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/iran_sans"
-                            android:inputType="none"
-                            android:maxLines="2" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="16dp"
+                    android:paddingVertical="4dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="#1E88E5">
 
-                    <com.google.android.material.textview.MaterialTextView
+                    <AutoCompleteTextView
+                        android:id="@+id/billCleaningItemGroups"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
-                        android:text="ردیف فهرست بها" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/price_list_lay"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:paddingVertical="4dp"
-                        app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#1E88E5">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/billOriginCleaningItems"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/iran_sans"
-                            android:inputType="none"
-                            android:maxLines="2" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                        android:fontFamily="@font/iran_sans"
+                        android:inputType="none"
+                        android:maxLines="2" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="ردیف فهرست بها" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/price_list_lay"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:paddingVertical="4dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="#1E88E5">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/billOriginCleaningItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/iran_sans"
+                        android:inputType="none"
+                        android:maxLines="2" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -335,31 +327,6 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="درصد / هزینه تادیه خسارت" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="#1E88E5">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/cost_of_damage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/iran_sans"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="توضیحات" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -376,6 +343,7 @@
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -402,25 +370,25 @@
             </LinearLayout>
 
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/image_picker"
-                    android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/image_picker"
+                android:layout_width="match_parent"
 
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:backgroundTint="#263238"
-                    android:fontFamily="@font/iran_sans"
-                    android:padding="12dp"
-                    android:text="تصویر تخلف"
-                    android:textColor="#FFFFFF"
-                    app:cornerRadius="4dp"
-                    />
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:backgroundTint="#263238"
+                android:fontFamily="@font/iran_sans"
+                android:padding="12dp"
+                android:text="تصویر تخلف"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="4dp" />
+
             <ImageView
                 android:id="@+id/violation_image"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
+                android:layout_height="100dp"
                 android:layout_marginHorizontal="8dp"
-                android:layout_height="100dp"/>
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

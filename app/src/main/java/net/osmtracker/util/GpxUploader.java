@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 
+import net.osmtracker.AppConstants;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -32,7 +33,7 @@ public class GpxUploader{
                 .build();
 
         Request request = new Request.Builder()
-                .url("https://demo.tfs.co.ir/api/GisGeolocation/upload")
+                .url(AppConstants.BASE_URL + "api/GisGeolocation/upload")
                 .addHeader("Accept", "application/json")
                 .addHeader("Authorization", token)
                 .post(requestBody)

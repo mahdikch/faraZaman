@@ -198,23 +198,36 @@ class TrackLogger : Activity() {
             checkGPSFlag = false
         }
     }
-
+    // کد اصلاح شده برای TrackLogger.kt -> onPause()
     override fun onPause() {
+        super.onPause()
         (findViewById<View>(R.id.gpsStatus) as GpsStatusRecord).requestLocationUpdates(false)
+
+        // فقط از سرویس جدا شو، آن را متوقف نکن
         gpsLogger?.let {
-            if (!it.isTracking) {
-                Log.v(TAG, "Service is not tracking, trying to stopService()")
-                unbindService(gpsLoggerConnection)
-                stopService(gpsLoggerServiceIntent)
-            } else {
-                unbindService(gpsLoggerConnection)
-            }
+            unbindService(gpsLoggerConnection)
         }
+
         sensorListener?.unregister()
         pressureListener?.unregister()
         mAudioManager?.unregisterMediaButtonEventReceiver(mediaButtonReceiver)
-        super.onPause()
     }
+//    override fun onPause() {
+//        (findViewById<View>(R.id.gpsStatus) as GpsStatusRecord).requestLocationUpdates(false)
+//        gpsLogger?.let {
+//            if (!it.isTracking) {
+//                Log.v(TAG, "Service is not tracking, trying to stopService()")
+//                unbindService(gpsLoggerConnection)
+//                stopService(gpsLoggerServiceIntent)
+//            } else {
+//                unbindService(gpsLoggerConnection)
+//            }
+//        }
+//        sensorListener?.unregister()
+//        pressureListener?.unregister()
+//        mAudioManager?.unregisterMediaButtonEventReceiver(mediaButtonReceiver)
+//        super.onPause()
+//    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         gpsLogger?.let { outState.putBoolean(STATE_IS_TRACKING, it.isTracking) }

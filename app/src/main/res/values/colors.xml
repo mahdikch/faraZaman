@@ -23,5 +23,12 @@
     <color name="colorPrimaryDarkLight">#4f9a94</color>
     <color name="colorAccentLight">#b2fef7</color>
     <color name="colorPrimaryTextLight">#000000</color>
+    <color name="gray">#949494</color>
+    <color name="gray_disabled">#BDBDBD</color>
 
+    <color name="brand_green">#00A98F</color>
+    <color name="brand_green_dark">#008772</color>
+    <color name="text_primary_dark">#212121</color>
+    <color name="text_secondary_dark">#757575</color>
+    <color name="white">#FFFFFF</color>
 </resources>

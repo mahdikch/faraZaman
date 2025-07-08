@@ -34,4 +34,6 @@
         <item name="backgroundColor">@color/colorPrimaryText</item>
         <item name="android:fontFamily">@font/iran_sans</item>
     </style>
+
+
 </resources>

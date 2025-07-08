@@ -19,6 +19,7 @@ import net.osmtracker.data.db.TrackContentProvider;
 import net.osmtracker.data.db.model.Track;
 import net.osmtracker.gpx.ExportToTempFileTask;
 import net.osmtracker.gpx.ZipHelper;
+import net.osmtracker.AppConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import okhttp3.Response;
 public class OpenStreetMapUpload extends TrackDetailEditor {
 
 	private static final String TAG = OpenStreetMapUpload.class.getSimpleName();
-	private static final String UPLOAD_URL = "https://demo.tfs.co.ir/api/GisGeolocation/upload";
+	private static final String UPLOAD_URL = AppConstants.BASE_URL + "api/GisGeolocation/upload";
 	private static final String PREF_TOKEN_KEY = "ACCESS_TOKEN";
 
 	@Override
